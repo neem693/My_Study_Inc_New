@@ -1,8 +1,10 @@
 import java.util.Scanner;
 class 문제입출력{
 	public static void main(String[] args){
+	
+		Scanner s= new Scanner(System.in);
+		
 		System.out.println("--[신상정보입력]--");
-		Scanner s = new Scanner(System.in);
 		System.out.print("이름:");
 		String name=s.next();
 		System.out.print("나이:");
@@ -22,5 +24,6 @@ class 문제입출력{
 		System.out.printf("주소: %s\n",addr);
 		System.out.printf("키: %.1f(cm)\n",ki);
 		System.out.printf("전화: %s\n",tel);
+		
 	}
 }
