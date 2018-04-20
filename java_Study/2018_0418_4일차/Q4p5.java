@@ -4,8 +4,12 @@ class Q4p5{
 	public static void main(String [] args){
 		GregorianCalendar gcl = new GregorianCalendar();
 		int year = gcl.get(GregorianCalendar.YEAR);
+		int month = gcl.get(GregorianCalendar.MONTH) +1;
+		int day = gcl.get(GregorianCalendar.DAY_OF_MONTH);
 		int birth_int,age;
+		System.out.println(year  + "-" + month +"-"+ day);
 		Scanner s = new Scanner(System.in);
+		
 		
 		String birth = s.next();
 		birth = birth.substring(0,4);
@@ -22,4 +26,3 @@ class Q4p5{
 		
 	}
 }
-		
