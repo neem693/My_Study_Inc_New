@@ -5,10 +5,8 @@ class Q5p5{
 		Scanner s = new Scanner(System.in);
 		int n = s.nextInt();
 		int result =0;
-		for(int i =1; i<=n; i++)
-			if(i%3==0)
-				result += i;
-		System.out.println(result);
-
+		for(int i =0; i<=n;i+=3)
+			result +=i;
+		System.out.printf("%d",result);
 	}
 }

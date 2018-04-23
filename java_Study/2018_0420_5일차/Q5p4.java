@@ -5,9 +5,11 @@ class Q5p4{
 		Scanner s = new Scanner(System.in);
 		int n = s.nextInt();
 		int result =0;
-		for(int i = 1; i<=n;i++)
-			if(i%2==1)
-				result += i;
-		System.out.println(result);
+		
+		for(int i = 1; i<=n;i++){
+			if(i%2==0) continue;
+		result +=i;
+		}
+	System.out.printf("%d",result);
 	}
 }
