@@ -6,9 +6,9 @@ import java.util.Scanner;
 public class Q_13 {
 	// 알파벳 이 몇개, 숫자가 몇개, 화이트 문자가 몇개(\t,\r,\n, ' '(스페이스바)), 특수 기호가 몇개
 	public static void main(String[] args) throws IOException {
-		
+
 		Scanner s = new Scanner(System.in);
-		
+
 		int str;
 		int alph = 0;
 		int number = 0;
@@ -17,8 +17,8 @@ public class Q_13 {
 		System.out.println("데이터를 입력하세요. 끝내려면 [CTRL] + Z를 누르세요");
 		while (true) {
 			str = System.in.read();
-			if (str == -1) 
-			break;
+			if (str == -1)
+				break;
 			System.out.printf("%c", str);
 
 			if (str >= 65 && str <= 90 || str >= 97 && str <= 122)

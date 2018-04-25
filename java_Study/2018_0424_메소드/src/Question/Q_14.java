@@ -10,7 +10,6 @@ public class Q_14 {
 			if(i>=11)
 				break;
 			
-		
 			
 			System.out.print(f);
 			if(r!=0)
