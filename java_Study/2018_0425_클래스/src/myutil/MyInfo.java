@@ -11,7 +11,7 @@ public class MyInfo {
 	private int current_month;
 
 	public MyInfo() {
-		GregorianCalendar gs = new GregorianCalendar();
+		Calendar gs = GregorianCalendar.getInstance();
 		current_year = gs.get(Calendar.YEAR);
 		current_month = gs.get(Calendar.MONTH) +1;
 	}
@@ -42,6 +42,7 @@ public class MyInfo {
 		if(year<100) {
 			year += 1900;
 		}
+		
 		return current_year - year;
 	}
 
