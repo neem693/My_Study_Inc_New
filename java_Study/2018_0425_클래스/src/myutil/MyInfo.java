@@ -32,7 +32,7 @@ public class MyInfo {
 	}
 	
 	public int getCurrent_year() {
-		return current_month;
+		return current_year;
 	}
 
 
