@@ -17,7 +17,6 @@ public class MyMain_Lotto {
 		lotto.make_win_number();
 		
 		
-	
 		END:
 		while(true)
 		{
