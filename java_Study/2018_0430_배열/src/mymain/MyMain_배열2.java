@@ -20,6 +20,7 @@ public class MyMain_¹è¿­2 {
 		mm2[2] = new int[] {6,7,8,9};
 		
 		MyArrays.display_array2(mm2);
+		
 	}
 
 }

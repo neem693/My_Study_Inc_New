@@ -87,5 +87,4 @@ public class Mabangjin {
 	public int getChasu() {
 		return chasu;
 	}
-
 }

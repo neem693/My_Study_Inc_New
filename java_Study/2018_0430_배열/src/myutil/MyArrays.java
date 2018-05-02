@@ -1,6 +1,15 @@
 package myutil;
 
 public class MyArrays {
+	
+	
+	
+	public static void copy_array(int [] src,int src_index,int[] dest,int dest_index,int dest_length) {
+		
+		for(int i = 0; i<dest_length;i++) {
+			dest[dest_index + i] = src[src_index + i];
+		}
+	}
 
 	public static void display_array(int[] mr) {
 		System.out.printf("[");
@@ -127,7 +136,7 @@ public class MyArrays {
 			for (int j = 0; j < dest[i].length; j++) {
 				if(i==j)
 				dest[i][j] = mm[i][j];
-				else dest[i][j] = mm[last_index -i][last_index-j];
+				else dest[i][j] = mm[j][i];
 			}
 		}
 		return dest;
@@ -140,9 +149,23 @@ public class MyArrays {
 			for (int j = 0; j < dest[i].length; j++) {
 				if((i+j) ==last_index)
 				dest[i][j] = mm[i][j];
-				else dest[i][j] = mm[last_index -i][last_index-j];
+				else dest[i][j] = mm[last_index -j][last_index-i];
 			}
 		}
 		return dest;
 	}
+	public static int[][] cross_flip_diagonal(int[][] mm) {
+		int[][] dest = new int[mm.length][mm[0].length];
+		int last_index=mm.length-1;
+		for (int i = 0; i < dest.length; i++) {
+			for (int j = 0; j < dest[i].length; j++) {
+				if(i==j||((i+j) ==last_index))
+				dest[i][j] = mm[i][j];
+				else dest[i][j] = mm[last_index-i][last_index-j];
+			}
+		}
+		return dest;
+	}
+	
+	
 }
