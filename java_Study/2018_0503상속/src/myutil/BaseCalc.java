@@ -3,7 +3,7 @@ package myutil;
 public class BaseCalc {
 	
 	public int plus(int a,int b) {
-		System.out.println(this.toString());
+		//System.out.println(this.toString());
 		return a+b;
 	}
 	
