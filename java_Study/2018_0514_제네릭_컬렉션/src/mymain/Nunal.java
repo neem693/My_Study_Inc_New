@@ -21,13 +21,26 @@ public class Nunal extends JFrame {
 	JPanel gamePan;
 	Point eye_left, eye_right, eyeball_left, eyeball_right;
 	int eye_radius, eyeball_radius;
-	int width,height;
-	BufferedImage img;
-	
-	
+	int width, height,eye_w,eye_h;
+	BufferedImage img, eyeImg;
+
 	public Nunal() {
 		super("눈알굴리기");
+		try {
+			img = ImageIO.read(new File("_background.jpg"));
+			eyeImg = ImageIO.read(new File("eye.png"));
 
+			width = img.getWidth();
+			height = img.getHeight();
+			System.out.println(width);
+			System.out.println(height);
+			
+			eye_w = eyeImg.getWidth();
+			eye_h = eyeImg.getHeight();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			// handle exception...
+		}
 		// 그림판 초기화
 		init_gamepan();
 
@@ -35,22 +48,8 @@ public class Nunal extends JFrame {
 		init_eye_position();
 
 		init_eyeball_position();
-		
+
 		init_mouse_event();
-		
-		 try {                
-	          img = ImageIO.read(new File("_background.jpg"));
-	          
-	          width = img.getWidth();
-	          height = img.getHeight();
-	          System.out.println(width);
-	          System.out.println(height);
-	       } catch (IOException ex) {
-	    	   	ex.printStackTrace();
-	            // handle exception...
-	       }
-		 
-		
 
 		this.setLocation(200, 100);
 
@@ -64,7 +63,7 @@ public class Nunal extends JFrame {
 	}
 
 	private void init_mouse_event() {
-		
+
 		MouseAdapter adapter = new MouseAdapter() {
 
 			@Override
@@ -73,14 +72,13 @@ public class Nunal extends JFrame {
 				super.mousePressed(e);
 				System.out.println(e);
 				Point pt = e.getPoint();
-				
-				//왼쪽 눈알 중심좌표 구하기
+
+				// 왼쪽 눈알 중심좌표 구하기
 				left_eyeball_position(pt);
-				
-				//오른쪽 눈알 중심좌표 구하기
+
+				// 오른쪽 눈알 중심좌표 구하기
 				right_eyeball_position(pt);
-				
-				
+
 				gamePan.repaint();
 			}
 
@@ -98,55 +96,48 @@ public class Nunal extends JFrame {
 				super.mouseDragged(e);
 				System.out.println(e);
 				Point pt = e.getPoint();
-				
-				//왼쪽 눈알 중심좌표 구하기
+
+				// 왼쪽 눈알 중심좌표 구하기
 				left_eyeball_position(pt);
-				
-				//오른쪽 눈알 중심좌표 구하기
+
+				// 오른쪽 눈알 중심좌표 구하기
 				right_eyeball_position(pt);
-				
-				
-				
+
 				gamePan.repaint();
 			}
-			
+
 		};
-		
-		//gamePan에 마우스 이벤트 설정
-		gamePan.addMouseListener(adapter);//pressed,released,entered,exited,clicked
-		gamePan.addMouseMotionListener(adapter);//draged,moved
-		
+
+		// gamePan에 마우스 이벤트 설정
+		gamePan.addMouseListener(adapter);// pressed,released,entered,exited,clicked
+		gamePan.addMouseMotionListener(adapter);// draged,moved
+
 	}
 
 	protected void right_eyeball_position(Point pt) {
-		
-	
-		
-		
+
 		int xx = pt.x - eye_right.x;
 		int yy = pt.y - eye_right.y;
-		
-		double r = Math.sqrt(xx*xx + yy* yy);
-		double right_rate = eyeball_radius /r;
-		
-		eyeball_right.x = (int)(eye_right.x + xx * right_rate);
-		eyeball_right.y = (int)(eye_right.y + yy * right_rate);
-		
-		
+
+		double r = Math.sqrt(xx * xx + yy * yy);
+		double right_rate = eyeball_radius / r;
+
+		eyeball_right.x = (int) (eye_right.x + xx * right_rate*0.2);
+		eyeball_right.y = (int) (eye_right.y + yy * right_rate*0.2);
+
 	}
 
 	protected void left_eyeball_position(Point pt) {
-	
+
 		int xx = pt.x - eye_left.x;
 		int yy = pt.y - eye_left.y;
-		
-		double r = Math.sqrt(xx*xx + yy* yy);
-		double left_rate = eyeball_radius /r;
-		
-		eyeball_left.x = (int)(eye_left.x + xx * left_rate);
-		eyeball_left.y = (int)(eye_left.y + yy * left_rate);
-		
-		
+
+		double r = Math.sqrt(xx * xx + yy * yy);
+		double left_rate = eyeball_radius / r;
+
+		eyeball_left.x = (int) (eye_left.x + xx * left_rate*0.2);
+		eyeball_left.y = (int) (eye_left.y + yy * left_rate*0.2);
+
 	}
 
 	private void init_eyeball_position() {
@@ -154,7 +145,7 @@ public class Nunal extends JFrame {
 		eyeball_left = new Point(eye_left.x, eye_left.y);
 		eyeball_right = new Point(eye_right.x, eye_right.y);
 
-		eyeball_radius = eye_radius / 2;
+		eyeball_radius = (int)(eye_radius/2.2);
 
 	}
 
@@ -163,16 +154,20 @@ public class Nunal extends JFrame {
 		// 왼쪽 눈 중심좌표
 
 		eye_left = new Point();
-		eye_left.x = MyConst.GAME_W / 4;
-		eye_left.y = MyConst.GAME_H / 2;
+		eye_left.x = 284;
+		eye_left.y = 218;
+		// eye_left.x = MyConst.GAME_W / 4;
+		// eye_left.y = MyConst.GAME_H / 2;
 
 		// 오른쪽 눈 중심좌표
 		eye_right = new Point();
-		eye_right.x = MyConst.GAME_W / 4 * 3;
-		eye_right.y = MyConst.GAME_H / 2;
+		eye_right.x = 440;
+		eye_right.y = 214;
+		// eye_right.x = MyConst.GAME_W / 4 * 3;
+		// eye_right.y = MyConst.GAME_H / 2;
 
 		// 눈의 반지름
-		eye_radius = (MyConst.GAME_W / 4) / 3 * 2;
+		eye_radius = eye_w ;
 
 	}
 
@@ -181,26 +176,33 @@ public class Nunal extends JFrame {
 			@Override
 			protected void paintComponent(Graphics g) {
 				// TODO Auto-generated method stub
-				g.drawImage(img,0,0,this);
 				g.drawString("눈알그리기", 10, 60);
-				
-				//g.clearRect(0, 0, MyConst.GAME_W, MyConst.GAME_H);
+
+				g.clearRect(0, 0, MyConst.GAME_W, MyConst.GAME_H);
+				g.drawImage(img, 0, 0, this);
 
 				//g.drawOval(eye_left.x - eye_radius, eye_left.y - eye_radius, eye_radius * 2, eye_radius * 2);
-				//g.drawOval(eye_right.x - eye_radius, eye_right.y - eye_radius , eye_radius * 2, eye_radius * 2);
+				//g.drawOval(eye_right.x - eye_radius, eye_right.y - eye_radius, eye_radius * 2, eye_radius * 2);
+
+				g.drawImage(eyeImg, eyeball_left.x - eyeball_radius, eyeball_left.y - eyeball_radius,
+						eyeball_radius * 2, eyeball_radius * 2, null, null);
 				
-				//g.fillOval(eyeball_left.x - eyeball_radius,eyeball_left.y - eyeball_radius, eyeball_radius * 2, eyeball_radius * 2);
-				//g.fillOval(eyeball_right.x - eyeball_radius,eyeball_right.y - eyeball_radius, eyeball_radius * 2, eyeball_radius * 2);
-				
+				g.drawImage(eyeImg, eyeball_right.x - eyeball_radius, eyeball_right.y - eyeball_radius,
+						eyeball_radius * 2, eyeball_radius * 2, null, null);
+
+
+				/*g.fillOval(eyeball_left.x - eyeball_radius, eyeball_left.y - eyeball_radius, eyeball_radius * 2,
+						eyeball_radius * 2);*/
+				/*g.fillOval(eyeball_right.x - eyeball_radius, eyeball_right.y - eyeball_radius, eyeball_radius * 2,
+						eyeball_radius * 2);*/
+
 			}
 		};
 		// 크기예약
-	
 
-		
-		gamePan.setPreferredSize(new Dimension(800, 785));
+		gamePan.setPreferredSize(new Dimension(width, height));
 
-		//gamePan.setPreferredSize(new Dimension(MyConst.GAME_W, MyConst.GAME_H));
+		// gamePan.setPreferredSize(new Dimension(MyConst.GAME_W, MyConst.GAME_H));
 
 		this.add(gamePan, "Center");
 
