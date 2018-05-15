@@ -35,6 +35,7 @@ public class Nunal extends JFrame {
 	}
 	
 	Point bld,brd,bud,bdd;
+	Rectangle ball_rect;
 	Rectangle rect_left,rect_right;
 	Rectangle ballL,ballR,ballD,ballU;
 	JPanel gamePan;
@@ -90,7 +91,7 @@ public class Nunal extends JFrame {
 				
 				work_rect(pt);
 				
-				ballR.contains(new Point(220,100));
+			
 				
 			
 				
@@ -112,38 +113,63 @@ public class Nunal extends JFrame {
 		rect_left = new Rectangle(eye_left.x - eye_radius +5, eye_left.y - eye_radius + 5, eye_radius * 2 - 15, eye_radius * 2 -15);
 		rect_right = new Rectangle(eye_right.x - eye_radius +5, eye_right.y - eye_radius + 5, eye_radius * 2 - 15, eye_radius * 2 -15);
 		
-		boolean left_eye = rect_left.contains(pt);
-		boolean right_eye = rect_right.contains(pt);
 		
 		
-		if(left_eye) {
-			bDown = !bDown;
-			bRight = !bRight;
-		}
+		ball_rect = new Rectangle(ball_x, ball_y, ballsize, ballsize);
 		
-		if(ballR.contains((int)x,(int)y)) {
+		
+		
+		if(ball_rect.intersects(ballL)) {
 			System.out.println("left");
 			bRight = false;
 		}
-		x= eye_left.x+eye_radius;
-		if(ballL.contains((int)x,(int) y)) {
-			System.out.println("right");
+		if(ball_rect.intersects(ballR)) {
+			System.out.println("Right");
 			bRight = true;
+			
 		}
-		x=eye_left.x;
-		y= eye_left.y - eye_radius;
-		
-		if(ballD.contains((int)x,(int) y)) {
-			System.out.println("Up");
-			bDown = false;
-		}
-		
-		y= eye_left.y + eye_radius;
-		
-		if(ballD.contains((int)x,(int) y)) {
+		if(ball_rect.intersects(ballD)) {
 			System.out.println("Down");
 			bDown = true;
+			
 		}
+		if(ball_rect.intersects(ballU)) {
+			System.out.println("Up");
+			bDown = false;
+			
+		}
+//		boolean left_eye = rect_left.contains(pt);
+//		boolean right_eye = rect_right.contains(pt);
+		
+		
+//		if(left_eye) {
+//			bDown = !bDown;
+//			bRight = !bRight;
+//		}
+		
+//		if(ballR.contains((int)x,(int)y)) {
+//			System.out.println("left");
+//			bRight = false;
+//		}
+//		x= eye_left.x+eye_radius;
+//		if(ballL.contains((int)x,(int) y)) {
+//			System.out.println("right");
+//			bRight = true;
+//		}
+//		x=eye_left.x;
+//		y= eye_left.y - eye_radius;
+//		
+//		if(ballD.contains((int)x,(int) y)) {
+//			System.out.println("Up");
+//			bDown = false;
+//		}
+//		
+//		y= eye_left.y + eye_radius;
+//		
+//		if(ballD.contains((int)x,(int) y)) {
+//			System.out.println("Down");
+//			bDown = true;
+//		}
 		
 		
 		
@@ -189,6 +215,22 @@ public class Nunal extends JFrame {
 		ballsize = eye_radius/2;
 		ball_x = 185;
 		ball_y = 165;
+		
+		int rect_xL = eye_left.x - eye_radius +5;
+		int rect_xR = eye_right.x - eye_radius +5;
+		int rect_yL = eye_left.y - eye_radius + 5;
+		int rect_yR = eye_right.y - eye_radius + 5;
+		
+//		g.drawRect(rect_xL, rect_yL, 5, eye_radius *2 -15);
+//		g.drawRect(rect_xL, rect_yL, eye_radius * 2 -15, 5);
+//		g.drawRect(rect_xL, rect_yL + eye_radius*2 -15 -5, eye_radius * 2 -15, 5);
+//		g.drawRect(rect_xL + eye_radius*2 -15 -5, rect_yL, 5, eye_radius * 2 -15);
+		
+		ballL = new Rectangle(rect_xL, rect_yL, 5, eye_radius *2 -15);
+		ballR = new Rectangle(rect_xL + eye_radius*2 -15 -5, rect_yL, 5, eye_radius * 2 -15);
+		
+		ballU = new Rectangle(rect_xL, rect_yL, eye_radius * 2 -15, 5);
+		ballD = new Rectangle(rect_xL, rect_yL + eye_radius*2 -15 -5, eye_radius * 2 -15, 5);
 	}
 
 	private void init_mouse_event() {
@@ -302,16 +344,19 @@ public class Nunal extends JFrame {
 				
 				//ball
 				g.fillOval(ball_x, ball_y, ballsize, ballsize);
-				g.drawRect(ball_x, ball_y-ballsize, ballsize, ballsize);
-				g.drawRect(ball_x, ball_y+ballsize, ballsize, ballsize);
-				g.drawRect(ball_x+ballsize, ball_y, ballsize, ballsize);
-				g.drawRect(ball_x-ballsize, ball_y, ballsize, ballsize);
+				
+//				g.drawRect(ball_x, ball_y-ballsize, ballsize, ballsize);
+//				g.drawRect(ball_x, ball_y+ballsize, ballsize, ballsize);
+//				g.drawRect(ball_x+ballsize, ball_y, ballsize, ballsize);
+//				g.drawRect(ball_x-ballsize, ball_y, ballsize, ballsize);
 				
 				//ball_rect
-				ballU = new Rectangle(ball_x, ball_y-ballsize, ballsize, ballsize);
-				ballD = new Rectangle(ball_x, ball_y+ballsize, ballsize, ballsize);
-				ballR = new Rectangle(ball_x+ballsize, ball_y, ballsize, ballsize);
-				ballL = new Rectangle(ball_x-ballsize, ball_y, ballsize, ballsize);
+//				ballU = new Rectangle(ball_x, ball_y-ballsize, ballsize, ballsize);
+//				ballD = new Rectangle(ball_x, ball_y+ballsize, ballsize, ballsize);
+//				ballR = new Rectangle(ball_x+ballsize, ball_y, ballsize, ballsize);
+//				ballL = new Rectangle(ball_x-ballsize, ball_y, ballsize, ballsize);
+				
+				
 				
 				
 				
@@ -330,6 +375,16 @@ public class Nunal extends JFrame {
 				g.fillOval(eye_left.x, eye_left.y + eye_radius, 5 , 5);
 				
 				
+				
+				int rect_xL = eye_left.x - eye_radius +5;
+				int rect_xR = eye_right.x - eye_radius +5;
+				int rect_yL = eye_left.y - eye_radius + 5;
+				int rect_yR = eye_right.y - eye_radius + 5;
+				
+				g.drawRect(rect_xL, rect_yL, 5, eye_radius *2 -15);
+				g.drawRect(rect_xL, rect_yL, eye_radius * 2 -15, 5);
+				g.drawRect(rect_xL, rect_yL + eye_radius*2 -15 -5, eye_radius * 2 -15, 5);
+				g.drawRect(rect_xL + eye_radius*2 -15 -5, rect_yL, 5, eye_radius * 2 -15);
 				
 				
 				
