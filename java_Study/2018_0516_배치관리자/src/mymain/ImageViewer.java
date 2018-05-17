@@ -102,8 +102,8 @@ public class ImageViewer extends JFrame {
 				case 2 : scale = 2;
 				
 				}
-				
-				trans = 300* (1-scale)/2;
+				System.out.println(trans);
+				trans = 300.0* (1.0-scale)/2.0;
 				System.out.println(trans);
 				
 				grimPan.repaint();
@@ -135,7 +135,7 @@ public class ImageViewer extends JFrame {
 
 	private void init_scale_slider() {
 		// TODO Auto-generated method stub
-		sliderScale = new JSlider(JSlider.VERTICAL,-2,2,(int)scale);
+		sliderScale = new JSlider(JSlider.VERTICAL,-2,2,0);
 		sliderScale.setMajorTickSpacing(1);
 		sliderScale.setPaintTicks(true);
 		sliderScale.setPaintLabels(true);
@@ -231,8 +231,9 @@ public class ImageViewer extends JFrame {
 				g2.rotate(angle*(Math.PI/180), 150, 150);
 				//맨처음 쎼타 파라미터는 라디안을 의미한다.
 				System.out.println(scale);
-				g2.scale(scale, scale);
 				g2.translate(trans, trans);
+				g2.scale(scale, scale);
+				
 				g2.drawImage(pic, 0, 0, this);
 				
 				Color color = new Color(red,green,blue,alpha);
