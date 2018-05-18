@@ -31,7 +31,7 @@ public class Ox_Suvive extends JFrame {
 			protected void paintComponent(Graphics g) {
 				// TODO Auto-generated method stub
 				super.paintComponent(g);
-				g.drawRect(0+border, 0+border, (int)(MyConst.GAME_W * 0.35), (int)(MyConst.GAME_H*MyConst.PAN_H));
+				g.drawRect(0+border, 0+border, (int)(MyConst.GAME_W * MyConst.XPAN_W), (int)(MyConst.GAME_H*MyConst.XPAN_H));
 				
 				
 				

@@ -14,7 +14,8 @@ import javax.swing.JPanel;
 
 public class MyMain_ThreadEx1 extends JFrame {
 
-	long time, start_time, diff_time;
+	long time, start_time,pause_time,end_pause_time, differ_time,total_sec;
+	long current_time;
 	boolean stop = false;
 
 	int mode = 0;
@@ -23,8 +24,9 @@ public class MyMain_ThreadEx1 extends JFrame {
 	int minute = 0;
 	int hour = 0;
 	int color = 0;
+	
+	
 
-	int stop_hour, stop_minute, stop_second, stop_mili_sec;
 	Font font = new Font("±¼¸²Ã¼", Font.BOLD, 20);
 	JLabel jlb_date;
 	JLabel jlb_time;
@@ -88,7 +90,8 @@ public class MyMain_ThreadEx1 extends JFrame {
 				Object ob = e.getSource();
 
 				if (ob == jb_start) {
-					start_time = System.currentTimeMillis();
+					stopwatch.start();
+					//start_time = System.currentTimeMillis();
 
 				}
 				if (ob == jb_stop) {
@@ -96,8 +99,8 @@ public class MyMain_ThreadEx1 extends JFrame {
 
 				}
 				if (ob == jb_init) {
-					stop_hour = stop_minute = stop_second = stop_mili_sec = 0;
-					jlb_stop_watch.setText("00:00:00.000");
+					//stop_hour = stop_minute = stop_second = stop_mili_sec = 0;
+					//jlb_stop_watch.setText("00:00:00.000");
 
 				}
 
@@ -117,8 +120,9 @@ public class MyMain_ThreadEx1 extends JFrame {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				start_time = (int) System.currentTimeMillis();
-				System.out.println(start_time);
+				time = (int) System.currentTimeMillis();
+				start_time =time;
+				System.out.println(time);
 				// diff_time = 0;
 
 				// System.out.println(melle_remain);
@@ -126,17 +130,18 @@ public class MyMain_ThreadEx1 extends JFrame {
 				// System.out.println(minute_remain);
 				// System.out.println(hour_remain);
 				while (true) {
-					long end_time = System.currentTimeMillis();
-					int gap_mili_sec = (int) (end_time - start_time);
+					current_time = System.currentTimeMillis();
+					
+					total_sec  = current_time - start_time;
 
-					stop_mili_sec = gap_mili_sec % 1000;
+					
 
-					int time = gap_mili_sec / 1000;
+					
 
-					melle = time % 1000;
-					sec = time / 1000 % 60;
-					minute = time / 1000 / 60 % 60;
-					hour = time / 1000 / 60 / 60 % 24;
+					melle = (int)total_sec % 1000;
+					sec = (int)total_sec / 1000 % 60;
+					minute = (int)total_sec / 1000 / 60 % 60;
+					hour = (int)total_sec / 1000 / 60 / 60 % 24;
 
 					String str = String.format("%02d : %02d : %02d : %03d", hour, minute, sec, melle);
 					jlb_stop_watch.setText(str);
