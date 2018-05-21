@@ -11,6 +11,9 @@ public class MyConst {
 	}
 	
 	public static class Key{
+		public static final int LEFT = 1;
+		public static final int RIGHT = 2;
+		public static final int UP = 4;
 		
 	}
 	

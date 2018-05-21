@@ -11,10 +11,12 @@ public class DDongManager {
 	public static final int DDONG_MAKE_INTERVAL = 20;
 	public List<DDong> ddong_list = new ArrayList<DDong>();
 	
+	
 	Random rand = new Random();
 	
 	int ddong_make_interval = DDONG_MAKE_INTERVAL;
-	
+	int level = 1;
+	int maxDDongSize;
 
 	public DDongManager(ExplosionManager explosionManager) {
 		// TODO Auto-generated constructor stub
@@ -24,11 +26,12 @@ public class DDongManager {
 
 	public void make_ddong() {
 		DDong ddong = new DDong();
-		if(ddong_make_interval==DDONG_MAKE_INTERVAL)
+		maxDDongSize = level * 5;
+		if(ddong_make_interval==DDONG_MAKE_INTERVAL && ddong_list.size()<=maxDDongSize)
 		{
 		ddong.pos.y = -ddong.pos.height;
 		ddong.pos.x = rand.nextInt(MyConst.GamePan.GAMEPAN_W) - ddong.pos.width/2;
-		ddong.speed = rand.nextInt(3) + 1; // 이동속도 : 3~5
+		ddong.speed = rand.nextInt(level * 3) + 2; // 이동속도 : 2~3
 		//생성된 DDong을 리스트에 추가
 		ddong_list.add(ddong);
 		}
@@ -46,11 +49,10 @@ public class DDongManager {
 				this.explosionManger.make_explosion(ddong.pos.x + MyImages.img_exp[0].getWidth(null)/3, ddong.pos.y - MyImages.img_exp[0].getHeight(null)/3);
 				this.explosionManger.move();
 				ddong_list.remove(i);
-				System.out.println(this.explosionManger.explosion_list.size());
+				//System.out.println(this.explosionManger.explosion_list.size());
 				
 			}
 		}
-
 	}
 
 	public void draw(Graphics g) {

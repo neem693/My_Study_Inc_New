@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PushbackInputStream;
 import java.util.Calendar;
 
 import javax.swing.JButton;
@@ -14,7 +15,7 @@ import javax.swing.JPanel;
 
 public class MyMain_ThreadEx1 extends JFrame {
 
-	long time, start_time,pause_time,end_pause_time, differ_time,total_sec;
+	long start_time, pause_time, total_sec;
 	long current_time;
 	boolean stop = false;
 
@@ -24,8 +25,6 @@ public class MyMain_ThreadEx1 extends JFrame {
 	int minute = 0;
 	int hour = 0;
 	int color = 0;
-	
-	
 
 	Font font = new Font("±¼¸²Ã¼", Font.BOLD, 20);
 	JLabel jlb_date;
@@ -90,17 +89,33 @@ public class MyMain_ThreadEx1 extends JFrame {
 				Object ob = e.getSource();
 
 				if (ob == jb_start) {
-					stopwatch.start();
-					//start_time = System.currentTimeMillis();
+					start_time = System.currentTimeMillis();
+					if (stop)
+						stopwatch.resume();
+					else
+						stopwatch.start();
+					// start_time = System.currentTimeMillis();
 
 				}
 				if (ob == jb_stop) {
+					stop = true;
 					stopwatch.suspend();
+					pause_time = total_sec;
+					
 
 				}
 				if (ob == jb_init) {
-					//stop_hour = stop_minute = stop_second = stop_mili_sec = 0;
-					//jlb_stop_watch.setText("00:00:00.000");
+					// stop_hour = stop_minute = stop_second = stop_mili_sec = 0;
+					// jlb_stop_watch.setText("00:00:00.000");
+					//stop = false;
+					stop = true;
+					
+					String str = String.format("%02d : %02d : %02d : %03d", 0, 0, 0, 0);
+					jlb_stop_watch.setText(str);
+					pause_time = 0;
+					total_sec = 0;
+					stopwatch.suspend();
+					
 
 				}
 
@@ -120,9 +135,9 @@ public class MyMain_ThreadEx1 extends JFrame {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				time = (int) System.currentTimeMillis();
-				start_time =time;
-				System.out.println(time);
+				//time = (int) System.currentTimeMillis();
+				//start_time = time;
+				//System.out.println(time);
 				// diff_time = 0;
 
 				// System.out.println(melle_remain);
@@ -131,17 +146,13 @@ public class MyMain_ThreadEx1 extends JFrame {
 				// System.out.println(hour_remain);
 				while (true) {
 					current_time = System.currentTimeMillis();
-					
-					total_sec  = current_time - start_time;
 
-					
+					total_sec = current_time - start_time + pause_time;
 
-					
-
-					melle = (int)total_sec % 1000;
-					sec = (int)total_sec / 1000 % 60;
-					minute = (int)total_sec / 1000 / 60 % 60;
-					hour = (int)total_sec / 1000 / 60 / 60 % 24;
+					melle = (int) total_sec % 1000;
+					sec = (int) total_sec / 1000 % 60;
+					minute = (int) total_sec / 1000 / 60 % 60;
+					hour = (int) total_sec / 1000 / 60 / 60 % 24;
 
 					String str = String.format("%02d : %02d : %02d : %03d", hour, minute, sec, melle);
 					jlb_stop_watch.setText(str);
@@ -157,7 +168,6 @@ public class MyMain_ThreadEx1 extends JFrame {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
 				}
 			}
 		}

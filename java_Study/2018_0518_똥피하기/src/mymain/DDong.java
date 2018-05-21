@@ -26,6 +26,7 @@ public class DDong extends Item{
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		g.drawImage(MyImages.img_ddong,pos.x,pos.y,null);//추상화 인터페이스
+		g.drawRect(this.pos.x, this.pos.y, this.pos.width,this.pos.height );
 		
 	}
 

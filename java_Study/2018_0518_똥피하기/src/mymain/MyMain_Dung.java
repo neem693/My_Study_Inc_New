@@ -16,31 +16,39 @@ import javax.swing.Timer;
 
 public class MyMain_Dung extends JFrame {
 	JPanel gamePan;
-	
+	int key_state;
+
 	Bate bate = new Bate();
 	ExplosionManager explosionManager = new ExplosionManager();
 	DDongManager ddongManager = new DDongManager(explosionManager);
+	Timer timer;
+	IsGameOver gameOver;
 
 	public MyMain_Dung() {
 		super("³»°¡¸¸µç À©µµ¿ì");
-		this.setLocation(200,100);
-		//this.setBounds(200, 100, 400, 300);
+		this.setLocation(200, 100);
+		// this.setBounds(200, 100, 400, 300);
 		init_gamePan();
 		init_timer();
 		init_mouse_event();
+		init_gameOver();
 		this.setResizable(false);
-		
-		
+
 		this.pack();
 		this.setVisible(true);
-		
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	private void init_gameOver() {
+		// TODO Auto-generated method stub
+		gameOver = new IsGameOver(ddongManager,bate,timer);
+		
+	}
+
 	private void init_mouse_event() {
 		// TODO Auto-generated method stub
-		
+
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -49,62 +57,72 @@ public class MyMain_Dung extends JFrame {
 				explosionManager.make_explosion(e.getX(), e.getY());
 			}
 		};
-		
+
 		gamePan.addMouseListener(adapter);
-		bate.pos.x = (int)(MyConst.GamePan.GAMEPAN_W / 2 * 0.9);
-		bate.pos.y = (int)(MyConst.GamePan.GAMEPAN_H*0.9);
 		
+
 		KeyListener keyListener = new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
 				super.keyPressed(e);
-				
-				
-				int key =e.getKeyCode();
-				
-				if(key == KeyEvent.VK_LEFT) {
-					bate.pos.x--;
-				}else if(key == KeyEvent.VK_RIGHT) {
-					bate.pos.x++;
-				}
-				
-				
-				
+				int key = e.getKeyCode();
+
+				if (key == KeyEvent.VK_LEFT)
+					key_state = key_state | MyConst.Key.LEFT;
+				if (key == KeyEvent.VK_RIGHT)
+					key_state = key_state | MyConst.Key.RIGHT;
+				if (key == KeyEvent.VK_UP)
+					key_state = key_state | MyConst.Key.UP;
+
 			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				super.keyReleased(e);
+				int key = e.getKeyCode();
+				if (key == KeyEvent.VK_LEFT)
+					key_state = key_state ^ MyConst.Key.LEFT;
+				if (key == KeyEvent.VK_RIGHT)
+					key_state = key_state ^ MyConst.Key.RIGHT;
+				if (key == KeyEvent.VK_UP)
+					key_state = key_state ^ MyConst.Key.UP;
+
+			}
+
 		};
 		this.addKeyListener(keyListener);
-			
+
 	}
 
 	private void init_timer() {
 		// TODO Auto-generated method stub
 		ActionListener listener = new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				process();
-				//Rectangle rect = new Rectangle(0,0,100,100);
+				// Rectangle rect = new Rectangle(0,0,100,100);
 				gamePan.repaint();
 			}
 		};
-		Timer timer = new Timer(10,listener);
+		timer = new Timer(10, listener);
 		timer.start();
-		
-		
+
 	}
 
 	protected void process() {
 		// TODO Auto-generated method stub
-		//¶Ë»ý¼º
+		// ¶Ë»ý¼º
 		ddongManager.make_ddong();
-		
-		//¶ËÀÌµ¿
+		// ¶ËÀÌµ¿
 		ddongManager.move();
-		
 		explosionManager.move();
-		
+		bate.setKey_state(key_state);
+		bate.move();
+		gameOver.isGameOver();
 	}
 
 	private void init_gamePan() {
@@ -114,18 +132,18 @@ public class MyMain_Dung extends JFrame {
 			protected void paintComponent(Graphics g) {
 				// TODO Auto-generated method stub
 				super.paintComponent(g);
-				
+
 				g.clearRect(0, 0, MyConst.GamePan.GAMEPAN_W, MyConst.GamePan.GAMEPAN_H);
-				
+
 				ddongManager.draw(g);
 				explosionManager.draw(g);
 				bate.draw(g);
 			}
 		};
-		
+
 		gamePan.setPreferredSize(new Dimension(MyConst.GamePan.GAMEPAN_W, MyConst.GamePan.GAMEPAN_H));
 		this.add(gamePan);
-		
+
 	}
 
 	public static void main(String[] args) {
