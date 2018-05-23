@@ -7,19 +7,26 @@ import java.awt.event.KeyListener;
 
 public class Bate extends Item {
 	int key_state;
-	int rect_space_x;//바트의 좌표와 가로의 길이를 더 작게해준다. 그래야 바트 안쪽으로 똥이 맞을거 같다.
-	int rect_space_y;//바타의 y좌표와 세로의 길이를 더 작게해준다. 그래야 바트 안쪽으로 똥이 맞을거 같다.
+	int draw_x;
+	int draw_y;
+	int width;
+	int height;
 	double space = 0.3;
 	
 	
 	public Bate() {
 		// TODO Auto-generated constructor stub
-		this.rect_space_x = (int)(MyImages.img_me.getWidth(null)*space);
-		this.rect_space_y = (int)(MyImages.img_me.getHeight(null)*space);
-		this.pos.width = MyImages.img_me.getWidth(null)- rect_space_x;
-		this.pos.height = MyImages.img_me.getHeight(null) - rect_space_y;
-		this.pos.x = (int) (MyConst.GamePan.GAMEPAN_W / 2 * 0.9)+ rect_space_x;
-		this.pos.y = MyConst.GamePan.GAMEPAN_H - MyImages.img_me.getHeight(null) + rect_space_y;
+		
+		width = MyImages.img_me.getWidth(null);
+		height = MyImages.img_me.getHeight(null);
+		
+		this.pos.x = width + (int)(width*0.25);
+		this.pos.y = height + (int)(height*0.25);
+
+		this.pos.width = width + (int)(width*0.5);
+		this.pos.height = height + (int)(height*0.5);
+		
+		
 		
 	}
 
@@ -48,7 +55,7 @@ public class Bate extends Item {
 		// TODO Auto-generated method stub
 		
 		g.drawImage(MyImages.img_me, this.pos.x, this.pos.y, null);
-		g.drawRect(this.pos.x-rect_space_x, this.pos.y + rect_space_y, this.pos.width+ rect_space_x, this.pos.height + rect_space_y);
+		//g.drawRect(this.pos.x-rect_space_x, this.pos.y + rect_space_y, this.pos.width+ rect_space_x, this.pos.height + rect_space_y);
 
 	}
 
