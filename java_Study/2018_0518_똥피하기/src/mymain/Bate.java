@@ -6,28 +6,46 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Bate extends Item {
+	int jump_interval;
+	boolean jump;
+	int x, y;
+	int width;
+	int height;
 	int key_state;
 	int draw_x;
 	int draw_y;
-	int width;
-	int height;
+
 	double space = 0.3;
-	
-	
-	public Bate() {
+
+	BulletManager bulletManager;
+
+	public Bate(BulletManager bulletManager) {
 		// TODO Auto-generated constructor stub
-		
+
 		width = MyImages.img_me.getWidth(null);
 		height = MyImages.img_me.getHeight(null);
-		
-		this.pos.x = width + (int)(width*0.25);
-		this.pos.y = height + (int)(height*0.25);
+		x = (int) (MyConst.GamePan.GAMEPAN_W * 0.5);
+		y = MyConst.GamePan.GAMEPAN_H - MyImages.img_me.getHeight(null);
 
-		this.pos.width = width + (int)(width*0.5);
-		this.pos.height = height + (int)(height*0.5);
-		
-		
-		
+		this.pos.x = x + (int) (width * 0.25);
+		this.pos.y = y + (int) (height * 0.25);
+
+		this.pos.width = (int) (width * 0.5);
+		this.pos.height = (int) (height * 0.5);
+
+		jump_interval = 200;
+
+		this.bulletManager = bulletManager;
+
+	}
+
+	public void init_bate() {
+
+		x = (int) (MyConst.GamePan.GAMEPAN_W * 0.5);
+		y = MyConst.GamePan.GAMEPAN_H - MyImages.img_me.getHeight(null);
+
+		this.pos.x = x + (int) (width * 0.25);
+		this.pos.y = y + (int) (height * 0.25);
 	}
 
 	@Override
@@ -35,17 +53,38 @@ public class Bate extends Item {
 		// TODO Auto-generated method stub
 
 		if ((key_state & MyConst.Key.LEFT) == MyConst.Key.LEFT)
-			if (this.pos.x <= 0)
-				this.pos.x = 0;
-			else
+			if (x <= 0) {
+				this.pos.x = x + (int) (width * 0.25);
+				this.x = 0;
+			} else {
 				this.pos.x -= 5;
+				this.x -= 5;
+			}
 		if ((key_state & MyConst.Key.RIGHT) == MyConst.Key.RIGHT)
-			if (this.pos.x >= MyConst.GamePan.GAMEPAN_W - MyImages.img_me.getWidth(null))
-				this.pos.x = MyConst.GamePan.GAMEPAN_W - MyImages.img_me.getWidth(null);
-			else
+			if (x >= MyConst.GamePan.GAMEPAN_W - MyImages.img_me.getWidth(null)) {
+				x = MyConst.GamePan.GAMEPAN_W - MyImages.img_me.getWidth(null);
+				this.pos.x = x + (int) (width * 0.25);
+			} else {
 				this.pos.x += 5;
-		if ((key_state & MyConst.Key.UP) == MyConst.Key.UP)
-			;
+				x += 5;
+			}
+		if (((key_state & MyConst.Key.UP) == MyConst.Key.UP) & !jump)
+			jump = true;
+
+		if ((key_state & MyConst.Key.FIRE) == MyConst.Key.FIRE) {
+			System.out.println("--Fire--");
+			bulletManager.make_bullet(x + width / 2, y);
+		}
+
+		// jump
+//		if (jump) {
+//			if (this.y <= jump_interval) {
+//				this.y += 5;
+//				this.pos.y = +=5;
+//			}else {
+//				
+//			}
+//		}
 
 		return false;
 	}
@@ -53,9 +92,10 @@ public class Bate extends Item {
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-		
-		g.drawImage(MyImages.img_me, this.pos.x, this.pos.y, null);
-		//g.drawRect(this.pos.x-rect_space_x, this.pos.y + rect_space_y, this.pos.width+ rect_space_x, this.pos.height + rect_space_y);
+
+		g.drawImage(MyImages.img_me, x, y, null);
+		// g.drawRect(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
+		// this.pos.width+ rect_space_x, this.pos.height + rect_space_y);
 
 	}
 
