@@ -1,4 +1,5 @@
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
@@ -11,13 +12,15 @@ public class Ox_Suvive extends JFrame {
 
 	public Ox_Suvive() {
 		super("내가만든 윈도우");
-		//this.setLocation(200,100);
-		this.setBounds(200, 100, MyConst.GAME_W, MyConst.GAME_H);
+		init_pan();
+		this.setLocation(200,100);
+		//this.setBounds(200, 100, MyConst.GAME_W, MyConst.GAME_H);
+		this.pack();
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
-		init_pan();
+		
 	}
 
 	private void init_pan() {
@@ -38,6 +41,7 @@ public class Ox_Suvive extends JFrame {
 			}
 		};
 		
+		full.setPreferredSize(new Dimension(MyConst.GAME_W, MyConst.GAME_H));
 		this.add(full);
 		
 		

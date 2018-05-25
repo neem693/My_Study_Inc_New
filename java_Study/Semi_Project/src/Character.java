@@ -12,4 +12,13 @@ public class Character {
 		
 
 	}
+
+	public Character(int x, int y) {
+		super();
+		this.current_point.x= x;
+		this.current_point.y =y;
+		
+	}
+	
+	
 }

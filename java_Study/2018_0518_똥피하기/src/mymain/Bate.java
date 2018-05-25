@@ -25,7 +25,7 @@ public class Bate extends Item {
 		width = MyImages.img_me.getWidth(null);
 		height = MyImages.img_me.getHeight(null);
 		x = (int) (MyConst.GamePan.GAMEPAN_W * 0.5);
-		y = MyConst.GamePan.GAMEPAN_H - MyImages.img_me.getHeight(null);
+		y = MyConst.GamePan.GAMEPAN_H - height;
 
 		this.pos.x = x + (int) (width * 0.25);
 		this.pos.y = y + (int) (height * 0.25);
@@ -33,7 +33,8 @@ public class Bate extends Item {
 		this.pos.width = (int) (width * 0.5);
 		this.pos.height = (int) (height * 0.5);
 
-		jump_interval = 200;
+		jump_interval = 480;
+		jump = false;
 
 		this.bulletManager = bulletManager;
 
@@ -68,8 +69,10 @@ public class Bate extends Item {
 				this.pos.x += 5;
 				x += 5;
 			}
-		if (((key_state & MyConst.Key.UP) == MyConst.Key.UP) & !jump)
+		if (((key_state & MyConst.Key.UP) == MyConst.Key.UP) && !jump) {
 			jump = true;
+			System.out.println(jump);
+		}
 
 		if ((key_state & MyConst.Key.FIRE) == MyConst.Key.FIRE) {
 			System.out.println("--Fire--");
@@ -77,15 +80,19 @@ public class Bate extends Item {
 		}
 
 		// jump
-//		if (jump) {
-//			if (this.y <= jump_interval) {
-//				this.y += 5;
-//				this.pos.y = +=5;
-//			}else {
-//				
-//			}
-//		}
+		if (jump) {
+			System.out.println(this.y);
+			if (this.y >= jump_interval) {
+				this.y -= 5;
+				this.pos.y -= 5;
+			} else {
+				jump = false;
 
+			}
+		} else if (!jump && (this.y < MyConst.GamePan.GAMEPAN_H - height)) {
+			this.y += 5;
+			this.pos.y += 5;
+		}
 		return false;
 	}
 
