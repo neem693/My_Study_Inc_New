@@ -1,3 +1,4 @@
+package ox_survive;
 import java.awt.Point;
 
 public class Character {
