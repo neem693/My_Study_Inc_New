@@ -1,7 +1,10 @@
 package ox_survive;
+import java.awt.Graphics;
 import java.awt.Point;
 
-public class Character {
+import utill.Item;
+
+public class Character extends Item{
 
 	Point current_point;
 	Point next_point;
@@ -18,6 +21,18 @@ public class Character {
 		super();
 		this.current_point.x= x;
 		this.current_point.y =y;
+		
+	}
+
+	@Override
+	public boolean move() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
 		
 	}
 	
