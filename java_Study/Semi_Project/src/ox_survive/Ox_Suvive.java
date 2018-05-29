@@ -19,7 +19,9 @@ public class Ox_Suvive extends JFrame {
 
 	public Ox_Suvive() {
 		super("내가만든 윈도우");
+		
 		init_pan();
+		
 		this.setLocation(200, 100);
 		// this.setBounds(200, 100, MyConst.GAME_W, MyConst.GAME_H);
 		this.pack();
@@ -31,8 +33,8 @@ public class Ox_Suvive extends JFrame {
 	private void init_pan() {
 		// TODO Auto-generated method stub
 		int border = (int) (MyConst.GAME_W * 0.05);
-		int width = (int) (MyConst.GAME_W * MyConst.XPAN_W);
-		int height = (int) (MyConst.GAME_H * MyConst.XPAN_H);
+		int width = Pan.width;
+		int height = Pan.height;
 
 		xpan = new Pan(0 + border, 0 + border);
 		opan = new Pan(MyConst.GAME_W - border - width,0+border);
@@ -42,11 +44,21 @@ public class Ox_Suvive extends JFrame {
 			protected void paintComponent(Graphics g) {
 				// TODO Auto-generated method stub
 				super.paintComponent(g);
+				
+				////이 때 쯤에 배경화면 하나 추가하자.
+				
+				
+				
 				g.drawRect(0 + border, 0 + border, width, height);
 				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);
 				
 				
-				//그리기
+				
+				
+				
+				
+				
+				//그리기 테스트 이다.
 				for (int i = 0; i < xpan.ch_lo.length; i++) {
 					for (int j = 0; j < xpan.ch_lo[i].length; j++) {
 						if (rand.nextInt() % 2 == 0)

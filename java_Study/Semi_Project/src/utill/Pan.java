@@ -5,12 +5,10 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import ox_survive.MyConst;
-import pv.Character_pan;
 
 public class Pan {
 	public static int width = (int)(MyConst.GAME_W*MyConst.XPAN_W);
 	public static int height = (int)(MyConst.GAME_H*MyConst.XPAN_H);
-	
 	public static int ch_width = (int)(MyConst.GAME_W*MyConst.XPAN_W*0.1);
 	public static int gap_w = (int)(ch_width * 0.75);
 	public static int ch_height = 80;
