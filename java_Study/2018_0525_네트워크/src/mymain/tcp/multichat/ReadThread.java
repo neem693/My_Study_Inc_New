@@ -69,6 +69,12 @@ public class ReadThread extends Thread {
 						frame.my_send_message_all(readStr + "\n");
 					}
 					break;
+				case "GRIM" :
+					synchronized (frame) {
+						frame.my_display_userlist();
+						frame.my_send_userlist();
+						frame.my_send_message_all(readStr + "\n");
+					}
 				
 					
 
