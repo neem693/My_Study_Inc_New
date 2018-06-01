@@ -18,10 +18,10 @@ import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -41,8 +41,10 @@ public class MultiChatClient extends JFrame {
 	JList<String> jlist_user; // 접속자목록
 	JButton jbt_connect;
 	boolean bConnect = false; // 연결상태관리할 변수
-	BufferedReader br;
+	// BufferedReader br=null;
 	// 소켓
+	ObjectInputStream ois = null; // 객체직렬화(수신)
+	ObjectOutputStream oos = null;// 객체직렬화(송신)
 
 	JPanel grimPan;
 	Image memPan; // 메모리상의 그림판
@@ -189,7 +191,9 @@ public class MultiChatClient extends JFrame {
 			public void mouseDragged(MouseEvent e) {
 				// TODO Auto-generated method stub
 				super.mouseDragged(e);
+				System.out.println(e.getPoint().x + " " + e.getPoint().y);
 				my_send_line(e.getPoint());
+				
 
 			}
 
@@ -204,26 +208,27 @@ public class MultiChatClient extends JFrame {
 	protected void my_send_line(Point point) {
 		// TODO Auto-generated method stub
 
+
 		if (bConnect == false)
 			return;
 
 		// 서버로 그리기 데이터 전송
-		String send_message = String.format("GRIM#%d#%d#%d#%d#%d#%d\n", point.x,
-				point.y, 
-				thick,
-				r,
-				g,
-				b);
+		MyData data = new MyData();
+		
+		data.data_protocol = MyData.GRIM;
+		
+		data.pt = point;
+		
+		data.thick = thick;
+		data.color = new Color(r, g, b);
 		
 		try {
-			//그림데이터 전송
-			client.getOutputStream().write(send_message.getBytes());
-			
+			// 그림데이터 전송
+			oos.writeObject(data);
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-
-		
 
 	}
 
@@ -255,12 +260,30 @@ public class MultiChatClient extends JFrame {
 				if (bConnect) {
 					// 연결작업
 					try {
-						client = new Socket("inca001", 7500);
+						client = new Socket("inca08", 9500);
+
+						// ObjectInputStream / ObjectOutputStream
+						// 절대주의사항(Cross연결해야 한다.)
+
+						oos = new ObjectOutputStream(client.getOutputStream());
+						ois = new ObjectInputStream(client.getInputStream());
+						// out -> in
+						// in -> out
+
 						// client = new Socket("inca001", 8500);
 						// 최초접속정보 전송
-						String send_message = String.format("IN#%s\n", user_name);
+						// String send_message = String.format("IN#%s\n", user_name);
 						// 여기서 반드시 \n을 해야 한다. 버퍼드리더이기 때문에
-						client.getOutputStream().write(send_message.getBytes());
+						// client.getOutputStream().write(send_message.getBytes());
+						MyData data = new MyData();
+						data.data_protocol = MyData.IN;
+						data.user_name = user_name;
+						
+						Graphics g  = memPan.getGraphics();
+						
+						g.clearRect(0, 0, 400, 400);
+
+						oos.writeObject(data);// 전송
 
 						my_read_message();
 
@@ -281,6 +304,12 @@ public class MultiChatClient extends JFrame {
 				} else {
 					// 끊기작업
 					try {
+						oos.close();
+						ois.close();
+						oos = null;
+						ois = null;
+						// null 대입한건 보험 들어준것
+						// 끊는 작업
 						client.close();
 						my_clear_userlist();
 					} catch (IOException e1) {
@@ -309,58 +338,45 @@ public class MultiChatClient extends JFrame {
 
 	protected void my_read_message() {
 		// TODO Auto-generated method stub
-		try {
-			br = new BufferedReader(new InputStreamReader(client.getInputStream()));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		new Thread() {
 			public void run() {
 				while (true) {
 
 					try {
-						String readStr = br.readLine();
-						if (readStr == null)
+						// String readStr = br.readLine();
+						MyData data = (MyData) ois.readObject();
+						if (data == null)
 							break;
 
 						// 수신데이터 프로토콜 분리작업
-						String[] data = readStr.split("#");
+
 						String display_message;
-						switch (data[0]) {
-						case "IN":
-							display_message = String.format("[%s]님 입장", data[1]);
+						switch (data.data_protocol) {
+						case MyData.IN:
+							display_message = String.format("[%s]님 입장", data.getUser_name());
 							my_display_message(display_message);
 							break;
-						case "OUT":
-							display_message = String.format("[%s]님 퇴장", data[1]);
+						case MyData.OUT:
+							display_message = String.format("[%s]님 퇴장", data.getUser_name());
 							my_display_message(display_message);
 							break;
-						case "LIST":
+						case MyData.LIST:
 							my_display_userlist(data);
 							break;
 						// 사용자접속자 목록이 변경상황
-						// data = "LIST#길동1#길동2#"
-						// data = { "LIST","길동1","길동2"};
-						case "CHAT":
-							display_message = String.format("[%s] : %s", data[1], data[2]);
+
+						case MyData.CHAT:
+							display_message = String.format("[%s] : %s", data.user_name, data.message);
 							my_display_message(display_message);
 							break;
-						case "GRIM":
-							Point p = new Point(Integer.parseInt(data[1]),Integer.parseInt(data[2]));
-							int t = Integer.parseInt(data[3]);
-							int red = Integer.parseInt(data[4]);
-							int green = Integer.parseInt(data[5]);
-							int blue = Integer.parseInt(data[6]);
-							my_draw_line(p,t,red,green,blue);
+						case MyData.GRIM:
 							
+							my_read_draw(data);
 							
-
 						}
 
-
-					} catch (IOException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						// e.printStackTrace();
 						break;
@@ -374,17 +390,25 @@ public class MultiChatClient extends JFrame {
 
 	}
 
-	protected void my_draw_line(Point p,int t,int red,int green, int blue) {
+	protected void my_read_draw(MyData data) {
 		// TODO Auto-generated method stub
-		Graphics g1 = memPan.getGraphics();
-		Color color = new Color(red, green, blue);
-
-		g1.setColor(color);
-		g1.fillOval(p.x - t / 2, p.y - t / 2, t, t);
-
-		// 메모리 -->화면복사 : paintComponent에서 복사코드가 있다.
+		Graphics gg = memPan.getGraphics();
+		gg.setColor(data.color);
+		gg.fillOval(data.pt.x-data.thick/2, data.pt.y-data.thick/2, data.thick, data.thick);
 		grimPan.repaint();
 	}
+
+//	protected void my_draw_line(MyData data) {
+//		// TODO Auto-generated method stub
+//		Graphics g1 = memPan.getGraphics();
+//		// Color color = new Color(red, green, blue);
+//
+//		g1.setColor(data.color);
+//		g1.fillOval(data.pt.x - data.thick / 2, data.pt.y - data.thick / 2, data.thick, data.thick);
+//
+//		// 메모리 -->화면복사 : paintComponent에서 복사코드가 있다.
+//		grimPan.repaint();
+//	}
 
 	public void my_display_message(String message) {
 
@@ -395,14 +419,10 @@ public class MultiChatClient extends JFrame {
 
 	}
 
-	protected void my_display_userlist(String[] user_array) {
+	protected void my_display_userlist(MyData data) {
 		// TODO Auto-generated method stub
 
-		String[] name_array = new String[user_array.length - 1];
-
-		System.arraycopy(user_array, 1, name_array, 0, name_array.length);
-
-		jlist_user.setListData(name_array);
+		jlist_user.setListData(data.user_list);
 
 	}
 
@@ -439,10 +459,17 @@ public class MultiChatClient extends JFrame {
 		if (message.isEmpty())
 			return;
 
-		String send_message = String.format("CHAT#%s#%s\n", user_name, message); // 전송
+		
 
 		try {
-			client.getOutputStream().write(send_message.getBytes());
+			
+			MyData data = new MyData();
+			data.data_protocol = MyData.CHAT;
+			data.user_name = user_name;
+			data.message = message;
+			
+			oos.writeObject(data);
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("--메시지 전송 실패--");
@@ -480,7 +507,6 @@ public class MultiChatClient extends JFrame {
 
 	public static void main(String[] args) {
 		new MultiChatClient();
-		
 
 	}
 

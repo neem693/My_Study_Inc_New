@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import images.Images;
+import utill.Character_Manager;
 import utill.Pan;
 
 public class Ox_Suvive extends JFrame {
@@ -15,7 +16,9 @@ public class Ox_Suvive extends JFrame {
 	JPanel full;
 	Pan xpan;
 	Pan opan;
+	Character_Manager chManager;
 	Random rand = new Random();
+	
 
 	public Ox_Suvive() {
 		super("내가만든 윈도우");
@@ -33,11 +36,25 @@ public class Ox_Suvive extends JFrame {
 	private void init_pan() {
 		// TODO Auto-generated method stub
 		int border = (int) (MyConst.GAME_W * 0.05);
-		int width = Pan.width;
-		int height = Pan.height;
+		int width = Pan.WIDTH;
+		int height = Pan.HEIGHT;
 
-		xpan = new Pan(0 + border, 0 + border);
-		opan = new Pan(MyConst.GAME_W - border - width,0+border);
+		xpan = new Pan("x",0 + border, 0 + border);
+		opan = new Pan("o",MyConst.GAME_W - border - width,0+border);
+		chManager = new Character_Manager(opan,xpan);
+		
+		///////////테스트
+//		for(int i=0;i<10;i++) {
+//			for(int j=0;j<5;j++) {
+//				System.out.printf("%02d ",xpan.ch_lo[i][j].getPriority());
+//			}
+//			System.out.println();
+//		}
+		
+		//priority 제대로 동작하느냐 테스트
+//		for(int i =0;i<50;i++) {
+//			System.out.println(xpan.ch_priority_lo[i].getPriority());
+//		}
 		full = new JPanel() {
 
 			@Override
@@ -51,7 +68,7 @@ public class Ox_Suvive extends JFrame {
 				
 				g.drawRect(0 + border, 0 + border, width, height);
 				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);
-				
+				chManager.draw(g);
 				
 				
 				
@@ -59,29 +76,29 @@ public class Ox_Suvive extends JFrame {
 				
 				
 				//그리기 테스트 이다.
-				for (int i = 0; i < xpan.ch_lo.length; i++) {
-					for (int j = 0; j < xpan.ch_lo[i].length; j++) {
-						if (rand.nextInt() % 2 == 0)
-							g.drawImage(Images.RYON, xpan.ch_lo[i][j].getCharacter_start_w(),
-									xpan.ch_lo[i][j].getCharacter_start_h(), xpan.ch_width, xpan.ch_height, null);
-						else
-							g.drawImage(Images.APEACHE, xpan.ch_lo[i][j].getCharacter_start_w(),
-									xpan.ch_lo[i][j].getCharacter_start_h(), xpan.ch_width, xpan.ch_height, null);
-
-					}
-				}
-				
-				for (int i = 0; i < opan.ch_lo.length; i++) {
-					for (int j = 0; j < opan.ch_lo[i].length; j++) {
-						if (rand.nextInt() % 2 == 0)
-							g.drawImage(Images.RYON, opan.ch_lo[i][j].getCharacter_start_w(),
-									opan.ch_lo[i][j].getCharacter_start_h(), opan.ch_width, opan.ch_height, null);
-						else
-							g.drawImage(Images.APEACHE, opan.ch_lo[i][j].getCharacter_start_w(),
-									opan.ch_lo[i][j].getCharacter_start_h(), opan.ch_width, opan.ch_height, null);
-
-					}
-				}
+//				for (int i = 0; i < xpan.ch_lo.length; i++) {
+//					for (int j = 0; j < xpan.ch_lo[i].length; j++) {
+//						if (rand.nextInt() % 2 == 0)
+//							g.drawImage(Images.RYON, xpan.ch_lo[i][j].getCharacter_start_w(),
+//									xpan.ch_lo[i][j].getCharacter_start_h(), xpan.CH_WIDHT, xpan.CH_HEIGHT, null);
+//						else
+//							g.drawImage(Images.APEACHE, xpan.ch_lo[i][j].getCharacter_start_w(),
+//									xpan.ch_lo[i][j].getCharacter_start_h(), xpan.CH_WIDHT, xpan.CH_HEIGHT, null);
+//
+//					}
+//				}
+//				
+//				for (int i = 0; i < opan.ch_lo.length; i++) {
+//					for (int j = 0; j < opan.ch_lo[i].length; j++) {
+//						if (rand.nextInt() % 2 == 0)
+//							g.drawImage(Images.RYON, opan.ch_lo[i][j].getCharacter_start_w(),
+//									opan.ch_lo[i][j].getCharacter_start_h(), opan.CH_WIDHT, opan.CH_HEIGHT, null);
+//						else
+//							g.drawImage(Images.APEACHE, opan.ch_lo[i][j].getCharacter_start_w(),
+//									opan.ch_lo[i][j].getCharacter_start_h(), opan.CH_WIDHT, opan.CH_HEIGHT, null);
+//
+//					}
+//				}
 			}
 		};
 
