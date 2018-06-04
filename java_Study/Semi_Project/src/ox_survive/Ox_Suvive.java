@@ -2,12 +2,16 @@ package ox_survive;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import images.Images;
+import pv.Character_ox;
 import utill.Character_Manager;
 import utill.Pan;
 
@@ -18,19 +22,44 @@ public class Ox_Suvive extends JFrame {
 	Pan opan;
 	Character_Manager chManager;
 	Random rand = new Random();
+	KeyAdapter adapter;
 	
 
 	public Ox_Suvive() {
 		super("내가만든 윈도우");
 		
 		init_pan();
+		init_event();
+		
 		
 		this.setLocation(200, 100);
 		// this.setBounds(200, 100, MyConst.GAME_W, MyConst.GAME_H);
 		this.pack();
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 
+	}
+
+	private void init_event() {
+		// TODO Auto-generated method stub
+		adapter = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				super.keyPressed(e);
+				int key = e.getKeyCode();
+				
+				if(key == KeyEvent.VK_RIGHT) {
+					chManager.user_change_ox(xpan);
+				}
+				if(key == KeyEvent.VK_LEFT) {
+					chManager.user_change_ox(opan);
+				}
+				
+			}
+		};
+		
 	}
 
 	private void init_pan() {
@@ -39,9 +68,9 @@ public class Ox_Suvive extends JFrame {
 		int width = Pan.WIDTH;
 		int height = Pan.HEIGHT;
 
-		xpan = new Pan("x",0 + border, 0 + border);
-		opan = new Pan("o",MyConst.GAME_W - border - width,0+border);
-		chManager = new Character_Manager(opan,xpan);
+		opan = new Pan(Pan.OPAN,0 + border, 0 + border);
+		xpan = new Pan(Pan.XPAN,MyConst.GAME_W - border - width,0+border);
+		chManager = new Character_Manager(opan,xpan,Character_Manager.HEAVY,1);
 		
 		///////////테스트
 //		for(int i=0;i<10;i++) {

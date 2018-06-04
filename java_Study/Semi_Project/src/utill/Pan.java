@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import ox_survive.MyConst;
 
 public class Pan {
+	public static final String OPAN = "O";
+	public static final String XPAN = "X";
 	public static final int WIDTH = (int)(MyConst.GAME_W*MyConst.XPAN_W);
 	public static final int HEIGHT = (int)(MyConst.GAME_H*MyConst.XPAN_H);
 	public static final int CH_WIDHT = (int)(MyConst.GAME_W*MyConst.XPAN_W*0.1);

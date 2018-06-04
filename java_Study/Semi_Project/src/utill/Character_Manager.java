@@ -4,20 +4,25 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
+import pv.Character_User;
 import pv.Character_ox;
 
 public class Character_Manager {
+	
+	
 
-	static final int HEAVY = 50;
-	static final int MEDIUM = 35;
-	static final int LOW = 20;
+
+	public static final int HEAVY = 50;
+	public static final int MEDIUM = 35;
+	public static final int LOW = 20;
 	Random rand;
 
 	static final String OLOCATION = "O";
 	static final String XLOCATION = "X";
 	Pan opan, xpan;
-	int count;
+	int how_many;
 	public ArrayList<Character_ox> ch_list;
+	public Character_ox ch_user;
 
 	public Character_Manager() {
 		// TODO Auto-generated constructor stub
@@ -25,29 +30,51 @@ public class Character_Manager {
 		ch_list = new ArrayList<Character_ox>();
 	}
 
-	public Character_Manager(Pan opan, Pan xpan) {
+	public Character_Manager(Pan opan, Pan xpan, int how_many, int how_many_user) {
 		this();
+		this.how_many = how_many;
 		this.opan = opan;
 		this.xpan = xpan;
 		int x, y;
 		int count_x = 0, count_o = 0;
-		Character_ox ch;
-		for (int i = 0; i < this.HEAVY; i++) {
+		int[] user_count = new int[how_many_user];
+		int count = 0;
+
+		make_user_count(user_count);
+
+		Character_ox ch =null;
+
+		for (int i = 0; i < this.how_many; i++) {
 			if (i % 2 == 0) {
 				x = opan.ch_priority_lo[count_o].getCharacter_start_w();
 				y = opan.ch_priority_lo[count_o].getCharacter_start_h();
 				opan.ch_priority_lo[count_o].is_hear = true;
 
-				ch = new Character_ox(x, y);
+				if (user_count[count] == i) {
+					ch = new Character_User(x,y);
+					ch_user = ch;
+				} else {
+					ch = new Character_ox(x,y);
+				}
+				ch.setCurrentLocation(Pan.OPAN);
 				opan.ch_priority_lo[count_o].setCh(ch);
 				count_o++;
-
+				
 			} else {
 				x = xpan.ch_priority_lo[count_x].getCharacter_start_w();
 				y = xpan.ch_priority_lo[count_x].getCharacter_start_h();
 				xpan.ch_priority_lo[count_x].is_hear = true;
+				
+				
 
-				ch = new Character_ox(x, y);
+				if (user_count[count] == i) {
+					ch = new Character_User(x,y);
+					ch_user = ch;
+				} else {
+					ch = new Character_ox(x,y);
+				}
+				ch.setCurrentLocation(Pan.XPAN);
+				
 				xpan.ch_priority_lo[count_x].setCh(ch);
 				count_x++;
 			}
@@ -59,9 +86,28 @@ public class Character_Manager {
 		// this.ch_list = new
 	}
 
+
+
+
+
+
+	private void make_user_count(int[] user_count) {
+		// TODO Auto-generated method stub
+		//user_count = new int[how_many_user];
+		int check;
+		AGAIN: for (int i = 0; i < user_count.length; i++) {
+			check = rand.nextInt(Character_Manager.HEAVY);
+			for (int j = 0; j < i; j++)
+				if (check == user_count[j]) {
+					i -= 1;
+					continue AGAIN;
+				}
+			user_count[i] = check;
+		}
+	}
+
 	public boolean move() {
 		// TODO Auto-generated method stub
-
 		return false;
 	}
 
@@ -70,9 +116,9 @@ public class Character_Manager {
 		// 멈춰있는것들을 먼저 그린다.
 		drawPan(g, opan);
 		drawPan(g, xpan);
-		
-		for(Character_ox ch : ch_list) {
-			if(ch.isMoving() == true)
+
+		for (Character_ox ch : ch_list) {
+			if (ch.isMoving() == true)
 				ch.draw(g);
 		}
 	}
@@ -88,5 +134,24 @@ public class Character_Manager {
 			}
 		}
 
+	}
+
+	public void user_change_ox(Pan pan) {
+		// TODO Auto-generated method stub
+		
+		if(ch_user.getCurrentLocation().equals(Pan.OPAN)) {
+//			xpan.ch_priority_lo
+			
+		}
+	
+		
+//		if(){
+//			
+//		}
+//		else if(pan.correctLocation.equals(Pan.XPAN)){
+//			
+//		}
+//		
+		
 	}
 }

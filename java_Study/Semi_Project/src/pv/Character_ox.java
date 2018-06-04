@@ -8,11 +8,15 @@ import java.util.Random;
 
 import images.Images;
 import ox_survive.MyConst;
+import utill.Character_Manager;
 import utill.Item;
+import utill.Pan;
 
 public class Character_ox extends Item {
 
+	
 	final static int CHARACTER_COUNT = 3;
+	String currentLocation;
 	int ch_count;
 	BufferedImage character_Image;
 	Point current_point;
@@ -80,11 +84,22 @@ public class Character_ox extends Item {
 
 		return false;
 	}
+	
+	
+	
+
+	public String getCurrentLocation() {
+		return currentLocation;
+	}
+
+	public void setCurrentLocation(String currentLocation) {
+		this.currentLocation = currentLocation;
+	}
 
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-		g.drawImage(character_Image,current_point.x,current_point.y,null);
+		g.drawImage(character_Image,current_point.x,current_point.y,Pan.CH_WIDHT,Pan.CH_HEIGHT,null);
 
 	}
 

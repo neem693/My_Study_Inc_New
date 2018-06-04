@@ -1,7 +1,6 @@
 package utill;
 
 import java.awt.Graphics;
-
 import pv.Character_ox;
 
 

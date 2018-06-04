@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Images {
+	public static BufferedImage Back_user;
 	public static BufferedImage RYON;
 	public static BufferedImage APEACHE;
 	public static BufferedImage TUBE;
@@ -14,6 +15,7 @@ public class Images {
 
 	static {
 		try {
+			Back_user = ImageIO.read(new File("src/images/user_back.png"));
 			RYON = ImageIO.read(new File("src/images/Ryon.png"));
 			APEACHE = ImageIO.read(new File("src/images/Apeache.png"));
 			TUBE = ImageIO.read(new File("src/images/Tube.png"));
