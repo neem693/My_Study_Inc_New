@@ -9,16 +9,18 @@ import java.util.Random;
 import images.Images;
 import ox_survive.MyConst;
 import utill.Character_Manager;
+import utill.Character_pan;
 import utill.Item;
 import utill.Pan;
 
 public class Character_ox extends Item {
 
 	
-	final static int CHARACTER_COUNT = 3;
+	final static int CHARACTER_COUNT = 4;
 	String currentLocation;
 	int ch_count;
 	BufferedImage character_Image;
+	Character_pan current_pan;
 	Point current_point;
 	Point next_point;
 	boolean moving;
@@ -39,6 +41,9 @@ public class Character_ox extends Item {
 			break;
 		case 3:
 			character_Image = Images.TUBE;
+			break;
+		case 4:
+			character_Image = Images.MUZI;
 			break;
 
 		}
@@ -102,5 +107,16 @@ public class Character_ox extends Item {
 		g.drawImage(character_Image,current_point.x,current_point.y,Pan.CH_WIDHT,Pan.CH_HEIGHT,null);
 
 	}
+
+	public Character_pan getCurrent_pan() {
+		return current_pan;
+	}
+
+	public void setCurrent_pan(Character_pan current_pan) {
+		this.current_pan = current_pan;
+	}
+	
+	
+	
 
 }

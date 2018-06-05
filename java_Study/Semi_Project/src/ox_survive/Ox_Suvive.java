@@ -2,6 +2,8 @@ package ox_survive;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -9,6 +11,7 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import images.Images;
 import pv.Character_ox;
@@ -23,6 +26,7 @@ public class Ox_Suvive extends JFrame {
 	Character_Manager chManager;
 	Random rand = new Random();
 	KeyAdapter adapter;
+	Timer timer;
 	
 
 	public Ox_Suvive() {
@@ -30,6 +34,8 @@ public class Ox_Suvive extends JFrame {
 		
 		init_pan();
 		init_event();
+		init_timer();
+		
 		
 		
 		this.setLocation(200, 100);
@@ -39,6 +45,29 @@ public class Ox_Suvive extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 
+	}
+
+	private void init_timer() {
+		// TODO Auto-generated method stub
+		ActionListener listener = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				process();
+				full.repaint();
+				
+			}
+		};
+		
+		timer = new Timer(10,listener);
+		timer.start();
+		
+	}
+
+	protected void process() {
+		// TODO Auto-generated method stub
+		chManager.move();
 	}
 
 	private void init_event() {
@@ -51,14 +80,16 @@ public class Ox_Suvive extends JFrame {
 				int key = e.getKeyCode();
 				
 				if(key == KeyEvent.VK_RIGHT) {
-					chManager.user_change_ox(xpan);
+					chManager.user_goto(xpan);
 				}
 				if(key == KeyEvent.VK_LEFT) {
-					chManager.user_change_ox(opan);
+					chManager.user_goto(opan);
 				}
 				
 			}
 		};
+		this.addKeyListener(adapter);
+		
 		
 	}
 

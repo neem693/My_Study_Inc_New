@@ -1,6 +1,8 @@
 package utill;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
+
 import pv.Character_ox;
 
 
@@ -13,6 +15,9 @@ public class Character_pan {
 	int priority;
 	boolean is_hear; // 캐릭터가 이 좌표에 없음을 나타냄
 	Character_ox ch;
+	Rectangle rect;
+	
+	
 
 
 	
@@ -32,6 +37,7 @@ public class Character_pan {
 		this();
 		this.character_start_w = character_start_w;
 		this.character_start_h = character_start_h;
+		this.rect = new Rectangle(character_start_w,character_start_h,Pan.CH_WIDHT,Pan.CH_HEIGHT);
 	}
 	
 	

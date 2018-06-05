@@ -11,6 +11,8 @@ public class Images {
 	public static BufferedImage RYON;
 	public static BufferedImage APEACHE;
 	public static BufferedImage TUBE;
+	public static BufferedImage MUZI;
+
 
 
 	static {
@@ -19,6 +21,8 @@ public class Images {
 			RYON = ImageIO.read(new File("src/images/Ryon.png"));
 			APEACHE = ImageIO.read(new File("src/images/Apeache.png"));
 			TUBE = ImageIO.read(new File("src/images/Tube.png"));
+			MUZI = ImageIO.read(new File("src/images/MUZI.png"));
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
