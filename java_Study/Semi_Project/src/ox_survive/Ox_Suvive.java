@@ -27,6 +27,7 @@ public class Ox_Suvive extends JFrame {
 	Random rand = new Random();
 	KeyAdapter adapter;
 	Timer timer;
+	GameOver gameover;
 	
 
 	public Ox_Suvive() {
@@ -35,6 +36,7 @@ public class Ox_Suvive extends JFrame {
 		init_pan();
 		init_event();
 		init_timer();
+		init_game();
 		
 		
 		
@@ -45,6 +47,13 @@ public class Ox_Suvive extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 
+	}
+
+	private void init_game() {
+		// TODO Auto-generated method stub
+		gameover = new GameOver(chManager, timer);
+		gameover.nextRound();
+		
 	}
 
 	private void init_timer() {
@@ -80,10 +89,10 @@ public class Ox_Suvive extends JFrame {
 				int key = e.getKeyCode();
 				
 				if(key == KeyEvent.VK_RIGHT) {
-					chManager.user_goto(xpan);
+					chManager.user_goto(xpan,chManager.getCh_user());
 				}
 				if(key == KeyEvent.VK_LEFT) {
-					chManager.user_goto(opan);
+					chManager.user_goto(opan,chManager.getCh_user());
 				}
 				
 			}

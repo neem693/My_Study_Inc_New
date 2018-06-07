@@ -12,9 +12,10 @@ import pv.Character_ox;
 
 public class Character_Manager {
 
-	public static final int HEAVY = 50;
+	public static final int HEAVY = 60;
 	public static final int MEDIUM = 35;
 	public static final int LOW = 20;
+	public static final int DIVDE = 20; // 캐릭터가 해당 지점까지 이동하는 횟수
 	Random rand;
 
 	static final String OLOCATION = "O";
@@ -28,6 +29,7 @@ public class Character_Manager {
 		// TODO Auto-generated constructor stub
 		rand = new Random();
 		ch_list = new ArrayList<Character_ox>();
+
 	}
 
 	public Character_Manager(Pan opan, Pan xpan, int how_many, int how_many_user) {
@@ -102,26 +104,29 @@ public class Character_Manager {
 
 	public boolean move() {
 		// TODO Auto-generated method stub
-		System.out.println("실행중");
+//		System.out.println("실행중");
 		Point cpoint, npoint;
+		double dX, dY;
+		int divide = Character_Manager.DIVDE;
 		for (Character_ox ch_ox_move : ch_list) {
-			cpoint = ch_ox_move.getCurrent_point();
-			npoint = ch_ox_move.getNext_point();
 			if (ch_ox_move.isMoving()) {
-				if (cpoint.x < npoint.x)
-					cpoint.x += 5;
-				else if (cpoint.x > npoint.x)
-					cpoint.x -= 5;
-
-				if (cpoint.y < npoint.y)
-					cpoint.y += 5;
-				else if (cpoint.y > npoint.y)
-					cpoint.y -= 5;
+				if (!ch_ox_move.isIs_x_y()) {
+					cpoint = ch_ox_move.getCurrent_point();
+					npoint = ch_ox_move.getNext_point();
+					dX = Math.abs((double) (cpoint.x - npoint.x) / (double) divide);
+					dY = Math.abs((double) (cpoint.y - npoint.y) / (double) divide);
+					ch_ox_move.setDx(dX);
+					ch_ox_move.setDy(dY);
+					ch_ox_move.setIs_x_y(true);
+				}
 
 				if (ch_ox_move.getCurrent_pan().rect.contains(ch_ox_move.getCurrent_point())) {
 					ch_ox_move.setCurrent_point(ch_ox_move.getNext_point());
 					ch_ox_move.setMoving(false);
+					ch_ox_move.setIs_x_y(false);
 				}
+				//if (ch_ox_move.isCan_go())
+					ch_ox_move.move();
 			}
 
 		}
@@ -153,7 +158,7 @@ public class Character_Manager {
 
 	}
 
-	public void user_goto(Pan pan) {
+	public void user_goto(Pan pan, Character_ox ch) {
 		// TODO Auto-generated method stub
 		Character_pan ch_pan = null;
 		Character_pan ch_pan2 = null;
@@ -165,27 +170,26 @@ public class Character_Manager {
 				if (i != 29 && pan.ch_priority_lo[i + 1].is_hear == false)
 					ch_pan2 = pan.ch_priority_lo[i + 1];
 				break;
-
 			}
-
 		}
 
 		if (ch_pan == null && ch_pan2 == null) {
 			for (; i < 50; i++) {
 				if (pan.ch_priority_lo[i].is_hear == false) {
 					ch_pan = pan.ch_priority_lo[i];
+					break;
 				}
 			}
 		}
 		if (ch_pan2 == (null)) {
-			go_ox(ch_pan, ch_user);
+			go_ox(ch_pan, ch);
 
 		} else {
 			r = rand.nextInt(10) + 1;
 			if (1 <= r && 5 >= r)
-				go_ox(ch_pan, ch_user);
+				go_ox(ch_pan, ch);
 			else if (6 <= r && 10 >= r)
-				go_ox(ch_pan2, ch_user);
+				go_ox(ch_pan2, ch);
 
 		}
 
@@ -201,6 +205,22 @@ public class Character_Manager {
 		ch.getCurrent_pan().setIs_hear(true);
 		ch_pan.setCh(ch);
 		System.out.println(ch.getCurrent_point() + " " + ch.getNext_point());
+	}
+
+	public ArrayList<Character_ox> getCh_list() {
+		return ch_list;
+	}
+
+	public Character_ox getCh_user() {
+		return ch_user;
+	}
+
+	public Pan getOpan() {
+		return opan;
+	}
+
+	public Pan getXpan() {
+		return xpan;
 	}
 
 }

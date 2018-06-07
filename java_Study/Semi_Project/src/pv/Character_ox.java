@@ -15,7 +15,6 @@ import utill.Pan;
 
 public class Character_ox extends Item {
 
-	
 	final static int CHARACTER_COUNT = 4;
 	String currentLocation;
 	int ch_count;
@@ -24,12 +23,17 @@ public class Character_ox extends Item {
 	Point current_point;
 	Point next_point;
 	boolean moving;
+	boolean is_x_y;
+	boolean can_go;
+	double dx, dy;
 	Random rand;
+
 
 	public Character_ox() {
 		// TODO Auto-generated constructor stub
 		super();
 		moving = false;
+		is_x_y = false;
 		rand = new Random();
 		ch_count = rand.nextInt(CHARACTER_COUNT) + 1;
 		switch (ch_count) {
@@ -47,17 +51,13 @@ public class Character_ox extends Item {
 			break;
 
 		}
-
 	}
 
 	public Character_ox(int x, int y) {
 		this();
-		this.current_point = new Point(x,y);
+		this.current_point = new Point(x, y);
 
 	}
-	
-	
-	
 
 	public Point getCurrent_point() {
 		return current_point;
@@ -80,6 +80,8 @@ public class Character_ox extends Item {
 	}
 
 	public void setMoving(boolean moving) {
+		
+
 		this.moving = moving;
 	}
 
@@ -87,11 +89,18 @@ public class Character_ox extends Item {
 	public boolean move() {
 		// TODO Auto-generated method stub
 
+		if (current_point.x < next_point.x)
+			current_point.x += (int) dx;
+		else if (current_point.x > next_point.x)
+			current_point.x -= (int) dx;
+
+		if (current_point.y < next_point.y)
+			current_point.y += (int) dy;
+		else if (current_point.y > next_point.y)
+			current_point.y -= (int) dy;
+
 		return false;
 	}
-	
-	
-	
 
 	public String getCurrentLocation() {
 		return currentLocation;
@@ -104,7 +113,8 @@ public class Character_ox extends Item {
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-		g.drawImage(character_Image,current_point.x,current_point.y,Pan.CH_WIDHT,Pan.CH_HEIGHT,null);
+		g.drawImage(character_Image, current_point.x, current_point.y, Pan.CH_WIDHT, Pan.CH_HEIGHT, null);
+		g.drawString(String.valueOf(current_pan.getPriority()), current_point.x, current_point.y);// 테스트 용
 
 	}
 
@@ -115,8 +125,30 @@ public class Character_ox extends Item {
 	public void setCurrent_pan(Character_pan current_pan) {
 		this.current_pan = current_pan;
 	}
-	
-	
-	
+
+	public boolean isIs_x_y() {
+		return is_x_y;
+	}
+
+	public void setIs_x_y(boolean is_x_y) {
+		this.is_x_y = is_x_y;
+	}
+
+	public double getDx() {
+		return dx;
+	}
+
+	public void setDx(double dx) {
+		this.dx = dx;
+	}
+
+	public double getDy() {
+		return dy;
+	}
+
+	public void setDy(double dy) {
+		this.dy = dy;
+	}
+
 
 }
