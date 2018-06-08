@@ -20,15 +20,18 @@ public class Character_Manager {
 
 	static final String OLOCATION = "O";
 	static final String XLOCATION = "X";
+	static final int MAX_MOVING = 5;
 	Pan opan, xpan;
 	int how_many;
 	public ArrayList<Character_ox> ch_list;
+	public ArrayList<Character_ox> ch_move_list;
 	public Character_ox ch_user;
 
 	public Character_Manager() {
 		// TODO Auto-generated constructor stub
 		rand = new Random();
 		ch_list = new ArrayList<Character_ox>();
+		ch_move_list = new ArrayList<Character_ox>();
 
 	}
 
@@ -104,10 +107,12 @@ public class Character_Manager {
 
 	public boolean move() {
 		// TODO Auto-generated method stub
-//		System.out.println("실행중");
+		// System.out.println("실행중");
 		Point cpoint, npoint;
 		double dX, dY;
 		int divide = Character_Manager.DIVDE;
+		int max_moving = Character_Manager.MAX_MOVING;
+
 		for (Character_ox ch_ox_move : ch_list) {
 			if (ch_ox_move.isMoving()) {
 				if (!ch_ox_move.isIs_x_y()) {
@@ -118,19 +123,50 @@ public class Character_Manager {
 					ch_ox_move.setDx(dX);
 					ch_ox_move.setDy(dY);
 					ch_ox_move.setIs_x_y(true);
+					if (!ch_ox_move.equals(ch_user))
+						ch_move_list.add(ch_ox_move);
 				}
+			}
+		}
 
-				if (ch_ox_move.getCurrent_pan().rect.contains(ch_ox_move.getCurrent_point())) {
-					ch_ox_move.setCurrent_point(ch_ox_move.getNext_point());
-					ch_ox_move.setMoving(false);
-					ch_ox_move.setIs_x_y(false);
-				}
-				//if (ch_ox_move.isCan_go())
-					ch_ox_move.move();
+		if (max_moving > ch_move_list.size())
+			max_moving = ch_move_list.size();
+
+		// System.out.println(String.valueOf(ch_move_list.size()>Character_Manager.MAX_MOVING)
+		// + " " + ch_move_list.size() + " " + max_moving);
+		// if(ch_move_list.size()==5)
+		// System.out.println("here");
+
+		for (int i = 0; i < max_moving; i++) {
+
+			if (move_step(ch_move_list.get(i))) {
+				ch_move_list.remove(i);
+				max_moving--;
 			}
 
 		}
+
+		if (ch_user.isMoving()) {
+			move_step(ch_user);
+		}
+
 		return false;
+	}
+
+	private boolean move_step(Character_ox character_ox) {
+		// TODO Auto-generated method stub
+		if (character_ox.getCurrent_pan().rect.contains(character_ox.getCurrent_point())) {
+
+			character_ox.setCurrent_point(character_ox.getNext_point());
+			character_ox.setMoving(false);
+			character_ox.setIs_x_y(false);
+			character_ox.setFirst_move(false);
+			return true;
+
+		} else
+			character_ox.move();
+		return false;
+
 	}
 
 	public void draw(Graphics g) {
@@ -160,6 +196,8 @@ public class Character_Manager {
 
 	public void user_goto(Pan pan, Character_ox ch) {
 		// TODO Auto-generated method stub
+		if(ch.isMoving())
+			return;
 		Character_pan ch_pan = null;
 		Character_pan ch_pan2 = null;
 		int i = 0;

@@ -35,8 +35,9 @@ public class Ox_Suvive extends JFrame {
 		
 		init_pan();
 		init_event();
-		init_timer();
 		init_game();
+		init_timer();
+		
 		
 		
 		
@@ -51,7 +52,7 @@ public class Ox_Suvive extends JFrame {
 
 	private void init_game() {
 		// TODO Auto-generated method stub
-		gameover = new GameOver(chManager, timer);
+		gameover = new GameOver(chManager, timer,full);
 		gameover.nextRound();
 		
 	}
@@ -77,6 +78,13 @@ public class Ox_Suvive extends JFrame {
 	protected void process() {
 		// TODO Auto-generated method stub
 		chManager.move();
+		gameover.count_up();
+		if(gameover.count_zero()) {
+			gameover.lets_kill();
+			gameover.nextRound();
+		}
+		
+		//gameover.
 	}
 
 	private void init_event() {
@@ -138,6 +146,8 @@ public class Ox_Suvive extends JFrame {
 				g.drawRect(0 + border, 0 + border, width, height);
 				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);
 				chManager.draw(g);
+				gameover.draw_count(g);
+				
 				
 				
 				

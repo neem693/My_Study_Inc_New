@@ -20,11 +20,16 @@ public class Character_ox extends Item {
 	int ch_count;
 	BufferedImage character_Image;
 	Character_pan current_pan;
+	Character_pan next_pan;
+	
 	Point current_point;
 	Point next_point;
 	boolean moving;
 	boolean is_x_y;
-	boolean can_go;
+	boolean first_move;
+	
+	
+	
 	double dx, dy;
 	Random rand;
 
@@ -88,7 +93,8 @@ public class Character_ox extends Item {
 	@Override
 	public boolean move() {
 		// TODO Auto-generated method stub
-
+		
+		first_move = true;
 		if (current_point.x < next_point.x)
 			current_point.x += (int) dx;
 		else if (current_point.x > next_point.x)
@@ -149,6 +155,26 @@ public class Character_ox extends Item {
 	public void setDy(double dy) {
 		this.dy = dy;
 	}
+
+	public void setFirst_move(boolean first_move) {
+		this.first_move = first_move;
+	}
+	
+	public boolean isFirst_move() {
+		return first_move;
+	}
+
+	public Character_pan getNext_pan() {
+		return next_pan;
+	}
+
+	public void setNext_pan(Character_pan next_pan) {
+		this.next_pan = next_pan;
+	}
+
+
+	
+	
 
 
 }
