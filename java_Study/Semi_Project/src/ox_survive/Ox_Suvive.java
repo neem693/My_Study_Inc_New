@@ -143,6 +143,7 @@ public class Ox_Suvive extends JFrame {
 				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);
 				chManager.draw(g);
 				gameover.draw_count(g);
+				gameover.munje_show(g);
 
 				// 그리기 테스트 이다.
 				// for (int i = 0; i < xpan.ch_lo.length; i++) {

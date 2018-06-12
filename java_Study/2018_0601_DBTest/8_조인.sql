@@ -89,12 +89,33 @@ order by sabun;
 select * from gogek;
 
 select s.saname,g.goname,d.dname,s2.sabun,s2.saname,g2.goname
-from sawon s inner join gogek g
+from sawon s left outer join gogek g
 on s.sabun = g.godam
-inner join dept d
+left outer join dept d
 on s.deptno = d.deptno
-inner join sawon s2
+left outer join sawon s2
 on s.samgr = s2.sabun
-inner join gogek g2
+left outer join gogek g2
 on s2.sabun = g2.godam;
-								
+							
+
+
+
+select d.dname,count(*)
+from dept d left outer join sawon s
+on d.deptno = s.deptno
+group by d.dname
+
+select * from gogek
+
+select * from sawon;
+
+select s.saname, g.goname
+from sawon s left outer join gogek g
+on s.samgr = g.godam
+
+
+select s.saname, count(g.goname) ´ã´ç°í°´¼ö
+from sawon s left outer join gogek g
+on s.samgr = g.godam
+group by s.saname;

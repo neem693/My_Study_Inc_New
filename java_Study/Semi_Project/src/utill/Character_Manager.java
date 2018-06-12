@@ -157,6 +157,7 @@ public class Character_Manager {
 			if (ch_user.isMoving()) {
 				move_step(ch_user);
 			}
+		System.out.println(ch_move_list.size());
 
 		return false;
 	}
