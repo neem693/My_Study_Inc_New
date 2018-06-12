@@ -1,5 +1,7 @@
 package utill;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ public class Character_Manager {
 
 	static final String OLOCATION = "O";
 	static final String XLOCATION = "X";
-	static final int MAX_MOVING = 5;
+	public static final int MAX_MOVING = 4;
 	Pan opan, xpan;
 	int how_many;
 	public ArrayList<Character_ox> ch_list;
@@ -63,8 +65,13 @@ public class Character_Manager {
 				}
 				ch.setCurrentLocation(Pan.OPAN);
 				opan.ch_priority_lo[count_o].setCh(ch);
+				opan.ch_priority_lo[count_o].setBefore_ch(ch);
+
+				System.out.println(opan.ch_priority_lo[count_o].getBefore_ch());
 				ch.setCurrent_pan(opan.ch_priority_lo[count_o]);
 				count_o++;
+
+				// 그전 위치 기억
 
 			} else {
 				x = xpan.ch_priority_lo[count_x].getCharacter_start_w();
@@ -79,6 +86,7 @@ public class Character_Manager {
 				}
 				ch.setCurrentLocation(Pan.XPAN);
 				xpan.ch_priority_lo[count_x].setCh(ch);
+				xpan.ch_priority_lo[count_x].setBefore_ch(ch);
 				ch.setCurrent_pan(xpan.ch_priority_lo[count_x]);
 				count_x++;
 			}
@@ -145,10 +153,10 @@ public class Character_Manager {
 			}
 
 		}
-
-		if (ch_user.isMoving()) {
-			move_step(ch_user);
-		}
+		if (ch_user != null)
+			if (ch_user.isMoving()) {
+				move_step(ch_user);
+			}
 
 		return false;
 	}
@@ -172,31 +180,55 @@ public class Character_Manager {
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		// 멈춰있는것들을 먼저 그린다.
-		drawPan(g, opan);
-		drawPan(g, xpan);
-
 		for (Character_ox ch : ch_list) {
-			if (ch.isMoving() == true)
+			if (ch.isMoving())
 				ch.draw(g);
 		}
+		drawPan(g);
+
 	}
 
-	private void drawPan(Graphics g, Pan pan) {
+	private void drawPan(Graphics g) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < pan.ch_lo.length; i++) {
-			for (int j = 0; j < pan.ch_lo[i].length; j++) {
+		for (int i = 0; i < opan.ch_lo.length; i++) {
+			for (int j = 0; j < opan.ch_lo[i].length; j++) {
 
-				if (pan.ch_lo[i][j].isIs_hear())
-					pan.ch_lo[i][j].getCh().draw(g);
+				// System.out.println(pan.ch_lo[i][j].isIs_hear());
+				if (opan.ch_lo[i][j].getCh() != null)
+					if (opan.ch_lo[i][j].isIs_hear()&&!opan.ch_lo[i][j].getCh().isMoving()) {
+						opan.ch_lo[i][j].getCh().draw(g);
+					}
+				if (xpan.ch_lo[i][j].getCh() != null)
+					if (xpan.ch_lo[i][j].isIs_hear()&&!xpan.ch_lo[i][j].getCh().isMoving()) {
+						xpan.ch_lo[i][j].getCh().draw(g);
+					}
 
+				// System.out.println(opan.ch_lo[i][j].getCh().real_moving());
+
+				// else if(opan.ch_lo[i][j].getBefore_ch()!=null) {
+				// if(opan.ch_lo[i][j].getBefore_ch().real_moving())
+				// opan.ch_lo[i][j].getBefore_ch().draw(g);
+				// }
 			}
+
 		}
+
+		// for(int i =0;i<pan.ch_lo.length;i++) {
+		// for(int j =0;j<pan.ch_lo[i].length;j++) {
+		// if(pan.ch_lo[i][j].getBefore_ch()!=null) {
+		// g.setColor(new Color(255,255,0));
+		// g.setFont(new Font("굴림",1,2));
+		// g.drawString(String.valueOf(pan.ch_lo[i][j].getBefore_ch().real_moving()),
+		// pan.ch_lo[i][j].character_start_w, pan.ch_lo[i][j].character_start_h);
+		// }
+		// }
+		// }
 
 	}
 
 	public void user_goto(Pan pan, Character_ox ch) {
 		// TODO Auto-generated method stub
-		if(ch.isMoving())
+		if (ch.isMoving())
 			return;
 		Character_pan ch_pan = null;
 		Character_pan ch_pan2 = null;
@@ -238,11 +270,17 @@ public class Character_Manager {
 		ch.setNext_point(new Point(ch_pan.character_start_w, ch_pan.character_start_h));
 		ch.setMoving(true);
 		ch.getCurrent_pan().setIs_hear(false);
+
+		// ch.getCurrent_pan().setBefore_ch(ch.getCurrent_pan().getCh());
+
 		ch.getCurrent_pan().setCh(null);
+
+		// ch.setBefore_pan(ch.getCurrent_pan());
+
 		ch.setCurrent_pan(ch_pan);
 		ch.getCurrent_pan().setIs_hear(true);
 		ch_pan.setCh(ch);
-		System.out.println(ch.getCurrent_point() + " " + ch.getNext_point());
+		//System.out.println(ch.getCurrent_point() + " " + ch.getNext_point());
 	}
 
 	public ArrayList<Character_ox> getCh_list() {

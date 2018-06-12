@@ -15,6 +15,7 @@ public class Character_pan {
 	int priority;
 	boolean is_hear; // 캐릭터가 이 좌표에 없음을 나타냄
 	Character_ox ch;
+	Character_ox before_ch;
 	Rectangle rect;
 	
 	
@@ -88,6 +89,16 @@ public class Character_pan {
 		this.ch =null;
 		is_hear = false;
 	}
+
+	public Character_ox getBefore_ch() {
+		return before_ch;
+	}
+
+	public void setBefore_ch(Character_ox before_ch) {
+		this.before_ch = before_ch;
+	}
+	
+	
 
 	
 

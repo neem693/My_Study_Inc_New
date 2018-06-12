@@ -8,6 +8,8 @@ import utill.Pan;
 public class Character_User extends Character_ox {
 	
 	
+	
+	
 	public Character_User() {
 		// TODO Auto-generated constructor stub
 		

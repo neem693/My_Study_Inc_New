@@ -19,6 +19,8 @@ class For_Ex4
 
 			for(int j= 1; j<=9; j++){
 				System.out.printf("%d x %d = %d\n",dan,j,dan*j);
+				if(j==3)
+				continue;
 			
 			}
 			System.out.println();

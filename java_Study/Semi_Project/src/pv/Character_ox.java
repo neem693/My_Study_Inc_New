@@ -20,23 +20,22 @@ public class Character_ox extends Item {
 	int ch_count;
 	BufferedImage character_Image;
 	Character_pan current_pan;
-	Character_pan next_pan;
-	
+	Character_pan before_pan;
+
 	Point current_point;
 	Point next_point;
 	boolean moving;
 	boolean is_x_y;
 	boolean first_move;
-	
-	
-	
+	boolean drawing;
+
 	double dx, dy;
 	Random rand;
-
 
 	public Character_ox() {
 		// TODO Auto-generated constructor stub
 		super();
+		first_move = false;
 		moving = false;
 		is_x_y = false;
 		rand = new Random();
@@ -85,7 +84,6 @@ public class Character_ox extends Item {
 	}
 
 	public void setMoving(boolean moving) {
-		
 
 		this.moving = moving;
 	}
@@ -93,8 +91,8 @@ public class Character_ox extends Item {
 	@Override
 	public boolean move() {
 		// TODO Auto-generated method stub
-		
-		first_move = true;
+		if (!first_move)
+			first_move = true;
 		if (current_point.x < next_point.x)
 			current_point.x += (int) dx;
 		else if (current_point.x > next_point.x)
@@ -159,22 +157,32 @@ public class Character_ox extends Item {
 	public void setFirst_move(boolean first_move) {
 		this.first_move = first_move;
 	}
-	
+
 	public boolean isFirst_move() {
 		return first_move;
 	}
 
-	public Character_pan getNext_pan() {
-		return next_pan;
+	public Character_pan getBefore_pan() {
+		return before_pan;
 	}
 
-	public void setNext_pan(Character_pan next_pan) {
-		this.next_pan = next_pan;
+	public void setBefore_pan(Character_pan next_pan) {
+		this.before_pan = next_pan;
+	}
+	public boolean real_moving() {
+		if(this.moving && !first_move)
+			return true;
+		else return false;
 	}
 
+	public boolean isDrawing() {
+		return drawing;
+	}
 
+	public void setDrawing(boolean drawing) {
+		this.drawing = drawing;
+	}
 	
 	
-
 
 }

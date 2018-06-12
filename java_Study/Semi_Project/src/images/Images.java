@@ -12,6 +12,7 @@ public class Images {
 	public static BufferedImage APEACHE;
 	public static BufferedImage TUBE;
 	public static BufferedImage MUZI;
+	public static BufferedImage BACKGROUND;
 
 
 
@@ -22,6 +23,7 @@ public class Images {
 			APEACHE = ImageIO.read(new File("src/images/Apeache.png"));
 			TUBE = ImageIO.read(new File("src/images/Tube.png"));
 			MUZI = ImageIO.read(new File("src/images/MUZI.png"));
+			BACKGROUND = ImageIO.read(new File("src/images/Background.png"));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
