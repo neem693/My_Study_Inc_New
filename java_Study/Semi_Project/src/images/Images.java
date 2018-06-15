@@ -13,6 +13,11 @@ public class Images {
 	public static BufferedImage TUBE;
 	public static BufferedImage MUZI;
 	public static BufferedImage BACKGROUND;
+	
+	public static BufferedImage MAIN_BACK;
+	public static BufferedImage EXIT;
+	public static BufferedImage START;
+	
 
 
 
@@ -24,6 +29,9 @@ public class Images {
 			TUBE = ImageIO.read(new File("src/images/Tube.png"));
 			MUZI = ImageIO.read(new File("src/images/MUZI.png"));
 			BACKGROUND = ImageIO.read(new File("src/images/Background.png"));
+			MAIN_BACK = ImageIO.read(new File("src/images/main_back.png"));
+			EXIT = ImageIO.read(new File("src/images/exit.png"));
+			START = ImageIO.read(new File("src/images/start.png"));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

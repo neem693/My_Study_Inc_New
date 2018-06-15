@@ -36,13 +36,16 @@ public class GameOver {
 	FontMetrics fontmet;
 
 	static final int ALL_COUNT = 500;
+	static final int MAX_PERCENT = 10;
 	static final int POSITIVE_PERCENT = 6;
-	static final int NEGATIVE_PERCENT = 10;
+	static final int NEGATIVE_PERCENT = 11;
 	boolean isRound = false; // 라운드 중일때 다음 라운드가 실행되지 않게
 	boolean quetioning = false; // 문제 5초 동안 일 때만
 	boolean gameover = false;
 	boolean already_killed = false;
-	
+	boolean cheating;
+	boolean isnt_value_cheating;
+
 	int round_interval;
 	int count = 0;
 	String count_str;
@@ -54,6 +57,7 @@ public class GameOver {
 		rand = new Random();
 		s = 0;
 		round = 0;
+		isnt_value_cheating = true;
 		try {
 			munje = new MunJe();
 			munje.random();
@@ -67,11 +71,13 @@ public class GameOver {
 
 	}
 
-	public GameOver(Character_Manager ch_m, Timer timer, JPanel full) {
+
+
+	public GameOver(Character_Manager ch_m, JPanel full) {
+		// TODO Auto-generated constructor stub
 		this();
 
 		this.ch_m = ch_m;
-		this.timer = timer;
 		this.ch_list = ch_m.getCh_list();
 		this.full = full;
 
@@ -106,24 +112,56 @@ public class GameOver {
 				// i=0;
 				break;
 			}
-			r = rand.nextInt(10);
-			if (quiz_r_c.get(round).equals("O")) // 만약 답이 o라면 60%가 o로 간다. 지금으로선 무조건 O가 60퍼센트라고 하자.
-			{
-
-				if (0 <= r && r <= GameOver.POSITIVE_PERCENT) {
-					ch_m.user_goto(ch_m.getOpan(), ch_list.get(s));
-				} else if (GameOver.POSITIVE_PERCENT < r && r <= GameOver.NEGATIVE_PERCENT) {
-					ch_m.user_goto(ch_m.getXpan(), ch_list.get(s));
-				}
-			}else if(quiz_r_c.get(round).equals("X"))
-			{
-				if (0 <= r && r <= GameOver.POSITIVE_PERCENT) {
-					ch_m.user_goto(ch_m.getXpan(), ch_list.get(s));
-				} else if (GameOver.POSITIVE_PERCENT < r && r <= GameOver.NEGATIVE_PERCENT) {
-					ch_m.user_goto(ch_m.getOpan(), ch_list.get(s));
-				}
+			if (isnt_value_cheating) {
+				we_cheat_player();
 			}
 
+			r = rand.nextInt(GameOver.MAX_PERCENT);
+			if (quiz_r_c.get(round).equals("O")) // 만약 답이 o라면 60%가 o로 간다. 지금으로선 무조건 O가 60퍼센트라고 하자.
+			{
+				if (!cheating)
+					o_is_correct(r);
+				else
+					x_is_correct(r);
+
+			} else if (quiz_r_c.get(round).equals("X")) {
+				if (!cheating)
+					x_is_correct(r);
+				else
+					o_is_correct(r);
+
+			}
+
+		}
+	}
+
+	private void we_cheat_player() {
+	      // TODO Auto-generated method stub
+	      int r = rand.nextInt(10)+1;
+	      if (0 <= r && r <= GameOver.POSITIVE_PERCENT)
+	         cheating = false;
+	      else if (GameOver.POSITIVE_PERCENT < r && r <= GameOver.NEGATIVE_PERCENT) {
+	         cheating = true;
+	      }
+	      isnt_value_cheating = false;
+
+	   }
+
+	private void x_is_correct(int r) {
+		// TODO Auto-generated method stub
+		if (0 <= r && r <= GameOver.POSITIVE_PERCENT) {
+			ch_m.user_goto(ch_m.getXpan(), ch_list.get(s));
+		} else if (GameOver.POSITIVE_PERCENT < r && r <= GameOver.NEGATIVE_PERCENT) {
+			ch_m.user_goto(ch_m.getOpan(), ch_list.get(s));
+		}
+	}
+
+	private void o_is_correct(int r) {
+		// TODO Auto-generated method stub
+		if (0 <= r && r <= GameOver.POSITIVE_PERCENT) {
+			ch_m.user_goto(ch_m.getOpan(), ch_list.get(s));
+		} else if (GameOver.POSITIVE_PERCENT < r && r <= GameOver.NEGATIVE_PERCENT) {
+			ch_m.user_goto(ch_m.getXpan(), ch_list.get(s));
 		}
 	}
 
@@ -145,8 +183,11 @@ public class GameOver {
 		}
 		if (!quetioning && count < GameOver.ALL_COUNT)
 			quetioning = true;
-		else if (count >= GameOver.ALL_COUNT)
-			quetioning = false;
+		else if (count >= GameOver.ALL_COUNT) {
+			quetioning = false;// 현재 라운드가 아니고, 갖가지 에니메이션 오답 처리를 하는 과정임을 의미함
+			isnt_value_cheating = true;
+
+		}
 		// System.out.println(quetioning);
 		count++;
 	}
@@ -160,7 +201,7 @@ public class GameOver {
 			} else if (round_interval >= 600) {
 				count = 0;// 인터벌이 다 됬을시 다시 초기화 하는 것
 				round_interval = 0; // 인터벌도 초기화 해준다.
-				isRound = false; // 현재 라운드가 아니고, 갖가지 에니메이션 오답 처리를 하는 과정임을 의미함
+				isRound = false; 
 				round++;
 			}
 			return true;
@@ -181,14 +222,14 @@ public class GameOver {
 
 	public void lets_kill() {
 		// TODO Auto-generated method stub
-		if(already_killed)
+		if (already_killed)
 			return;
 		already_killed = true;
 
-		Pan pan=null;
+		Pan pan = null;
 		if (quiz_r_c.get(round).equals("O")) { // x판이 틀렸을 때
 			pan = ch_m.getXpan();
-		}else if(quiz_r_c.get(round).equals("X")) {
+		} else if (quiz_r_c.get(round).equals("X")) {
 			pan = ch_m.getOpan();
 		}
 		for (int i = 0; i < pan.ch_lo.length; i++) {
@@ -199,8 +240,10 @@ public class GameOver {
 
 						if (ch_list.get(n) == pan.ch_lo[i][j].getCh()) {
 							// System.out.println("---same---");
-							if (ch_list.get(n) == ch_m.ch_user)// user가 망가졌을 때
+							if (ch_list.get(n) == ch_m.ch_user) {// user가 망가졌을 때
 								ch_m.ch_user = null;
+								gameover = true;
+							}
 							ch_list.remove(n);
 							pan.ch_lo[i][j].setIs_hear(false);
 							pan.ch_lo[i][j].setCh(null);
@@ -222,7 +265,7 @@ public class GameOver {
 	}
 
 	public void munje_show(Graphics g) {
-		if(!quetioning)
+		if (!quetioning)
 			return;
 		fontmet = g.getFontMetrics();
 		g.setColor(new Color(0, 0, 0, 126));
@@ -232,6 +275,17 @@ public class GameOver {
 
 		g.drawString(quiz_r_m.get(round), 640 - fontmet.stringWidth(quiz_r_m.get(round)) / 2 + 15, 10 + 20);
 
+	}
+	public void end_game(Graphics g ) {
+		String str = String.format("당신은 %d등입니다.", ch_list.size()+1);
+		String lol = "ㅋㅋㅋㅋㅋㅋ";
+		fontmet = g.getFontMetrics();
+		g.setColor(new Color(0, 0, 0, 126));
+		g.drawString(str, 100, 200);
+		
+	}
+	public void show_correct_img(Graphics g) {
+		
 	}
 
 }
