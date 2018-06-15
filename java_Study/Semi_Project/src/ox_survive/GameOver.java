@@ -229,7 +229,7 @@ public class GameOver {
 	public void draw_count(Graphics g) {
 		// TODO Auto-generated method stub
 		g.setFont(new Font("±¼¸²", 1, 20));
-		count_str = String.format("%d . %02d", this.getCount() / 100, this.getCount() % 100);
+		count_str = String.format("%d . %02d", (GameOver.ALL_COUNT-this.getCount()) / 100, (GameOver.ALL_COUNT-this.getCount()) % 100);
 		g.drawString(count_str, MyConst.GAME_W / 2 - g.getFontMetrics().stringWidth(count_str) / 2, 100);
 	}
 
