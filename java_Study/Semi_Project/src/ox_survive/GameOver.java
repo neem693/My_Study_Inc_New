@@ -26,11 +26,10 @@ public class GameOver {
 	MunJe munje;
 	Character_Manager ch_m;
 	Timer timer;
-	int s;//캐릭터들을 어레이 리스트로 불러올때, 끊기지 않기 위해서 전역변수를 준것
+	int s;// 캐릭터들을 어레이 리스트로 불러올때, 끊기지 않기 위해서 전역변수를 준것
 	int round;
 	int remain;
-	int w,l; //오답체크 할시, 해당하는 이미지를 랜덤으로 불러오기 위해 난수를 받아와야 하는데, 그것을 기억해야 할 전역변수가 필요하다.
-	
+	int w, l; // 오답체크 할시, 해당하는 이미지를 랜덤으로 불러오기 위해 난수를 받아와야 하는데, 그것을 기억해야 할 전역변수가 필요하다.
 
 	Random rand;
 	ArrayList<Character_ox> ch_list;
@@ -55,7 +54,6 @@ public class GameOver {
 	boolean isnt_value_cheating;
 	boolean win = false;
 	boolean checking = false;
-
 
 	int round_interval;
 	int count = 0;
@@ -192,11 +190,9 @@ public class GameOver {
 		}
 		if (!quetioning && count < GameOver.ALL_COUNT) {
 			quetioning = true;
-			checking =false;
+			checking = false;
 
-			
-		}
-		else if (count >= GameOver.ALL_COUNT) {
+		} else if (count >= GameOver.ALL_COUNT) {
 			quetioning = false;
 			isnt_value_cheating = true;
 
@@ -229,7 +225,8 @@ public class GameOver {
 	public void draw_count(Graphics g) {
 		// TODO Auto-generated method stub
 		g.setFont(new Font("굴림", 1, 20));
-		count_str = String.format("%d . %02d", (GameOver.ALL_COUNT-this.getCount()) / 100, (GameOver.ALL_COUNT-this.getCount()) % 100);
+		count_str = String.format("%d . %02d", (GameOver.ALL_COUNT - this.getCount()) / 100,
+				(GameOver.ALL_COUNT - this.getCount()) % 100);
 		g.drawString(count_str, MyConst.GAME_W / 2 - g.getFontMetrics().stringWidth(count_str) / 2, 100);
 	}
 
@@ -294,12 +291,11 @@ public class GameOver {
 		g.drawString(quiz_r_m.get(round), 640 - fontmet.stringWidth(quiz_r_m.get(round)) / 2 + 15, 10 + 20);
 
 	}
-	
 
 	public void end_game(Graphics g) {
 		Font font1 = new Font("굴림", 1, 60);
 		g.setFont(font1);
-		String str=null, lol=null;
+		String str = null, lol = null;
 		if (win) {
 			str = "축하합니다. 1등입니다.";
 			lol = "ㅎㅎㅎㅎㅎㅎㅎㅎ GG";
@@ -322,31 +318,29 @@ public class GameOver {
 		g.drawString(str, MyConst.GAME_W / 2 - fontmet.stringWidth(str) / 2, MyConst.GAME_H / 2);
 		g.drawString(lol, MyConst.GAME_W / 2 - fontmet.stringWidth(lol) / 2, MyConst.GAME_H / 2 + fontmet.getHeight());
 	}
-	
-	
-	
+
 	public void lets_check_munje(Graphics g) {
-		if(this.quetioning) 
+		if (this.quetioning)
 			return;
 		Pan correct_anwser;
 		Pan not_co_anwser;
 		Point start_point;
-		int x,y;
-		Image win=null,lose=null;
-		
-		if(quiz_r_c.get(round).equals("O")) {
+		int x, y;
+		Image win = null, lose = null;
+
+		if (quiz_r_c.get(round).equals("O")) {
 			correct_anwser = ch_m.getOpan();
 			not_co_anwser = ch_m.getXpan();
-		}else {
+		} else {
 			correct_anwser = ch_m.getXpan();
 			not_co_anwser = ch_m.getOpan();
 		}
-		if(!checking) {
-			w  = rand.nextInt(Images.WIN_L)+1;
-			l  = rand.nextInt(Images.LOSE_L)+1;
+		if (!checking) {
+			w = rand.nextInt(Images.WIN_L) + 1;
+			l = rand.nextInt(Images.LOSE_L) + 1;
 		}
 		checking = true;
-		
+
 		switch (w) {
 		case 1:
 			win = Images.WIN1;
@@ -367,7 +361,7 @@ public class GameOver {
 			win = Images.WIN6;
 			break;
 		}
-		
+
 		switch (l) {
 		case 1:
 			lose = Images.LOSE1;
@@ -381,27 +375,15 @@ public class GameOver {
 		}
 
 		start_point = correct_anwser.getFirst_Point();
-		x= start_point.x + correct_anwser.WIDTH/2 - win.getWidth(null)/2;
-		y = start_point.y + correct_anwser.HEIGHT/2 - win.getHeight(null)/2;
-		g.drawImage(win, x, y,null);
-		
+		x = start_point.x + correct_anwser.WIDTH / 2 - win.getWidth(null) / 2;
+		y = start_point.y + correct_anwser.HEIGHT / 2 - win.getHeight(null) / 2;
+		g.drawImage(win, x, y, null);
+
 		start_point = not_co_anwser.getFirst_Point();
-		x= start_point.x + not_co_anwser.WIDTH/2 - lose.getWidth(null)/2;
-		y = start_point.y + not_co_anwser.HEIGHT/2 - lose.getHeight(null)/2;
+		x = start_point.x + not_co_anwser.WIDTH / 2 - lose.getWidth(null) / 2;
+		y = start_point.y + not_co_anwser.HEIGHT / 2 - lose.getHeight(null) / 2;
 		g.drawImage(lose, x, y, null);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-			
-		
-		
+
 	}
-	
-	
+
 }

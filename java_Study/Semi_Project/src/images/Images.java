@@ -22,8 +22,8 @@ public class Images {
 	
 	
 	
-	public static int WIN_L =3;
-	public static int LOSE_L = 2;
+	public static int WIN_L =6;
+	public static int LOSE_L = 3;
 	
 	public static Image WIN1;
 	public static Image WIN2;
