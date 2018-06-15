@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import images.Images;
-import ox_survive.MyConst;
+import main.MyConst;
 import utill.Character_Manager;
 import utill.Character_pan;
 import utill.Item;

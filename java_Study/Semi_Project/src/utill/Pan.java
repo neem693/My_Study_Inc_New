@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import ox_survive.MyConst;
+import main.MyConst;
 
 public class Pan {
 	public static final String OPAN = "O";
@@ -18,7 +18,7 @@ public class Pan {
 	public int count=0;
 	public String correctLocation;
 	
-	Point First_Point = new Point();
+	Point First_Point = new Point(); // 해당 판이 시작하는 지점 왼쪽 위 부분을 말함
 
 	public Character_pan[][] ch_lo;
 	// Character_pan [] ch_lo = new Character_pan[30];//캐릭터 로케이션;
@@ -78,6 +78,12 @@ public class Pan {
 			}
 		}
 	}
+
+	public Point getFirst_Point() {
+		return First_Point;
+	}
+	
+	
 	
 
 	

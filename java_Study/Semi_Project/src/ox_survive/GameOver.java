@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -11,6 +14,8 @@ import java.util.Random;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import images.Images;
+import main.MyConst;
 import pv.Character_User;
 import pv.Character_ox;
 import utill.Character_Manager;
@@ -23,6 +28,7 @@ public class GameOver {
 	Timer timer;
 	int s;
 	int round;
+	int remain;
 
 	Random rand;
 	ArrayList<Character_ox> ch_list;
@@ -45,6 +51,8 @@ public class GameOver {
 	boolean already_killed = false;
 	boolean cheating;
 	boolean isnt_value_cheating;
+	boolean win = false;
+
 
 	int round_interval;
 	int count = 0;
@@ -70,8 +78,6 @@ public class GameOver {
 		}
 
 	}
-
-
 
 	public GameOver(Character_Manager ch_m, JPanel full) {
 		// TODO Auto-generated constructor stub
@@ -136,16 +142,16 @@ public class GameOver {
 	}
 
 	private void we_cheat_player() {
-	      // TODO Auto-generated method stub
-	      int r = rand.nextInt(10)+1;
-	      if (0 <= r && r <= GameOver.POSITIVE_PERCENT)
-	         cheating = false;
-	      else if (GameOver.POSITIVE_PERCENT < r && r <= GameOver.NEGATIVE_PERCENT) {
-	         cheating = true;
-	      }
-	      isnt_value_cheating = false;
+		// TODO Auto-generated method stub
+		int r = rand.nextInt(10) + 1;
+		if (0 <= r && r <= GameOver.POSITIVE_PERCENT)
+			cheating = false;
+		else if (GameOver.POSITIVE_PERCENT < r && r <= GameOver.NEGATIVE_PERCENT) {
+			cheating = true;
+		}
+		isnt_value_cheating = false;
 
-	   }
+	}
 
 	private void x_is_correct(int r) {
 		// TODO Auto-generated method stub
@@ -184,7 +190,7 @@ public class GameOver {
 		if (!quetioning && count < GameOver.ALL_COUNT)
 			quetioning = true;
 		else if (count >= GameOver.ALL_COUNT) {
-			quetioning = false;// 현재 라운드가 아니고, 갖가지 에니메이션 오답 처리를 하는 과정임을 의미함
+			quetioning = false;
 			isnt_value_cheating = true;
 
 		}
@@ -201,7 +207,7 @@ public class GameOver {
 			} else if (round_interval >= 600) {
 				count = 0;// 인터벌이 다 됬을시 다시 초기화 하는 것
 				round_interval = 0; // 인터벌도 초기화 해준다.
-				isRound = false; 
+				isRound = false; // 현재 라운드가 아니고, 갖가지 에니메이션 오답 처리를 하는 과정임을 의미함
 				round++;
 			}
 			return true;
@@ -224,6 +230,8 @@ public class GameOver {
 		// TODO Auto-generated method stub
 		if (already_killed)
 			return;
+		else
+			remain = ch_list.size();// 플레이어 포함 다 죽을 경우 해당 등수를 보여주기 위해서 변수를 저장한 것이다.
 		already_killed = true;
 
 		Pan pan = null;
@@ -255,6 +263,9 @@ public class GameOver {
 
 			}
 		}
+		if (ch_list.size() == 1 && ch_list.get(0) == ch_m.ch_user) {
+			win = true;
+		}
 
 		// System.out.println(ch_list.size());
 
@@ -276,16 +287,78 @@ public class GameOver {
 		g.drawString(quiz_r_m.get(round), 640 - fontmet.stringWidth(quiz_r_m.get(round)) / 2 + 15, 10 + 20);
 
 	}
-	public void end_game(Graphics g ) {
-		String str = String.format("당신은 %d등입니다.", ch_list.size()+1);
-		String lol = "ㅋㅋㅋㅋㅋㅋ";
+	
+
+	public void end_game(Graphics g) {
+		Font font1 = new Font("굴림", 1, 60);
+		g.setFont(font1);
+		String str=null, lol=null;
+		if (win) {
+			str = "축하합니다. 1등입니다.";
+			lol = "ㅎㅎㅎㅎㅎㅎㅎㅎ GG";
+
+		} else if (gameover) {
+
+			if (ch_list.size() == 0)
+
+				str = String.format("당신은 %d등입니다.", remain);
+			else
+				str = String.format("당신은 %d등입니다.", ch_list.size() + 1);
+
+			lol = "ㅋㅋㅋㅋㅋㅋ";
+
+		}
 		fontmet = g.getFontMetrics();
 		g.setColor(new Color(0, 0, 0, 126));
-		g.drawString(str, 100, 200);
+		g.fillRect(0, MyConst.GAME_H / 2 - fontmet.getHeight() * 3, MyConst.GAME_W + 15, fontmet.getHeight() * 7);
+		g.setColor(Color.WHITE);
+		g.drawString(str, MyConst.GAME_W / 2 - fontmet.stringWidth(str) / 2, MyConst.GAME_H / 2);
+		g.drawString(lol, MyConst.GAME_W / 2 - fontmet.stringWidth(lol) / 2, MyConst.GAME_H / 2 + fontmet.getHeight());
+	}
+	
+	
+	
+	public void lets_check_munje(Graphics g) {
+		if(this.quetioning) 
+			return;
+		Pan correct_anwser;
+		Pan not_co_anwser;
+		Point start_point;
+		int x,y;
+		Image win,lose;
+		
+		if(quiz_r_c.get(round).equals("O")) {
+			correct_anwser = ch_m.getOpan();
+			not_co_anwser = ch_m.getXpan();
+		}else {
+			correct_anwser = ch_m.getXpan();
+			not_co_anwser = ch_m.getOpan();
+		}
+		
+		win = Images.WIN1;
+		lose = Images.LOSE1;
+		start_point = correct_anwser.getFirst_Point();
+		x= start_point.x + correct_anwser.WIDTH/2 - win.getWidth(null)/2;
+		y = start_point.y + correct_anwser.HEIGHT/2 - win.getHeight(null)/2;
+		g.drawImage(win, x, y,null);
+		
+		start_point = not_co_anwser.getFirst_Point();
+		x= start_point.x + not_co_anwser.WIDTH/2 - win.getWidth(null)/2;
+		y = start_point.y + not_co_anwser.HEIGHT/2 - win.getHeight(null)/2;
+		g.drawImage(lose, x, y, null);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			
+		
 		
 	}
-	public void show_correct_img(Graphics g) {
-		
-	}
-
+	
+	
 }

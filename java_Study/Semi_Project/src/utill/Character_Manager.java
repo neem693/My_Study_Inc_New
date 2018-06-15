@@ -299,5 +299,6 @@ public class Character_Manager {
 	public Pan getXpan() {
 		return xpan;
 	}
+	
 
 }

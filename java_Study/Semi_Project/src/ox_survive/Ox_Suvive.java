@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import images.Images;
+import main.MyConst;
 import pv.Character_ox;
 import utill.Character_Manager;
 import utill.Pan;
@@ -122,7 +123,7 @@ public class Ox_Suvive extends JFrame {
 		}
 		if(!gameover.isRound)
 			gameover.nextRound();
-		if(gameover.gameover)
+		if(gameover.gameover||gameover.win)
 			timer.stop();
 
 		// gameover.
@@ -222,10 +223,10 @@ public class Ox_Suvive extends JFrame {
 				chManager.draw(g);
 				gameover.draw_count(g);
 				gameover.munje_show(g);
-				if(gameover.gameover)
+				if(gameover.gameover||gameover.win)
 					gameover.end_game(g);
-				if(!gameover.quetioning&&!gameover.gameover) {
-					gameover.show_correct_img(g);
+				if(!gameover.quetioning) {
+					gameover.lets_check_munje(g);
 				}
 
 				// 그리기 테스트 이다.

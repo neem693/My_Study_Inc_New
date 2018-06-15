@@ -1,10 +1,12 @@
 package images;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public class Images {
 	public static BufferedImage Back_user;
@@ -18,6 +20,8 @@ public class Images {
 	public static BufferedImage EXIT;
 	public static BufferedImage START;
 	
+	public static Image WIN1;
+	public static Image LOSE1;
 
 
 
@@ -32,6 +36,8 @@ public class Images {
 			MAIN_BACK = ImageIO.read(new File("src/images/main_back.png"));
 			EXIT = ImageIO.read(new File("src/images/exit.png"));
 			START = ImageIO.read(new File("src/images/start.png"));
+			LOSE1 = new ImageIcon("src/images/살인태클.gif").getImage();
+			WIN1 = new ImageIcon("src/images/잠수함.gif").getImage();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
