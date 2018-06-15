@@ -33,6 +33,8 @@ public class TEST extends JFrame {
 				// TODO Auto-generated method stub
 				super.paintComponent(g);
 				g.drawImage(Images.LOSE1, 0, 0,this);
+				g.drawImage(Images.LOSE2, 0, 200, this);
+				g.drawImage(Images.WIN2, 0, 400, this);
 				
 			}
 		};

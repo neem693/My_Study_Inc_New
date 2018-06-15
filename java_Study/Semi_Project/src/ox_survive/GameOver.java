@@ -26,9 +26,11 @@ public class GameOver {
 	MunJe munje;
 	Character_Manager ch_m;
 	Timer timer;
-	int s;
+	int s;//캐릭터들을 어레이 리스트로 불러올때, 끊기지 않기 위해서 전역변수를 준것
 	int round;
 	int remain;
+	int w,l; //오답체크 할시, 해당하는 이미지를 랜덤으로 불러오기 위해 난수를 받아와야 하는데, 그것을 기억해야 할 전역변수가 필요하다.
+	
 
 	Random rand;
 	ArrayList<Character_ox> ch_list;
@@ -52,6 +54,7 @@ public class GameOver {
 	boolean cheating;
 	boolean isnt_value_cheating;
 	boolean win = false;
+	boolean checking = false;
 
 
 	int round_interval;
@@ -187,8 +190,12 @@ public class GameOver {
 			s = 0;
 			isRound = true;
 		}
-		if (!quetioning && count < GameOver.ALL_COUNT)
+		if (!quetioning && count < GameOver.ALL_COUNT) {
 			quetioning = true;
+			checking =false;
+
+			
+		}
 		else if (count >= GameOver.ALL_COUNT) {
 			quetioning = false;
 			isnt_value_cheating = true;
@@ -325,7 +332,7 @@ public class GameOver {
 		Pan not_co_anwser;
 		Point start_point;
 		int x,y;
-		Image win,lose;
+		Image win=null,lose=null;
 		
 		if(quiz_r_c.get(round).equals("O")) {
 			correct_anwser = ch_m.getOpan();
@@ -334,17 +341,53 @@ public class GameOver {
 			correct_anwser = ch_m.getXpan();
 			not_co_anwser = ch_m.getOpan();
 		}
+		if(!checking) {
+			w  = rand.nextInt(Images.WIN_L)+1;
+			l  = rand.nextInt(Images.LOSE_L)+1;
+		}
+		checking = true;
 		
-		win = Images.WIN1;
-		lose = Images.LOSE1;
+		switch (w) {
+		case 1:
+			win = Images.WIN1;
+			break;
+		case 2:
+			win = Images.WIN2;
+			break;
+		case 3:
+			win = Images.WIN3;
+			break;
+		case 4:
+			win = Images.WIN4;
+			break;
+		case 5:
+			win = Images.WIN5;
+			break;
+		case 6:
+			win = Images.WIN6;
+			break;
+		}
+		
+		switch (l) {
+		case 1:
+			lose = Images.LOSE1;
+			break;
+		case 2:
+			lose = Images.LOSE2;
+			break;
+		case 3:
+			lose = Images.LOSE3;
+			break;
+		}
+
 		start_point = correct_anwser.getFirst_Point();
 		x= start_point.x + correct_anwser.WIDTH/2 - win.getWidth(null)/2;
 		y = start_point.y + correct_anwser.HEIGHT/2 - win.getHeight(null)/2;
 		g.drawImage(win, x, y,null);
 		
 		start_point = not_co_anwser.getFirst_Point();
-		x= start_point.x + not_co_anwser.WIDTH/2 - win.getWidth(null)/2;
-		y = start_point.y + not_co_anwser.HEIGHT/2 - win.getHeight(null)/2;
+		x= start_point.x + not_co_anwser.WIDTH/2 - lose.getWidth(null)/2;
+		y = start_point.y + not_co_anwser.HEIGHT/2 - lose.getHeight(null)/2;
 		g.drawImage(lose, x, y, null);
 		
 		

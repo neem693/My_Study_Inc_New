@@ -67,7 +67,7 @@ public class Character_Manager {
 				opan.ch_priority_lo[count_o].setCh(ch);
 				opan.ch_priority_lo[count_o].setBefore_ch(ch);
 
-				System.out.println(opan.ch_priority_lo[count_o].getBefore_ch());
+//				System.out.println(opan.ch_priority_lo[count_o].getBefore_ch());
 				ch.setCurrent_pan(opan.ch_priority_lo[count_o]);
 				count_o++;
 
@@ -157,7 +157,7 @@ public class Character_Manager {
 			if (ch_user.isMoving()) {
 				move_step(ch_user);
 			}
-		System.out.println(ch_move_list.size());
+		//System.out.println(ch_move_list.size());
 
 		return false;
 	}
