@@ -385,5 +385,12 @@ public class GameOver {
 		g.drawImage(lose, x, y, null);
 
 	}
+	public void gameRestart(Timer timer) {
+		gameover= false;
+		win = false;
+		timer.restart();
+		
+	}
+	
 
 }

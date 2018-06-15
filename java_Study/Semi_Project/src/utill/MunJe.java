@@ -35,7 +35,7 @@ public class MunJe {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		data = new String[100][3];
+		data = new String[110][3];
 		int i = 0;
 		while (true) {
 		

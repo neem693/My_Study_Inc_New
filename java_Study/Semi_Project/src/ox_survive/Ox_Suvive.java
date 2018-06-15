@@ -81,7 +81,7 @@ public class Ox_Suvive extends JFrame {
 		
 		
 		jbt_start.setBounds(0, 285, 250, 350);
-		jbt_exit.setBounds(1030, 286, 250, 350);
+		jbt_exit.setBounds(1030, 285, 250, 350);
 		
 		main_ox.setLayout(null);
 		main_ox.add(jbt_start,"West");
@@ -150,6 +150,11 @@ public class Ox_Suvive extends JFrame {
 						chManager.user_goto(opan, chManager.getCh_user());
 						System.out.println("작동중");
 					}
+					
+				}
+				if(key == KeyEvent.VK_SPACE&&(gameover.gameover||gameover.win)) {
+					gameover.gameRestart(timer);
+					System.out.println("다시시작");
 				}
 
 			}
