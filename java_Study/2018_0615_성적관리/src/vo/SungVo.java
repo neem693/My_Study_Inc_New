@@ -12,6 +12,17 @@ public class SungVo {
 	
 	
 	
+	public SungVo(int idx, String name, int kor, int eng, int mat, int tot, String avg, int rank) {
+		super();
+		this.idx = idx;
+		this.name = name;
+		this.kor = kor;
+		this.eng = eng;
+		this.mat = mat;
+		this.tot = tot;
+		this.avg = avg;
+		this.rank = rank;
+	}
 	public int getIdx() {
 		return idx;
 	}

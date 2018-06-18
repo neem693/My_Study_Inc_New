@@ -1,8 +1,6 @@
 package utill;
 
-import java.awt.Graphics;
 import java.awt.Point;
-import java.util.ArrayList;
 
 import main.MyConst;
 
