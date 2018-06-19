@@ -63,3 +63,7 @@ insert into sungtb values(seq_sungtb_idx.nextVal,'만길동',100,100,100);
 
 select * from sungtb_view;
 			
+select name from sungtb_view;
+
+update sungtb set kor = 80,eng = 90, mat= 70 where idx=6;
+update sungtb set name = '빵길동',kor=80,eng=70, mat=70 where idx =6;

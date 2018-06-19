@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -71,8 +72,14 @@ public class Main_Sung extends JFrame {
 
 	private void display_input_data() {
 		// TODO Auto-generated method stub
+		if(current_pos>sung_list.size()-1)
+			current_pos=sung_list.size()-1;
 		if (current_pos == -1)
 			return;
+		
+			
+			
+
 		SungVo vo = sung_list.get(current_pos);
 
 		jtf_no.setText(String.valueOf(vo.getIdx()));
@@ -83,16 +90,16 @@ public class Main_Sung extends JFrame {
 		jtf_tot.setText(String.valueOf(vo.getTot()));
 		jtf_avg.setText(String.valueOf(vo.getAvg()));
 		jtf_rank.setText(String.valueOf(vo.getRank()));
-		
+
 		check_enable_buttons();
 
 	}
 
 	private void check_enable_buttons() {
 		// TODO Auto-generated method stub
-		jbt_prev.setEnabled(current_pos>0);
-		jbt_next.setEnabled(current_pos<sung_list.size()-1);
-		
+		jbt_prev.setEnabled(current_pos > 0);
+		jbt_next.setEnabled(current_pos < sung_list.size() - 1);
+
 	}
 
 	// JTable 배치 모델정의
@@ -211,6 +218,13 @@ public class Main_Sung extends JFrame {
 		// 버튼이벤트 초기화
 		init_button_event();
 
+		// 읽기전용속성
+		jtf_no.setEditable(false);
+
+		jtf_avg.setEditable(false);
+		jtf_rank.setEditable(false);
+		jtf_tot.setEditable(false);
+
 	}
 
 	private void init_button_event() {
@@ -268,16 +282,217 @@ public class Main_Sung extends JFrame {
 
 	protected void on_delete() {
 		// TODO Auto-generated method stub
+		sung_delete();
+		
+		//1. 데이터가 1개만 남았을 경우
+		
+		
+		
+		//2.마지막 데이터 삭제시
 
+	}
+
+	private void sung_delete() {
+		// TODO Auto-generated method stub
+		int idx = Integer.parseInt(jtf_no.getText());
+		SungVo vo = new SungVo();
+		vo.setIdx(idx);
+		
+		int res = SungTBDao.getInstance().delete(vo);
+		display_total_list();
+		display_input_data();
+		
 	}
 
 	protected void on_update() {
 		// TODO Auto-generated method stub
+		if (bAdd) {
+			// 등록작업
+			sung_insert();
+		} else {
+			// 수정작업
+			sung_update();
+
+		}
+
+	}
+
+	private void sung_update() {
+		// TODO Auto-generated method stub
+		int result = JOptionPane.showConfirmDialog(this, "정말 수정하시겠습니까?","수정",JOptionPane.YES_NO_OPTION);
+		if(result != JOptionPane.YES_OPTION) {
+			display_input_data();
+			return;
+		}
+		String name = jtf_name.getText().trim();
+		String str_kor = jtf_kor.getText().trim();
+		String str_eng = jtf_eng.getText().trim();
+		String str_mat = jtf_mat.getText().trim();
+		String str_idx = jtf_no.getText().trim();
+
+		if (name.isEmpty()) {// 이름항목이 비어있으면
+
+			JOptionPane.showMessageDialog(this, "이름을 입력하세요");
+			jtf_name.requestFocus();
+			return;
+
+		}
+		if (str_kor.isEmpty()) {// 국어항목이 비어있으면
+
+			JOptionPane.showMessageDialog(this, "국어점수를 입력하세요");
+			jtf_kor.requestFocus();
+			return;
+
+		}
+		if (str_eng.isEmpty()) {// 영어항목이 비어있으면
+
+			JOptionPane.showMessageDialog(this, "영어점수를 입력하세요");
+			jtf_eng.requestFocus();
+			return;
+
+		}
+		if (str_mat.isEmpty()) {// 수학항목이 비어있으면
+
+			JOptionPane.showMessageDialog(this, "수학점수를 입력하세요");
+			jtf_mat.requestFocus();
+			return;
+
+		}
+		System.out.println("업데이트 잘 작동중....");
+		int idx = Integer.parseInt(str_idx);
+		int kor = Integer.parseInt(str_kor);
+		int eng = Integer.parseInt(str_eng);
+		int mat = Integer.parseInt(str_mat);
+		
+		
+		
+		SungVo vo = new SungVo();
+		vo.setIdx(idx);
+		vo.setName(name);
+		vo.setKor(kor);
+		vo.setEng(eng);
+		vo.setMat(mat);
+		
+		//SungTBDao 에게 DB insert요청
+		int res = SungTBDao.getInstance().update(vo);
+		
+		
+		display_total_list();
+		display_input_data();
+		
+
+	}
+
+	private void sung_insert() {
+		// TODO Auto-generated method stub
+		String name = jtf_name.getText().trim();
+		String str_kor = jtf_kor.getText().trim();
+		String str_eng = jtf_eng.getText().trim();
+		String str_mat = jtf_mat.getText().trim();
+
+		if (name.isEmpty()) {// 이름항목이 비어있으면
+
+			JOptionPane.showMessageDialog(this, "이름을 입력하세요");
+			jtf_name.requestFocus();
+			return;
+
+		}
+		if (str_kor.isEmpty()) {// 국어항목이 비어있으면
+
+			JOptionPane.showMessageDialog(this, "국어점수를 입력하세요");
+			jtf_kor.requestFocus();
+			return;
+
+		}
+		if (str_eng.isEmpty()) {// 영어항목이 비어있으면
+
+			JOptionPane.showMessageDialog(this, "영어점수를 입력하세요");
+			jtf_eng.requestFocus();
+			return;
+
+		}
+		if (str_mat.isEmpty()) {// 수학항목이 비어있으면
+
+			JOptionPane.showMessageDialog(this, "수학점수를 입력하세요");
+			jtf_mat.requestFocus();
+			return;
+
+		}
+		
+		int kor = Integer.parseInt(str_kor);
+
+		int eng = Integer.parseInt(str_eng);
+		int mat = Integer.parseInt(str_mat);
+		
+		SungVo vo = new SungVo();
+		vo.setName(name);
+		vo.setKor(kor);
+		vo.setEng(eng);
+		vo.setMat(mat);
+		
+		//SungTBDao 에게 DB insert요청
+		int res = SungTBDao.getInstance().insert(vo);
+		
+		//Db에서 변경된상태의 모든 데이터 가져오기
+		display_total_list();
+		//현재 등록된 데이터 정보 출력
+		current_pos = sung_list.size()-1;
+		display_input_data();
+		
+		//작업상태 초기상태로 전환
+		bAdd = false;
+		jbt_new.setText("추가");
+		jbt_update.setText("수정");
+		
+		
+
 
 	}
 
 	protected void on_new() {
 		// TODO Auto-generated method stub
+		bAdd = !bAdd;
+
+		if (bAdd) {
+			// 입력준비
+			clear_input();
+			jbt_next.setEnabled(false);
+			jbt_prev.setEnabled(false);
+			
+		} else {
+			// 입력취소
+			jbt_next.setEnabled(true);
+			jbt_prev.setEnabled(true);
+			
+			if (sung_list.size() == 0)
+				clear_input();
+			else
+				display_input_data();
+
+		}
+
+		jbt_new.setText(bAdd ? "취소" : "추가");
+		jbt_update.setText(bAdd ? "등록" : "수정");
+
+	}
+
+	private void display_input() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void clear_input() {
+		// TODO Auto-generated method stub
+		jtf_no.setText("");
+		jtf_name.setText("");
+		jtf_kor.setText("");
+		jtf_eng.setText("");
+		jtf_mat.setText("");
+		jtf_tot.setText("");
+		jtf_avg.setText("");
+		jtf_rank.setText("");
+		// 입력포커스 이름 항목에 가져다 놓는다.
+		jtf_name.requestFocus();
 
 	}
 

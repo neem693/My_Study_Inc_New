@@ -23,6 +23,9 @@ public class SungVo {
 		this.avg = avg;
 		this.rank = rank;
 	}
+	public SungVo() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getIdx() {
 		return idx;
 	}
