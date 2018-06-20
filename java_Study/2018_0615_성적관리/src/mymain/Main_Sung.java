@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -72,8 +74,10 @@ public class Main_Sung extends JFrame {
 
 	private void display_input_data() {
 		// TODO Auto-generated method stub
-		if(current_pos>sung_list.size()-1)
+		
+		if(current_pos>sung_list.size()-1)//성리스트보다 하나적은 값이 현재 커런트 포스라면
 			current_pos=sung_list.size()-1;
+		check_enable_buttons();
 		if (current_pos == -1)
 			return;
 		
@@ -90,15 +94,23 @@ public class Main_Sung extends JFrame {
 		jtf_tot.setText(String.valueOf(vo.getTot()));
 		jtf_avg.setText(String.valueOf(vo.getAvg()));
 		jtf_rank.setText(String.valueOf(vo.getRank()));
-
+		
+		
+		
 		check_enable_buttons();
+		
+		jtb_display.setRowSelectionInterval(current_pos, current_pos);
+		
 
 	}
 
 	private void check_enable_buttons() {
 		// TODO Auto-generated method stub
-		jbt_prev.setEnabled(current_pos > 0);
-		jbt_next.setEnabled(current_pos < sung_list.size() - 1);
+		System.out.println(sung_list.size());
+		jbt_prev.setEnabled(current_pos > 0 && !(sung_list.size()==0));
+		jbt_next.setEnabled(current_pos < sung_list.size() - 1 && !(sung_list.size()==0));
+		
+		jbt_delete.setEnabled(current_pos != -1);
 
 	}
 
@@ -282,6 +294,10 @@ public class Main_Sung extends JFrame {
 
 	protected void on_delete() {
 		// TODO Auto-generated method stub
+		int res = JOptionPane.showConfirmDialog(this, "정말 삭제하시겠습니까?" + sung_list.get(current_pos).getIdx() + "번", "삭제", JOptionPane.YES_NO_CANCEL_OPTION);
+		if(res != JOptionPane.YES_OPTION) {
+			return;
+		}
 		sung_delete();
 		
 		//1. 데이터가 1개만 남았을 경우
@@ -504,6 +520,16 @@ public class Main_Sung extends JFrame {
 		jsp.setPreferredSize(new Dimension(400, 200));
 
 		this.add(jsp, "South");
+		
+		jtb_display.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				super.mousePressed(e);
+				current_pos = jtb_display.getSelectedRow();
+				display_input_data();
+			}
+		});
 
 	}
 
