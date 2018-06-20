@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import images.Images;
 import utill.Pan;
 
-public class Character_User extends Character_ox {
+public class Character_User extends Character_ox  {
 	
 	
 	

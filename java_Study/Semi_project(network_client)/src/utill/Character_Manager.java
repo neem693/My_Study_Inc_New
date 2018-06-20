@@ -42,76 +42,76 @@ public class Character_Manager {
 		this.how_many = how_many;
 		this.opan = opan;
 		this.xpan = xpan;
-		int x, y;
-		int count_x = 0, count_o = 0;
-		int[] user_count = new int[how_many_user];
-		int count = 0;
+//		int x, y;
+//		int count_x = 0, count_o = 0;
+//		int[] user_count = new int[how_many_user];
+//		int count = 0;
 
-		make_user_count(user_count);
-
-		Character_ox ch = null;
-
-		for (int i = 0; i < this.how_many; i++) {
-			if (i % 2 == 0) {
-				x = opan.ch_priority_lo[count_o].getCharacter_start_w();
-				y = opan.ch_priority_lo[count_o].getCharacter_start_h();
-				opan.ch_priority_lo[count_o].is_hear = true;
-
-				if (user_count[count] == i) {
-					ch = new Character_User(x, y);
-					ch_user = ch;
-				} else {
-					ch = new Character_ox(x, y);
-				}
-				ch.setCurrentLocation(Pan.OPAN);
-				opan.ch_priority_lo[count_o].setCh(ch);
-				opan.ch_priority_lo[count_o].setBefore_ch(ch);
-
-//				System.out.println(opan.ch_priority_lo[count_o].getBefore_ch());
-				ch.setCurrent_pan(opan.ch_priority_lo[count_o]);
-				count_o++;
-
-				// 그전 위치 기억
-
-			} else {
-				x = xpan.ch_priority_lo[count_x].getCharacter_start_w();
-				y = xpan.ch_priority_lo[count_x].getCharacter_start_h();
-				xpan.ch_priority_lo[count_x].is_hear = true;
-
-				if (user_count[count] == i) {
-					ch = new Character_User(x, y);
-					ch_user = ch;
-				} else {
-					ch = new Character_ox(x, y);
-				}
-				ch.setCurrentLocation(Pan.XPAN);
-				xpan.ch_priority_lo[count_x].setCh(ch);
-				xpan.ch_priority_lo[count_x].setBefore_ch(ch);
-				ch.setCurrent_pan(xpan.ch_priority_lo[count_x]);
-				count_x++;
-			}
-
-			ch_list.add(ch);
-
-		}
-		// for(int i =0; )
-		// this.ch_list = new
+//		make_user_count(user_count);
+//
+//		Character_ox ch = null;
+//
+//		for (int i = 0; i < this.how_many; i++) {
+//			if (i % 2 == 0) {
+//				x = opan.ch_priority_lo[count_o].getCharacter_start_w();
+//				y = opan.ch_priority_lo[count_o].getCharacter_start_h();
+//				opan.ch_priority_lo[count_o].is_hear = true;
+//
+//				if (user_count[count] == i) {
+//					ch = new Character_User(x, y);
+//					ch_user = ch;
+//				} else {
+//					ch = new Character_ox(x, y);
+//				}
+//				ch.setCurrentLocation(Pan.OPAN);
+//				opan.ch_priority_lo[count_o].setCh(ch);
+//				opan.ch_priority_lo[count_o].setBefore_ch(ch);
+//
+////				System.out.println(opan.ch_priority_lo[count_o].getBefore_ch());
+//				ch.setCurrent_pan(opan.ch_priority_lo[count_o]);
+//				count_o++;
+//
+//				// 그전 위치 기억
+//
+//			} else {
+//				x = xpan.ch_priority_lo[count_x].getCharacter_start_w();
+//				y = xpan.ch_priority_lo[count_x].getCharacter_start_h();
+//				xpan.ch_priority_lo[count_x].is_hear = true;
+//
+//				if (user_count[count] == i) {
+//					ch = new Character_User(x, y);
+//					ch_user = ch;
+//				} else {
+//					ch = new Character_ox(x, y);
+//				}
+//				ch.setCurrentLocation(Pan.XPAN);
+//				xpan.ch_priority_lo[count_x].setCh(ch);
+//				xpan.ch_priority_lo[count_x].setBefore_ch(ch);
+//				ch.setCurrent_pan(xpan.ch_priority_lo[count_x]);
+//				count_x++;
+//			}
+//
+//			ch_list.add(ch);
+//
+//		}
+//		// for(int i =0; )
+//		// this.ch_list = new
 	}
 
-	private void make_user_count(int[] user_count) {
-		// TODO Auto-generated method stub
-		// user_count = new int[how_many_user];
-		int check;
-		AGAIN: for (int i = 0; i < user_count.length; i++) {
-			check = rand.nextInt(Character_Manager.HEAVY);
-			for (int j = 0; j < i; j++)
-				if (check == user_count[j]) {
-					i -= 1;
-					continue AGAIN;
-				}
-			user_count[i] = check;
-		}
-	}
+//	private void make_user_count(int[] user_count) {
+//		// TODO Auto-generated method stub
+//		// user_count = new int[how_many_user];
+//		int check;
+//		AGAIN: for (int i = 0; i < user_count.length; i++) {
+//			check = rand.nextInt(Character_Manager.HEAVY);
+//			for (int j = 0; j < i; j++)
+//				if (check == user_count[j]) {
+//					i -= 1;
+//					continue AGAIN;
+//				}
+//			user_count[i] = check;
+//		}
+//	}
 
 	public boolean move() {
 		// TODO Auto-generated method stub

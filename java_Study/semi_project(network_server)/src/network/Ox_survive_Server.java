@@ -2,6 +2,8 @@ package network;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,8 +18,11 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import main.MyConst;
 import pv.Character_User;
 import pv.Character_ox;
+import utill.Character_Manager;
+import utill.MunJe;
 import utill.Pan;
 
 public class Ox_survive_Server extends JFrame {
@@ -31,9 +36,11 @@ public class Ox_survive_Server extends JFrame {
 
 	ArrayList<String> user_list;
 
-	Pan opan, xpan;
+	Pan opan, xpan;//pan//
+	Character_Manager ch_m;
 
 	boolean all_ready;
+	boolean start = false;
 
 	class ReadThread extends Thread {
 		Socket child;
@@ -163,6 +170,7 @@ public class Ox_survive_Server extends JFrame {
 		this.setLocation(200, 100);
 		init_display();
 		init_server();
+		init_event();
 
 		// this.setBounds(200, 100, 400, 300);
 		this.pack();
@@ -171,18 +179,73 @@ public class Ox_survive_Server extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	private void init_event() {
+		// TODO Auto-generated method stub
+		ActionListener action = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (jbt_start == e.getSource()) {
+					Ox_Survive_Data data = new Ox_Survive_Data();
+					data.protocol = Ox_Survive_Data.GAME_START;
+					////////////////////////
+					// 맨처음에 필요한 데이터 여기에 넣어라//
+					////////////////////////
+					send_all_client(data);
+					start = true;///// 나중에 쓸 때 있으면 써라. 이건 그냥 예비용으로 만들어 놓은 냠냠이 start다.
+					check_view();
+					
+					
+					
+					///게임 초기화 해서 보내기
+					init_game_fisrt();
+					data = new Ox_Survive_Data();
+					data.protocol = Ox_Survive_Data.INITIALIZE_GAME;
+					data.opan = opan;
+					data.xpan = xpan;
+					data.ch_list = ch_m.ch_list;
+
+				}
+
+			}
+		};
+		jbt_start.addActionListener(action);
+	}
+
+	protected void init_game_fisrt() {
+		// TODO Auto-generated method stub
+		int border = (int) (MyConst.GAME_W * 0.05);
+		int width = Pan.WIDTH;
+		int height = Pan.HEIGHT;
+
+		opan = new Pan(Pan.OPAN, 0 + border, 0 + border);
+		xpan = new Pan(Pan.XPAN, MyConst.GAME_W - border - width, 0 + border);
+		ch_m = new Character_Manager(opan, xpan, Character_Manager.HEAVY, 1);
+		MunJe munje;
+		try {
+			munje = new MunJe();
+			munje.random();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
 	public void check_all_ready() {
 		// TODO Auto-generated method stub
 		int i = 0;
 
 		for (ReadThread rt : socket_list) {
-		//	System.out.println(rt.ready);
+			// System.out.println(rt.ready);
 			if (rt.ready) {
 				i++;
 			}
 		}
 
-		System.out.println(i==socket_list.size());
+		// System.out.println(i==socket_list.size());
 		if (i == socket_list.size())
 			all_ready = true;
 		else
@@ -194,10 +257,18 @@ public class Ox_survive_Server extends JFrame {
 
 	private void check_view() {
 		// TODO Auto-generated method stub
-		if (!(socket_list.size() == 0) && all_ready) {
-			jbt_start.setEnabled(true);
-		} else
+		if (start) {
 			jbt_start.setEnabled(false);
+			jbt_start.setText("시작중...");
+		}
+		else if (!(socket_list.size() == 0) && all_ready) {
+			jbt_start.setEnabled(true);
+			jbt_start.setText("시작");
+		} else {
+			jbt_start.setEnabled(false);
+			jbt_start.setText("시작");
+		}
+		start = false;
 	}
 
 	public void send_user_list() {

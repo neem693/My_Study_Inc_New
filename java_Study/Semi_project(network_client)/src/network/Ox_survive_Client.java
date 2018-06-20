@@ -38,6 +38,7 @@ public class Ox_survive_Client extends JFrame {
 	JButton ready_nick_set;
 	boolean connect = false;
 	boolean ready = false;
+	
 
 	JTextArea jtext;
 	JTextField jserver_addr;
@@ -193,8 +194,7 @@ public class Ox_survive_Client extends JFrame {
 							show_the_message(data.nick_name + "¥‘¿Ã ≈¿Â«œºÃΩ¿¥œ¥Ÿ. §ª§ª");
 							break;
 						case Ox_Survive_Data.GAME_START:
-							
-							
+							ox_survive = new Ox_Suvive();
 							ox_survive.send_message(data);
 							
 							break;	

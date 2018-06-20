@@ -13,7 +13,7 @@ import utill.Character_pan;
 import utill.Item;
 import utill.Pan;
 
-public class Character_ox extends Item {
+public class Character_ox extends Item  {
 
 	final static int CHARACTER_COUNT = 4;
 	String currentLocation;

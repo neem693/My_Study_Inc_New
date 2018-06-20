@@ -108,12 +108,12 @@ public class GameOver {
 			if (ch_m.ch_move_list.size() >= Character_Manager.MAX_MOVING) {
 				break;
 			}
-			for (Character_ox coh : ch_list) {
-				if (coh.isMoving())
-					m++;
-				if (m >= Character_Manager.MAX_MOVING)
-					break;
-			}
+//			for (Character_ox coh : ch_list) {
+//				if (coh.isMoving())
+//					m++;
+//				if (m >= Character_Manager.MAX_MOVING)
+//					break;
+//			}
 
 			if (i == ch_m.MAX_MOVING) {
 				// i=0;

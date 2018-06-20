@@ -29,8 +29,8 @@ import utill.Pan;
 public class Ox_Suvive extends JFrame {
 	public static int gap_w = (int) (MyConst.GAME_W * MyConst.XPAN_W * 0.1 * 0.75);
 	JPanel full;
-	JPanel main_ox;
-	JPanel show_panel;
+//	JPanel main_ox;
+	//JPanel show_panel;
 	Pan xpan;
 	Pan opan;
 	Character_Manager chManager;
@@ -39,20 +39,20 @@ public class Ox_Suvive extends JFrame {
 	Timer timer;
 	GameOver gameover;
 	
-	CardLayout card;
+	//CardLayout card;
 	
-	JButton jbt_start;
-	JButton jbt_exit;
+//	JButton jbt_start;
+//	JButton jbt_exit;
 
 	public Ox_Suvive() {
 		super("내가만든 윈도우");
 		
-		card = new CardLayout();
-		show_panel = new JPanel(card);
-		show_panel.setPreferredSize(new Dimension(MyConst.GAME_W,MyConst.GAME_H));
+		//card = new CardLayout();
+		//show_panel = new JPanel(card);
+		//show_panel.setPreferredSize(new Dimension(MyConst.GAME_W,MyConst.GAME_H));
 
 		init_pan();
-		init_button();
+		//init_button();
 		
 		init_event();
 		init_game();
@@ -63,32 +63,32 @@ public class Ox_Suvive extends JFrame {
 		this.pack();
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		card.show(show_panel, "main");
-
+		//card.show(show_panel, "main");
+		timer.start();//위치변경 예정
 	}
 
-	private void init_button() {
-		// TODO Auto-generated method stub
-		jbt_start = new JButton(new ImageIcon(Images.START));
-		jbt_exit = new JButton(new ImageIcon(Images.EXIT));
-		
-		jbt_exit.setFocusPainted(false);
-		jbt_exit.setBorderPainted(false);
-		jbt_exit.setContentAreaFilled(false);
-		
-		jbt_start.setFocusPainted(false);
-		jbt_start.setBorderPainted(false);
-		jbt_start.setContentAreaFilled(false);
-		
-		
-		jbt_start.setBounds(0, 285, 250, 350);
-		jbt_exit.setBounds(1030, 285, 250, 350);
-		
-		main_ox.setLayout(null);
-		main_ox.add(jbt_start,"West");
-		main_ox.add(jbt_exit,"East");
-		
-	}
+//	private void init_button() {
+//		// TODO Auto-generated method stub
+//		jbt_start = new JButton(new ImageIcon(Images.START));
+//		jbt_exit = new JButton(new ImageIcon(Images.EXIT));
+//		
+//		jbt_exit.setFocusPainted(false);
+//		jbt_exit.setBorderPainted(false);
+//		jbt_exit.setContentAreaFilled(false);
+//		
+//		jbt_start.setFocusPainted(false);
+//		jbt_start.setBorderPainted(false);
+//		jbt_start.setContentAreaFilled(false);
+//		
+//		
+//		jbt_start.setBounds(0, 285, 250, 350);
+//		jbt_exit.setBounds(1030, 285, 250, 350);
+//		
+//		main_ox.setLayout(null);
+//		main_ox.add(jbt_start,"West");
+//		main_ox.add(jbt_exit,"East");
+//		
+//	}
 
 	private void init_game() {
 		// TODO Auto-generated method stub
@@ -163,26 +163,26 @@ public class Ox_Suvive extends JFrame {
 		this.addKeyListener(adapter);
 		
 		
-		ActionListener action = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if(jbt_start == e.getSource())
-				{
-					card.show(show_panel, "game");
-					timer.start();
-					Ox_Suvive.this.requestFocusInWindow(true);//이걸 해야지만 해당하는 프레임이 포커스가 된다. 따라서 키 이벤트가 작동한다.
-				}
-				if(jbt_exit == e.getSource())
-				{
-					System.exit(0);
-				}
-			}
-		};
+//		ActionListener action = new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO Auto-generated method stub
+//				if(jbt_start == e.getSource())
+//				{
+//					card.show(show_panel, "game");
+//					timer.start();
+//					Ox_Suvive.this.requestFocusInWindow(true);//이걸 해야지만 해당하는 프레임이 포커스가 된다. 따라서 키 이벤트가 작동한다.
+//				}
+//				if(jbt_exit == e.getSource())
+//				{
+//					System.exit(0);
+//				}
+//			}
+//		};
 		
-		jbt_start.addActionListener(action);
-		jbt_exit.addActionListener(action);
+//		jbt_start.addActionListener(action);
+//		jbt_exit.addActionListener(action);
 		
 		
 		
@@ -268,22 +268,23 @@ public class Ox_Suvive extends JFrame {
 
 
 		full.setPreferredSize(new Dimension(MyConst.GAME_W, MyConst.GAME_H));
-		show_panel.add(full,"game");
+//		show_panel.add(full,"game");
 		
-		main_ox = new JPanel() {
-			@Override
-			protected void paintComponent(Graphics g) {
-				// TODO Auto-generated method stub
-				super.paintComponent(g);
-				g.drawImage(Images.MAIN_BACK, 0, 0, null);
-
-			}
-		};
-		main_ox.setPreferredSize(new Dimension(MyConst.GAME_W,MyConst.GAME_H));
-		show_panel.add(main_ox,"main");
+//		main_ox = new JPanel() {
+//			@Override
+//			protected void paintComponent(Graphics g) {
+//				// TODO Auto-generated method stub
+//				super.paintComponent(g);
+//				g.drawImage(Images.MAIN_BACK, 0, 0, null);
+//
+//			}
+//		};
+//		main_ox.setPreferredSize(new Dimension(MyConst.GAME_W,MyConst.GAME_H));
+//		show_panel.add(main_ox,"main");
 		
 		
-		this.add(show_panel);
+//		this.add(show_panel);
+		this.add(full);
 		
 
 	}

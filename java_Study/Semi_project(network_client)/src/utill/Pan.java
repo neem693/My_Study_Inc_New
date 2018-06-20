@@ -2,11 +2,12 @@ package utill;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import main.MyConst;
 
-public class Pan {
+public class Pan implements Serializable{
 	public static final String OPAN = "O";
 	public static final String XPAN = "X";
 	public static final int WIDTH = (int)(MyConst.GAME_W*MyConst.XPAN_W);
