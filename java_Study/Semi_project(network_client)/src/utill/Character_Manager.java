@@ -36,6 +36,11 @@ public class Character_Manager {
 		ch_move_list = new ArrayList<Character_ox>();
 
 	}
+	public Character_Manager(Pan opan,Pan xpan) {
+		this();
+		this.opan = opan;
+		this.xpan = xpan;
+	}
 
 	public Character_Manager(Pan opan, Pan xpan, int how_many, int how_many_user) {
 		this();
@@ -181,9 +186,12 @@ public class Character_Manager {
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		// 멈춰있는것들을 먼저 그린다.
+		
 		for (Character_ox ch : ch_list) {
 			if (ch.isMoving())
 				ch.draw(g);
+			System.out.println("무빙중이다.");
+			
 		}
 		drawPan(g);
 

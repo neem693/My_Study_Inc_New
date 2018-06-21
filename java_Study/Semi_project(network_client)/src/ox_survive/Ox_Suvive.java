@@ -11,6 +11,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -39,10 +41,15 @@ public class Ox_Suvive extends JFrame {
 	Timer timer;
 	GameOver gameover;
 	
+	ObjectInputStream ios;
+	ObjectOutputStream oos;
+	
 	//CardLayout card;
 	
 //	JButton jbt_start;
 //	JButton jbt_exit;
+
+	
 
 	public Ox_Suvive() {
 		super("내가만든 윈도우");
@@ -51,20 +58,9 @@ public class Ox_Suvive extends JFrame {
 		//show_panel = new JPanel(card);
 		//show_panel.setPreferredSize(new Dimension(MyConst.GAME_W,MyConst.GAME_H));
 
-		init_pan();
-		//init_button();
 		
-		init_event();
-		init_game();
-		init_timer();
-
-		this.setLocation(200, 100);
-		// this.setBounds(200, 100, MyConst.GAME_W, MyConst.GAME_H);
-		this.pack();
-		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//card.show(show_panel, "main");
-		timer.start();//위치변경 예정
+		
 	}
 
 //	private void init_button() {
@@ -90,10 +86,14 @@ public class Ox_Suvive extends JFrame {
 //		
 //	}
 
-	private void init_game() {
+	private void init_game(Ox_Survive_Data data) {
 		// TODO Auto-generated method stub
 		gameover = new GameOver(chManager, full);
-		gameover.nextRound();
+		gameover.setQuiz_r_n(data.getQuiz_r_n());
+		gameover.setQuiz_r_c(data.getQuiz_r_c());
+		gameover.setQuiz_r_m(data.getQuiz_r_m());
+		
+		
 
 	}
 
@@ -197,9 +197,10 @@ public class Ox_Suvive extends JFrame {
 		int width = Pan.WIDTH;
 		int height = Pan.HEIGHT;
 
-		opan = new Pan(Pan.OPAN, 0 + border, 0 + border);
-		xpan = new Pan(Pan.XPAN, MyConst.GAME_W - border - width, 0 + border);
-		chManager = new Character_Manager(opan, xpan, Character_Manager.HEAVY, 1);
+//		opan = new Pan(Pan.OPAN, 0 + border, 0 + border);
+//		xpan = new Pan(Pan.XPAN, MyConst.GAME_W - border - width, 0 + border);
+//		chManager = new Character_Manager(opan, xpan, Character_Manager.HEAVY, 1);
+		//위치이동
 
 		/////////// 테스트
 		// for(int i=0;i<10;i++) {
@@ -222,7 +223,7 @@ public class Ox_Suvive extends JFrame {
 
 				//// 이 때 쯤에 배경화면 하나 추가하자.
 				
-				g.drawImage(Images.BACKGROUND, 0, 0,null);
+				g.drawImage(Images.BACKGROUND.getImage(), 0, 0,null);
 
 				g.drawRect(0 + border, 0 + border, width, height);
 				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);
@@ -235,34 +236,37 @@ public class Ox_Suvive extends JFrame {
 					gameover.lets_check_munje(g);
 				}
 
-				// 그리기 테스트 이다.
-				// for (int i = 0; i < xpan.ch_lo.length; i++) {
-				// for (int j = 0; j < xpan.ch_lo[i].length; j++) {
-				// if (rand.nextInt() % 2 == 0)
-				// g.drawImage(Images.RYON, xpan.ch_lo[i][j].getCharacter_start_w(),
-				// xpan.ch_lo[i][j].getCharacter_start_h(), xpan.CH_WIDHT, xpan.CH_HEIGHT,
-				// null);
-				// else
-				// g.drawImage(Images.APEACHE, xpan.ch_lo[i][j].getCharacter_start_w(),
-				// xpan.ch_lo[i][j].getCharacter_start_h(), xpan.CH_WIDHT, xpan.CH_HEIGHT,
-				// null);
-				//
-				// }
-				// }
-				//
-				// for (int i = 0; i < opan.ch_lo.length; i++) {
-				// for (int j = 0; j < opan.ch_lo[i].length; j++) {
-				// if (rand.nextInt() % 2 == 0)
-				// g.drawImage(Images.RYON, opan.ch_lo[i][j].getCharacter_start_w(),
-				// opan.ch_lo[i][j].getCharacter_start_h(), opan.CH_WIDHT, opan.CH_HEIGHT,
-				// null);
-				// else
-				// g.drawImage(Images.APEACHE, opan.ch_lo[i][j].getCharacter_start_w(),
-				// opan.ch_lo[i][j].getCharacter_start_h(), opan.CH_WIDHT, opan.CH_HEIGHT,
-				// null);
-				//
-				// }
-				// }
+//				 그리기 테스트 이다.
+//				 for (int i = 0; i < xpan.ch_lo.length; i++) {
+//				 for (int j = 0; j < xpan.ch_lo[i].length; j++) {
+//				 if (rand.nextInt() % 2 == 0)
+//				 g.drawImage(Images.RYON.getImage(), xpan.ch_lo[i][j].getCharacter_start_w(),
+//				 xpan.ch_lo[i][j].getCharacter_start_h(), xpan.CH_WIDHT, xpan.CH_HEIGHT,
+//				 null);
+//				 else
+//				 g.drawImage(Images.APEACHE, xpan.ch_lo[i][j].getCharacter_start_w(),
+//				 xpan.ch_lo[i][j].getCharacter_start_h(), xpan.CH_WIDHT, xpan.CH_HEIGHT,
+//				 null);
+//				
+//				 }
+//				 }
+//				
+//				 for (int i = 0; i < opan.ch_lo.length; i++) {
+//				 for (int j = 0; j < opan.ch_lo[i].length; j++) {
+//				 if (rand.nextInt() % 2 == 0)
+//				 g.drawImage(Images.RYON, opan.ch_lo[i][j].getCharacter_start_w(),
+//				 opan.ch_lo[i][j].getCharacter_start_h(), opan.CH_WIDHT, opan.CH_HEIGHT,
+//				 null);
+//				 else
+//				 g.drawImage(Images.APEACHE, opan.ch_lo[i][j].getCharacter_start_w(),
+//				 opan.ch_lo[i][j].getCharacter_start_h(), opan.CH_WIDHT, opan.CH_HEIGHT,
+//				 null);
+//				
+//				 }
+//				 }
+				
+				//g.drawImage(Images.RYON.getImage(), 100, 100, null);
+				
 			}
 		};
 
@@ -288,14 +292,77 @@ public class Ox_Suvive extends JFrame {
 		
 
 	}
+	
+
+
+	public ObjectInputStream getIos() {
+		return ios;
+	}
+
+	public void setIos(ObjectInputStream ios) {
+		this.ios = ios;
+	}
+
+	public ObjectOutputStream getOos() {
+		return oos;
+	}
+
+	public void setOos(ObjectOutputStream oos) {
+		this.oos = oos;
+	}
 
 	public static void main(String[] args) {
 		new Ox_Suvive();
 	}
+	
+	
+	
 
 	public void send_message(Ox_Survive_Data data) {
 		// TODO Auto-generated method stub
+		System.out.println("받았다.");
+		switch (data.getProtocol()) {
+		case Ox_Survive_Data.INITIALIZE_GAME:
+			opan = data.getOpan();
+			xpan = data.getXpan();
+			chManager = new Character_Manager(opan, xpan);
+			chManager.ch_list = data.getCh_list();
+			chManager.ch_user = data.getCh_user_list().get(data.getUser_index());
+			
+			init_pan();
+			//init_button();
+			
+			
+			
+			init_event();
+			init_game(data);
+			//문제셋
+			//init_game_munje_set(data);
+			
+			init_timer();
+
+			this.setLocation(200, 100);
+			// this.setBounds(200, 100, MyConst.GAME_W, MyConst.GAME_H);
+			this.pack();
+			this.setVisible(true);
+			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			//gameover.nextRound();
+			
+			
+			System.out.println(chManager.ch_list.size());
+			timer.start();//위치변경 예정
+			break;
+
+		default:
+			break;
+		}
 		
 	}
+
+
+
+
+
+
 
 }

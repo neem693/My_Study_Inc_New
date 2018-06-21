@@ -4,7 +4,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.Random;
+
+import javax.swing.ImageIcon;
 
 import images.Images;
 import main.MyConst;
@@ -13,12 +16,12 @@ import utill.Character_pan;
 import utill.Item;
 import utill.Pan;
 
-public class Character_ox extends Item {
+public class Character_ox extends Item implements Serializable{
 
 	final static int CHARACTER_COUNT = 4;
 	String currentLocation;
 	int ch_count;
-	BufferedImage character_Image;
+	ImageIcon character_Image;
 	Character_pan current_pan;
 	Character_pan before_pan;
 
@@ -117,7 +120,7 @@ public class Character_ox extends Item {
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-		g.drawImage(character_Image, current_point.x, current_point.y, Pan.CH_WIDHT, Pan.CH_HEIGHT, null);
+		g.drawImage(character_Image.getImage(), current_point.x, current_point.y, Pan.CH_WIDHT, Pan.CH_HEIGHT, null);
 		g.drawString(String.valueOf(current_pan.getPriority()), current_point.x, current_point.y);// 테스트 용
 
 	}

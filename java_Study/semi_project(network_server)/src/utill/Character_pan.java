@@ -2,12 +2,13 @@ package utill;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import pv.Character_ox;
 
 
 
-public class Character_pan {
+public class Character_pan implements Serializable{
 
 
 	int character_start_w;

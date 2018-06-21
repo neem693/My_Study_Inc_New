@@ -68,8 +68,8 @@ public class Ox_Suvive extends JFrame {
 
 	private void init_button() {
 		// TODO Auto-generated method stub
-		jbt_start = new JButton(new ImageIcon(Images.START));
-		jbt_exit = new JButton(new ImageIcon(Images.EXIT));
+		jbt_start = new JButton(new ImageIcon(Images.START.getImage()));
+		jbt_exit = new JButton(new ImageIcon(Images.EXIT.getImage()));
 		
 		jbt_exit.setFocusPainted(false);
 		jbt_exit.setBorderPainted(false);
@@ -221,7 +221,7 @@ public class Ox_Suvive extends JFrame {
 
 				//// 이 때 쯤에 배경화면 하나 추가하자.
 				
-				g.drawImage(Images.BACKGROUND, 0, 0,null);
+				g.drawImage(Images.BACKGROUND.getImage(), 0, 0,null);
 
 				g.drawRect(0 + border, 0 + border, width, height);
 				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);
@@ -274,7 +274,7 @@ public class Ox_Suvive extends JFrame {
 			protected void paintComponent(Graphics g) {
 				// TODO Auto-generated method stub
 				super.paintComponent(g);
-				g.drawImage(Images.MAIN_BACK, 0, 0, null);
+				g.drawImage(Images.MAIN_BACK.getImage(), 0, 0, null);
 
 			}
 		};

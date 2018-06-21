@@ -38,6 +38,8 @@ public class Ox_survive_Server extends JFrame {
 
 	Pan opan, xpan;//pan//
 	Character_Manager ch_m;
+	MunJe munje;
+	
 
 	boolean all_ready;
 	boolean start = false;
@@ -75,7 +77,14 @@ public class Ox_survive_Server extends JFrame {
 			while (true) {
 
 				try {
-					Ox_Survive_Data data = (Ox_Survive_Data) ois.readObject();
+					Ox_Survive_Data data = (Ox_Survive_Data) ois.readObject();//직렬화 데이터가 다를경우 exception발생
+//					System.out.println((data==null) + " 허허 " + data + " 하하");
+					if(data==null)break;
+					
+					
+					int index = socket_list.indexOf(this);//현재 소켓리스트의 해당하는 인덱스
+					data.message_index = index;//의미하는 바는 보내는 사람 인덱스 미리설정해줌
+					
 					String display = String.format("%s님이 %d의 프로토콜로 데이터를 보냈습니다.\n",
 							child.getInetAddress().getHostAddress(), data.protocol);
 					show_the_text(display);
@@ -92,7 +101,7 @@ public class Ox_survive_Server extends JFrame {
 						}
 					case Ox_Survive_Data.READY_NICKSET:
 						synchronized (Ox_survive_Server.this) {
-							index = socket_list.indexOf(this);
+							
 							// System.out.println(data.nick_name.equals(""));
 
 							if (data.nick_name.equals("")) {
@@ -112,7 +121,7 @@ public class Ox_survive_Server extends JFrame {
 					case Ox_Survive_Data.READY_CANCLE:
 						synchronized (Ox_survive_Server.this) {
 							// nick_name = user_list.ge
-							index = socket_list.indexOf(this);
+							
 							nick_name = user_list.get(index);
 							nick_name = nick_name.replaceAll("\\<레디\\>", "");
 							user_list.set(index, nick_name);
@@ -205,6 +214,11 @@ public class Ox_survive_Server extends JFrame {
 					data.opan = opan;
 					data.xpan = xpan;
 					data.ch_list = ch_m.ch_list;
+					data.ch_user_list = ch_m.ch_user_list;
+					data.setQuiz_r_n(munje.getQuiz_r_n());
+					data.setQuiz_r_m(munje.getQuiz_r_m());
+					data.setQuiz_r_c(munje.getQuiz_r_c());
+					send_all_client(data);
 
 				}
 
@@ -221,8 +235,7 @@ public class Ox_survive_Server extends JFrame {
 
 		opan = new Pan(Pan.OPAN, 0 + border, 0 + border);
 		xpan = new Pan(Pan.XPAN, MyConst.GAME_W - border - width, 0 + border);
-		ch_m = new Character_Manager(opan, xpan, Character_Manager.HEAVY, 1);
-		MunJe munje;
+		ch_m = new Character_Manager(opan, xpan, Character_Manager.HEAVY, socket_list.size());
 		try {
 			munje = new MunJe();
 			munje.random();
@@ -230,6 +243,7 @@ public class Ox_survive_Server extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		
 	}
@@ -284,7 +298,10 @@ public class Ox_survive_Server extends JFrame {
 
 	private void send_all_client(Ox_Survive_Data data) {
 		// TODO Auto-generated method stub
-		for (ReadThread rt : socket_list) {
+		//for (ReadThread rt : socket_list) {
+		for(int i=0;i<socket_list.size();i++) {
+			ReadThread rt = socket_list.get(i);
+			data.user_index = i;
 			try {
 				rt.oos.writeObject(data);
 			} catch (IOException e) {

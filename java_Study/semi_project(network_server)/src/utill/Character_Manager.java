@@ -26,6 +26,7 @@ public class Character_Manager {
 	Pan opan, xpan;
 	int how_many;
 	public ArrayList<Character_ox> ch_list;
+	public ArrayList<Character_ox> ch_user_list;
 	public ArrayList<Character_ox> ch_move_list;
 	public Character_ox ch_user;
 
@@ -33,6 +34,7 @@ public class Character_Manager {
 		// TODO Auto-generated constructor stub
 		rand = new Random();
 		ch_list = new ArrayList<Character_ox>();
+		ch_user_list = new ArrayList<Character_ox>();
 		ch_move_list = new ArrayList<Character_ox>();
 
 	}
@@ -60,6 +62,7 @@ public class Character_Manager {
 				if (user_count[count] == i) {
 					ch = new Character_User(x, y);
 					ch_user = ch;
+					ch_user_list.add(ch);
 				} else {
 					ch = new Character_ox(x, y);
 				}
@@ -81,6 +84,7 @@ public class Character_Manager {
 				if (user_count[count] == i) {
 					ch = new Character_User(x, y);
 					ch_user = ch;
+					ch_user_list.add(ch);
 				} else {
 					ch = new Character_ox(x, y);
 				}

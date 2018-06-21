@@ -9,16 +9,27 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Images {
-	public static BufferedImage Back_user;
-	public static BufferedImage RYON;
-	public static BufferedImage APEACHE;
-	public static BufferedImage TUBE;
-	public static BufferedImage MUZI;
-	public static BufferedImage BACKGROUND;
+//	public static BufferedImage Back_user;
+//	public static BufferedImage RYON;
+//	public static BufferedImage APEACHE;
+//	public static BufferedImage TUBE;
+//	public static BufferedImage MUZI;
+//	public static BufferedImage BACKGROUND;
+//	
+//	public static BufferedImage MAIN_BACK;
+//	public static BufferedImage EXIT;
+//	public static BufferedImage START;
 	
-	public static BufferedImage MAIN_BACK;
-	public static BufferedImage EXIT;
-	public static BufferedImage START;
+	public static ImageIcon Back_user;
+	public static ImageIcon RYON;
+	public static ImageIcon APEACHE;
+	public static ImageIcon TUBE;
+	public static ImageIcon MUZI;
+	public static ImageIcon BACKGROUND;
+	
+	public static ImageIcon MAIN_BACK;
+	public static ImageIcon EXIT;
+	public static ImageIcon START;
 	
 	
 	
@@ -39,15 +50,29 @@ public class Images {
 
 	static {
 		try {
-			Back_user = ImageIO.read(new File("src/images/user_back.png"));
-			RYON = ImageIO.read(new File("src/images/Ryon.png"));
-			APEACHE = ImageIO.read(new File("src/images/Apeache.png"));
-			TUBE = ImageIO.read(new File("src/images/Tube.png"));
-			MUZI = ImageIO.read(new File("src/images/MUZI.png"));
-			BACKGROUND = ImageIO.read(new File("src/images/Background.png"));
-			MAIN_BACK = ImageIO.read(new File("src/images/main_back.png"));
-			EXIT = ImageIO.read(new File("src/images/exit.png"));
-			START = ImageIO.read(new File("src/images/start.png"));
+//			Back_user = ImageIO.read(new File("src/images/user_back.png"));
+//			RYON = ImageIO.read(new File("src/images/Ryon.png"));
+//			APEACHE = ImageIO.read(new File("src/images/Apeache.png"));
+//			TUBE = ImageIO.read(new File("src/images/Tube.png"));
+//			MUZI = ImageIO.read(new File("src/images/MUZI.png"));
+//			BACKGROUND = ImageIO.read(new File("src/images/Background.png"));
+//			MAIN_BACK = ImageIO.read(new File("src/images/main_back.png"));
+//			EXIT = ImageIO.read(new File("src/images/exit.png"));
+//			START = ImageIO.read(new File("src/images/start.png"));
+
+			Back_user = new ImageIcon("src/images/user_back.png");
+			RYON = new ImageIcon("src/images/Ryon.png");
+			APEACHE = new ImageIcon("src/images/Apeache.png");
+			TUBE = new ImageIcon("src/images/Tube.png");
+			MUZI = new ImageIcon("src/images/MUZI.png");
+			BACKGROUND = new ImageIcon("src/images/Background.png");
+			MAIN_BACK = new ImageIcon("src/images/main_back.png");
+			EXIT = new ImageIcon("src/images/exit.png");
+			START = new ImageIcon("src/images/start.png");
+			
+			
+			
+			
 			LOSE1 = new ImageIcon("src/images/살인태클.gif").getImage();
 			LOSE2 = new ImageIcon("src/images/벤치 클리어링.gif").getImage();
 			LOSE3 = new ImageIcon("src/images/lose3.gif").getImage();
@@ -59,7 +84,7 @@ public class Images {
 			WIN6 = new ImageIcon("src/images/win6.gif").getImage();
 			
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

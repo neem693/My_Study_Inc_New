@@ -67,16 +67,16 @@ public class GameOver {
 		s = 0;
 		round = 0;
 		isnt_value_cheating = true;
-		try {
-			munje = new MunJe();
-			munje.random();
-			quiz_r_n = munje.getQuiz_r_n();
-			quiz_r_m = munje.getQuiz_r_m();
-			quiz_r_c = munje.getQuiz_r_c();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			munje = new MunJe();
+//			munje.random();
+//			quiz_r_n = munje.getQuiz_r_n();
+//			quiz_r_m = munje.getQuiz_r_m();
+//			quiz_r_c = munje.getQuiz_r_c();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 
@@ -391,6 +391,33 @@ public class GameOver {
 		timer.restart();
 		
 	}
+
+	public ArrayList<String> getQuiz_r_n() {
+		return quiz_r_n;
+	}
+
+	public void setQuiz_r_n(ArrayList<String> quiz_r_n) {
+		this.quiz_r_n = quiz_r_n;
+	}
+
+	public ArrayList<String> getQuiz_r_m() {
+		return quiz_r_m;
+	}
+
+	public void setQuiz_r_m(ArrayList<String> quiz_r_m) {
+		this.quiz_r_m = quiz_r_m;
+	}
+
+	public ArrayList<String> getQuiz_r_c() {
+		return quiz_r_c;
+	}
+
+	public void setQuiz_r_c(ArrayList<String> quiz_r_c) {
+		this.quiz_r_c = quiz_r_c;
+	}
+	
+	
+	
 	
 
 }

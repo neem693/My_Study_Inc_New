@@ -38,7 +38,6 @@ public class Ox_survive_Client extends JFrame {
 	JButton ready_nick_set;
 	boolean connect = false;
 	boolean ready = false;
-	
 
 	JTextArea jtext;
 	JTextField jserver_addr;
@@ -81,11 +80,11 @@ public class Ox_survive_Client extends JFrame {
 				read_data();
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				
+				// e.printStackTrace();
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				//e.printStackTrace();
+				// e.printStackTrace();
 				show_the_message("서버가 죽은거 같다.");
 				init_client();
 
@@ -195,9 +194,13 @@ public class Ox_survive_Client extends JFrame {
 							break;
 						case Ox_Survive_Data.GAME_START:
 							ox_survive = new Ox_Suvive();
-							ox_survive.send_message(data);
+							ox_survive.setIos(ios);
+							ox_survive.setOos(oos);
 							
 							break;	
+						case Ox_Survive_Data.INITIALIZE_GAME:
+							ox_survive.send_message(data);
+							break;
 
 						}
 					} catch (ClassNotFoundException e) {
@@ -253,7 +256,7 @@ public class Ox_survive_Client extends JFrame {
 
 			data.protocol = Ox_Survive_Data.READY_NICKSET;
 			data.nick_name = jnick_name.getText().trim();
-			ready =true;
+			ready = true;
 
 		}
 		try {
