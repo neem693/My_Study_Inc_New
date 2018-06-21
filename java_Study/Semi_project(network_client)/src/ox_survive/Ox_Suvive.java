@@ -327,6 +327,7 @@ public class Ox_Suvive extends JFrame {
 			xpan = data.getXpan();
 			chManager = new Character_Manager(opan, xpan);
 			chManager.ch_list = data.getCh_list();
+			chManager.ch_user_list = data.getCh_user_list();
 			chManager.ch_user = data.getCh_user_list().get(data.getUser_index());
 			
 			init_pan();

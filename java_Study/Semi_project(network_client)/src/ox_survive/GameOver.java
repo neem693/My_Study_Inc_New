@@ -13,6 +13,7 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.text.StyledEditorKit.AlignmentAction;
 
 import images.Images;
 import main.MyConst;
@@ -99,12 +100,14 @@ public class GameOver {
 		int r;
 		int i = 0;
 		int m = 0;
-		for (; s < ch_list.size(); s++) {
+		AGAIN: for (; s < ch_list.size(); s++) {
 			// System.out.println(ch_m.ch_move_list.size());
 
 			i++;
-			if (ch_list.get(s) == ch_m.getCh_user())
-				continue;
+			for(Character_ox user : ch_m.ch_user_list) {
+			if (ch_list.get(s) == user)
+				continue AGAIN;
+			}
 			if (ch_m.ch_move_list.size() >= Character_Manager.MAX_MOVING) {
 				break;
 			}

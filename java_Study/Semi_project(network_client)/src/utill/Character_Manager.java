@@ -26,6 +26,7 @@ public class Character_Manager {
 	Pan opan, xpan;
 	int how_many;
 	public ArrayList<Character_ox> ch_list;
+	public ArrayList<Character_ox> ch_user_list;
 	public ArrayList<Character_ox> ch_move_list;
 	public Character_ox ch_user;
 
