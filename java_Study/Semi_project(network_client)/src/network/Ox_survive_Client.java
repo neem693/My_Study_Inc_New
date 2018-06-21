@@ -11,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -75,7 +76,7 @@ public class Ox_survive_Client extends JFrame {
 
 				Ox_Survive_Data data = new Ox_Survive_Data();
 				data.protocol = Ox_Survive_Data.USER_IN;
-				data.nick_name = socket.getInetAddress().getHostAddress();
+				data.nick_name = InetAddress.getLocalHost().getHostAddress();
 				oos.writeObject(data);
 				read_data();
 			} catch (UnknownHostException e) {
