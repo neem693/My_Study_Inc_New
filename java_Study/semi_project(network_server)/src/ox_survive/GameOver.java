@@ -26,10 +26,14 @@ public class GameOver {
 	MunJe munje;
 	Character_Manager ch_m;
 	Timer timer;
+
 	int s;// 캐릭터들을 어레이 리스트로 불러올때, 끊기지 않기 위해서 전역변수를 준것
 	int round;
 	int remain;
 	int w, l; // 오답체크 할시, 해당하는 이미지를 랜덤으로 불러오기 위해 난수를 받아와야 하는데, 그것을 기억해야 할 전역변수가 필요하다.
+	// 서버 전역변수
+	int noc;// number_of_character
+	String[] ai_move; // ai가 움직여야 할 곳을 미리 정하여서 클라이언트에 전달해줘야 한다.
 
 	Random rand;
 	ArrayList<Character_ox> ch_list;
@@ -67,16 +71,18 @@ public class GameOver {
 		s = 0;
 		round = 0;
 		isnt_value_cheating = true;
-		try {
-			munje = new MunJe();
-			munje.random();
-			quiz_r_n = munje.getQuiz_r_n();
-			quiz_r_m = munje.getQuiz_r_m();
-			quiz_r_c = munje.getQuiz_r_c();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+	}
+
+	public GameOver(MunJe munje, Character_Manager ch_m) {
+		this();
+		this.munje = munje;
+		this.ch_m = ch_m;
+		this.ch_list = ch_m.getCh_list();
+
+		quiz_r_n = munje.getQuiz_r_n();
+		quiz_r_m = munje.getQuiz_r_m();
+		quiz_r_c = munje.getQuiz_r_c();
 
 	}
 
@@ -96,30 +102,24 @@ public class GameOver {
 		// int max_character = ch_list.size();
 		// if (isRound)
 		// return;
+		ai_move = new String[ch_list.size()];
+		int count = 0;
 		int r;
 		int i = 0;
 		int m = 0;
-		for (; s < ch_list.size(); s++) {
+		SKIP: for (; s < ch_list.size(); s++) {
 			// System.out.println(ch_m.ch_move_list.size());
 
-			i++;
-			if (ch_list.get(s) == ch_m.getCh_user())
-				continue;
-			if (ch_m.ch_move_list.size() >= Character_Manager.MAX_MOVING) {
-				break;
-			}
-			for (Character_ox coh : ch_list) {
-				if (coh.isMoving())
-					m++;
-				if (m >= Character_Manager.MAX_MOVING)
-					break;
+			for (Character_ox user : ch_m.ch_user_list) {
+				if (ch_list.get(s) == user) {
+					ai_move[s] = null;
+					continue SKIP;
+					}
 			}
 
-			if (i == ch_m.MAX_MOVING) {
-				// i=0;
-				break;
-			}
 			if (isnt_value_cheating) {
+				// isnt_value_cheating은 라운드가 끝났을시에 바로 true해줘야 한다!!! 이거 꼭 기억하라.
+				// round도 ++ 해줘야 한다. 꼭 기억하라.
 				we_cheat_player();
 			}
 
@@ -127,18 +127,17 @@ public class GameOver {
 			if (quiz_r_c.get(round).equals("O")) // 만약 답이 o라면 60%가 o로 간다. 지금으로선 무조건 O가 60퍼센트라고 하자.
 			{
 				if (!cheating)
-					o_is_correct(r);
+					ai_move[s] = "O";// o_is_correct(r);
 				else
-					x_is_correct(r);
+					ai_move[s] = "X";// x_is_correct(r);
 
 			} else if (quiz_r_c.get(round).equals("X")) {
 				if (!cheating)
-					x_is_correct(r);
+					ai_move[s] = "X";// x_is_correct(r);
 				else
-					o_is_correct(r);
+					ai_move[s] = "O";// o_is_correct(r);
 
 			}
-
 		}
 	}
 
@@ -150,7 +149,8 @@ public class GameOver {
 		else if (GameOver.POSITIVE_PERCENT < r && r <= GameOver.NEGATIVE_PERCENT) {
 			cheating = true;
 		}
-		isnt_value_cheating = false;
+		isnt_value_cheating = false;// 라운드가 끝났을 시에는 다시 true로 변한다.
+									// 즉, 해당 라운드가 cheat인지 아닌지 한라운드에 한번만 결정할 수 있다는 것을 의미한다.
 
 	}
 
@@ -385,12 +385,24 @@ public class GameOver {
 		g.drawImage(lose, x, y, null);
 
 	}
+
 	public void gameRestart(Timer timer) {
-		gameover= false;
+		gameover = false;
 		win = false;
 		timer.restart();
-		
+
 	}
+
+	public String[] getAi_move() {
+		return ai_move;
+	}
+
+	public void setAi_move(String[] ai_move) {
+		this.ai_move = ai_move;
+	}
+	
+	
+	
 	
 
 }

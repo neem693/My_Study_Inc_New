@@ -347,10 +347,19 @@ public class Ox_Suvive extends JFrame {
 			this.pack();
 			this.setVisible(true);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			//gameover.nextRound();
+			//gameover.nextRound(); //어차피 타이머의 액션리스너가 알아서 호출해준다.
 			
 			
 			System.out.println(chManager.ch_list.size());
+			
+			break;
+		
+			
+			
+		
+		case Ox_Survive_Data.NEXT_ROUND:
+			gameover.setAi_move(data.getAi_move());
+			
 			timer.start();//위치변경 예정
 			break;
 

@@ -172,6 +172,7 @@ public class Character_ox extends Item implements Serializable{
 	public void setBefore_pan(Character_pan next_pan) {
 		this.before_pan = next_pan;
 	}
+	
 	public boolean real_moving() {
 		if(this.moving && !first_move)
 			return true;

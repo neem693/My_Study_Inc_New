@@ -202,6 +202,9 @@ public class Ox_survive_Client extends JFrame {
 						case Ox_Survive_Data.INITIALIZE_GAME:
 							ox_survive.send_message(data);
 							break;
+						case Ox_Survive_Data.NEXT_ROUND:
+							ox_survive.send_message(data);
+							break;
 
 						}
 					} catch (ClassNotFoundException e) {

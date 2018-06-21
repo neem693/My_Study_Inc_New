@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import main.MyConst;
+import ox_survive.GameOver;
 import pv.Character_User;
 import pv.Character_ox;
 import utill.Character_Manager;
@@ -39,6 +40,7 @@ public class Ox_survive_Server extends JFrame {
 	Pan opan, xpan;//pan//
 	Character_Manager ch_m;
 	MunJe munje;
+	GameOver gameover;
 	
 
 	boolean all_ready;
@@ -219,12 +221,26 @@ public class Ox_survive_Server extends JFrame {
 					data.setQuiz_r_m(munje.getQuiz_r_m());
 					data.setQuiz_r_c(munje.getQuiz_r_c());
 					send_all_client(data);
+					
+					
+					init_game_round();
+					data = new Ox_Survive_Data();
+					data.protocol = Ox_Survive_Data.NEXT_ROUND;
+					data.setAi_move(gameover.getAi_move());
+					send_all_client(data);
+
 
 				}
 
 			}
 		};
 		jbt_start.addActionListener(action);
+	}
+
+	protected void init_game_round() {
+		// TODO Auto-generated method stub
+		gameover = new GameOver(munje, ch_m);
+		gameover.nextRound();
 	}
 
 	protected void init_game_fisrt() {

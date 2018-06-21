@@ -59,6 +59,8 @@ public class GameOver {
 	int round_interval;
 	int count = 0;
 	String count_str;
+	
+	String [] ai_move;//ai가 움직여야 할 곳을 미리 받아서 ai들을 움직이자.
 
 	public GameOver() {
 		// TODO Auto-generated constructor stub
@@ -100,47 +102,56 @@ public class GameOver {
 		int r;
 		int i = 0;
 		int m = 0;
-		AGAIN: for (; s < ch_list.size(); s++) {
+		SKIP: for (; s < ch_list.size(); s++) {
 			// System.out.println(ch_m.ch_move_list.size());
 
 			i++;
 			for(Character_ox user : ch_m.ch_user_list) {
 			if (ch_list.get(s) == user)
-				continue AGAIN;
+				continue SKIP;
 			}
+			
 			if (ch_m.ch_move_list.size() >= Character_Manager.MAX_MOVING) {
 				break;
 			}
-//			for (Character_ox coh : ch_list) {
-//				if (coh.isMoving())
-//					m++;
-//				if (m >= Character_Manager.MAX_MOVING)
-//					break;
-//			}
+			for (Character_ox coh : ch_list) {
+				if (coh.isMoving())
+					m++;
+				if (m >= Character_Manager.MAX_MOVING)
+					break;
+			}
 
 			if (i == ch_m.MAX_MOVING) {
 				// i=0;
 				break;
 			}
-			if (isnt_value_cheating) {
-				we_cheat_player();
-			}
-
-			r = rand.nextInt(GameOver.MAX_PERCENT);
-			if (quiz_r_c.get(round).equals("O")) // 만약 답이 o라면 60%가 o로 간다. 지금으로선 무조건 O가 60퍼센트라고 하자.
-			{
-				if (!cheating)
-					o_is_correct(r);
-				else
-					x_is_correct(r);
-
-			} else if (quiz_r_c.get(round).equals("X")) {
-				if (!cheating)
-					x_is_correct(r);
-				else
-					o_is_correct(r);
-
-			}
+//			if (isnt_value_cheating) {
+//				we_cheat_player();
+//			}
+//
+//			r = rand.nextInt(GameOver.MAX_PERCENT);
+//			if (quiz_r_c.get(round).equals("O")) // 만약 답이 o라면 60%가 o로 간다. 지금으로선 무조건 O가 60퍼센트라고 하자.
+//			{
+//				if (!cheating)
+//					o_is_correct(r);
+//				else
+//					x_is_correct(r);
+//
+//			} else if (quiz_r_c.get(round).equals("X")) {
+//				if (!cheating)
+//					x_is_correct(r);
+//				else
+//					o_is_correct(r);
+//
+//			}
+			
+			if(ai_move[s].equals("O"))
+				ch_m.user_goto(ch_m.getOpan(), ch_list.get(s));
+			else if(ai_move[s].equals("X"))
+				ch_m.user_goto(ch_m.getXpan(), ch_list.get(s));
+			else if(ai_move[s]==null)
+				continue;
+			
 
 		}
 	}
@@ -418,6 +429,16 @@ public class GameOver {
 	public void setQuiz_r_c(ArrayList<String> quiz_r_c) {
 		this.quiz_r_c = quiz_r_c;
 	}
+
+	public String[] getAi_move() {
+		return ai_move;
+	}
+
+	public void setAi_move(String[] ai_move) {
+		this.ai_move = ai_move;
+	}
+	
+	
 	
 	
 	

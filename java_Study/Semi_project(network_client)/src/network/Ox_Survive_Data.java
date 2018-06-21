@@ -30,6 +30,7 @@ public class Ox_Survive_Data implements Serializable {
 	ArrayList<Character_ox> ch_list;
 	ArrayList<Character_ox> ch_user_list;
 	String [] user_list;
+	String [] ai_move;
 	int key;
 	String message;
 	//KeyEvent key;
@@ -124,6 +125,12 @@ public class Ox_Survive_Data implements Serializable {
 	}
 	public void setCh_user_list(ArrayList<Character_ox> ch_user_list) {
 		this.ch_user_list = ch_user_list;
+	}
+	public String[] getAi_move() {
+		return ai_move;
+	}
+	public void setAi_move(String[] ai_move) {
+		this.ai_move = ai_move;
 	}
 	
 	
