@@ -75,7 +75,7 @@ public class Ox_survive_Client extends JFrame {
 
 				Ox_Survive_Data data = new Ox_Survive_Data();
 				data.protocol = Ox_Survive_Data.USER_IN;
-				data.nick_name = divide_get(0);
+				data.nick_name = socket.getInetAddress().getHostAddress();
 				oos.writeObject(data);
 				read_data();
 			} catch (UnknownHostException e) {
