@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import org.omg.CosNaming.IstringHelper;
@@ -54,23 +55,27 @@ public class Character_Manager {
 		Character_ox ch = null;
 
 		for (int i = 0; i < this.how_many; i++) {
+			ch=null;
 			if (i % 2 == 0) {
 				x = opan.ch_priority_lo[count_o].getCharacter_start_w();
 				y = opan.ch_priority_lo[count_o].getCharacter_start_h();
 				opan.ch_priority_lo[count_o].is_hear = true;
 
-				if (user_count[count] == i) {
-					ch = new Character_User(x, y);
-					ch_user = ch;
-					ch_user_list.add(ch);
-				} else {
+				if (count < how_many_user) {
+					if (user_count[count] == i) {
+						ch = new Character_User(x, y);
+						ch_user = ch;
+						ch_user_list.add(ch);
+						count++;
+					}
+				} if(ch==null) {
 					ch = new Character_ox(x, y);
 				}
 				ch.setCurrentLocation(Pan.OPAN);
 				opan.ch_priority_lo[count_o].setCh(ch);
 				opan.ch_priority_lo[count_o].setBefore_ch(ch);
 
-//				System.out.println(opan.ch_priority_lo[count_o].getBefore_ch());
+				// System.out.println(opan.ch_priority_lo[count_o].getBefore_ch());
 				ch.setCurrent_pan(opan.ch_priority_lo[count_o]);
 				count_o++;
 
@@ -81,11 +86,14 @@ public class Character_Manager {
 				y = xpan.ch_priority_lo[count_x].getCharacter_start_h();
 				xpan.ch_priority_lo[count_x].is_hear = true;
 
-				if (user_count[count] == i) {
-					ch = new Character_User(x, y);
-					ch_user = ch;
-					ch_user_list.add(ch);
-				} else {
+				if (count < how_many_user) {
+					if (user_count[count] == i) {
+						ch = new Character_User(x, y);
+						ch_user = ch;
+						ch_user_list.add(ch);
+						count++;
+					}
+				} if(ch==null){
 					ch = new Character_ox(x, y);
 				}
 				ch.setCurrentLocation(Pan.XPAN);
@@ -114,6 +122,7 @@ public class Character_Manager {
 					continue AGAIN;
 				}
 			user_count[i] = check;
+			Arrays.sort(user_count);
 		}
 	}
 
@@ -161,7 +170,7 @@ public class Character_Manager {
 			if (ch_user.isMoving()) {
 				move_step(ch_user);
 			}
-		//System.out.println(ch_move_list.size());
+		// System.out.println(ch_move_list.size());
 
 		return false;
 	}
@@ -200,11 +209,11 @@ public class Character_Manager {
 
 				// System.out.println(pan.ch_lo[i][j].isIs_hear());
 				if (opan.ch_lo[i][j].getCh() != null)
-					if (opan.ch_lo[i][j].isIs_hear()&&!opan.ch_lo[i][j].getCh().isMoving()) {
+					if (opan.ch_lo[i][j].isIs_hear() && !opan.ch_lo[i][j].getCh().isMoving()) {
 						opan.ch_lo[i][j].getCh().draw(g);
 					}
 				if (xpan.ch_lo[i][j].getCh() != null)
-					if (xpan.ch_lo[i][j].isIs_hear()&&!xpan.ch_lo[i][j].getCh().isMoving()) {
+					if (xpan.ch_lo[i][j].isIs_hear() && !xpan.ch_lo[i][j].getCh().isMoving()) {
 						xpan.ch_lo[i][j].getCh().draw(g);
 					}
 
@@ -285,7 +294,7 @@ public class Character_Manager {
 		ch.setCurrent_pan(ch_pan);
 		ch.getCurrent_pan().setIs_hear(true);
 		ch_pan.setCh(ch);
-		//System.out.println(ch.getCurrent_point() + " " + ch.getNext_point());
+		// System.out.println(ch.getCurrent_point() + " " + ch.getNext_point());
 	}
 
 	public ArrayList<Character_ox> getCh_list() {
@@ -303,6 +312,5 @@ public class Character_Manager {
 	public Pan getXpan() {
 		return xpan;
 	}
-	
 
 }

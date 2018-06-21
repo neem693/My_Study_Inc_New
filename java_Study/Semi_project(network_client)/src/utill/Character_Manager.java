@@ -190,7 +190,7 @@ public class Character_Manager {
 		for (Character_ox ch : ch_list) {
 			if (ch.isMoving())
 				ch.draw(g);
-			System.out.println("무빙중이다.");
+			//System.out.println("무빙중이다.");
 			
 		}
 		drawPan(g);
