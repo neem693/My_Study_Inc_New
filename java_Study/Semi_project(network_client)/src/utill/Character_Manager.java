@@ -37,7 +37,8 @@ public class Character_Manager {
 		ch_move_list = new ArrayList<Character_ox>();
 
 	}
-	public Character_Manager(Pan opan,Pan xpan) {
+
+	public Character_Manager(Pan opan, Pan xpan) {
 		this();
 		this.opan = opan;
 		this.xpan = xpan;
@@ -48,76 +49,76 @@ public class Character_Manager {
 		this.how_many = how_many;
 		this.opan = opan;
 		this.xpan = xpan;
-//		int x, y;
-//		int count_x = 0, count_o = 0;
-//		int[] user_count = new int[how_many_user];
-//		int count = 0;
+		// int x, y;
+		// int count_x = 0, count_o = 0;
+		// int[] user_count = new int[how_many_user];
+		// int count = 0;
 
-//		make_user_count(user_count);
-//
-//		Character_ox ch = null;
-//
-//		for (int i = 0; i < this.how_many; i++) {
-//			if (i % 2 == 0) {
-//				x = opan.ch_priority_lo[count_o].getCharacter_start_w();
-//				y = opan.ch_priority_lo[count_o].getCharacter_start_h();
-//				opan.ch_priority_lo[count_o].is_hear = true;
-//
-//				if (user_count[count] == i) {
-//					ch = new Character_User(x, y);
-//					ch_user = ch;
-//				} else {
-//					ch = new Character_ox(x, y);
-//				}
-//				ch.setCurrentLocation(Pan.OPAN);
-//				opan.ch_priority_lo[count_o].setCh(ch);
-//				opan.ch_priority_lo[count_o].setBefore_ch(ch);
-//
-////				System.out.println(opan.ch_priority_lo[count_o].getBefore_ch());
-//				ch.setCurrent_pan(opan.ch_priority_lo[count_o]);
-//				count_o++;
-//
-//				// 그전 위치 기억
-//
-//			} else {
-//				x = xpan.ch_priority_lo[count_x].getCharacter_start_w();
-//				y = xpan.ch_priority_lo[count_x].getCharacter_start_h();
-//				xpan.ch_priority_lo[count_x].is_hear = true;
-//
-//				if (user_count[count] == i) {
-//					ch = new Character_User(x, y);
-//					ch_user = ch;
-//				} else {
-//					ch = new Character_ox(x, y);
-//				}
-//				ch.setCurrentLocation(Pan.XPAN);
-//				xpan.ch_priority_lo[count_x].setCh(ch);
-//				xpan.ch_priority_lo[count_x].setBefore_ch(ch);
-//				ch.setCurrent_pan(xpan.ch_priority_lo[count_x]);
-//				count_x++;
-//			}
-//
-//			ch_list.add(ch);
-//
-//		}
-//		// for(int i =0; )
-//		// this.ch_list = new
+		// make_user_count(user_count);
+		//
+		// Character_ox ch = null;
+		//
+		// for (int i = 0; i < this.how_many; i++) {
+		// if (i % 2 == 0) {
+		// x = opan.ch_priority_lo[count_o].getCharacter_start_w();
+		// y = opan.ch_priority_lo[count_o].getCharacter_start_h();
+		// opan.ch_priority_lo[count_o].is_hear = true;
+		//
+		// if (user_count[count] == i) {
+		// ch = new Character_User(x, y);
+		// ch_user = ch;
+		// } else {
+		// ch = new Character_ox(x, y);
+		// }
+		// ch.setCurrentLocation(Pan.OPAN);
+		// opan.ch_priority_lo[count_o].setCh(ch);
+		// opan.ch_priority_lo[count_o].setBefore_ch(ch);
+		//
+		//// System.out.println(opan.ch_priority_lo[count_o].getBefore_ch());
+		// ch.setCurrent_pan(opan.ch_priority_lo[count_o]);
+		// count_o++;
+		//
+		// // 그전 위치 기억
+		//
+		// } else {
+		// x = xpan.ch_priority_lo[count_x].getCharacter_start_w();
+		// y = xpan.ch_priority_lo[count_x].getCharacter_start_h();
+		// xpan.ch_priority_lo[count_x].is_hear = true;
+		//
+		// if (user_count[count] == i) {
+		// ch = new Character_User(x, y);
+		// ch_user = ch;
+		// } else {
+		// ch = new Character_ox(x, y);
+		// }
+		// ch.setCurrentLocation(Pan.XPAN);
+		// xpan.ch_priority_lo[count_x].setCh(ch);
+		// xpan.ch_priority_lo[count_x].setBefore_ch(ch);
+		// ch.setCurrent_pan(xpan.ch_priority_lo[count_x]);
+		// count_x++;
+		// }
+		//
+		// ch_list.add(ch);
+		//
+		// }
+		// // for(int i =0; )
+		// // this.ch_list = new
 	}
 
-//	private void make_user_count(int[] user_count) {
-//		// TODO Auto-generated method stub
-//		// user_count = new int[how_many_user];
-//		int check;
-//		AGAIN: for (int i = 0; i < user_count.length; i++) {
-//			check = rand.nextInt(Character_Manager.HEAVY);
-//			for (int j = 0; j < i; j++)
-//				if (check == user_count[j]) {
-//					i -= 1;
-//					continue AGAIN;
-//				}
-//			user_count[i] = check;
-//		}
-//	}
+	// private void make_user_count(int[] user_count) {
+	// // TODO Auto-generated method stub
+	// // user_count = new int[how_many_user];
+	// int check;
+	// AGAIN: for (int i = 0; i < user_count.length; i++) {
+	// check = rand.nextInt(Character_Manager.HEAVY);
+	// for (int j = 0; j < i; j++)
+	// if (check == user_count[j]) {
+	// i -= 1;
+	// continue AGAIN;
+	// }
+	// user_count[i] = check;
+	// }
+	// }
 
 	public boolean move() {
 		// TODO Auto-generated method stub
@@ -163,7 +164,7 @@ public class Character_Manager {
 			if (ch_user.isMoving()) {
 				move_step(ch_user);
 			}
-		//System.out.println(ch_move_list.size());
+		// System.out.println(ch_move_list.size());
 
 		return false;
 	}
@@ -187,12 +188,12 @@ public class Character_Manager {
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		// 멈춰있는것들을 먼저 그린다.
-		
+
 		for (Character_ox ch : ch_list) {
 			if (ch.isMoving())
 				ch.draw(g);
-			//System.out.println("무빙중이다.");
-			
+			// System.out.println("무빙중이다.");
+
 		}
 		drawPan(g);
 
@@ -205,11 +206,11 @@ public class Character_Manager {
 
 				// System.out.println(pan.ch_lo[i][j].isIs_hear());
 				if (opan.ch_lo[i][j].getCh() != null)
-					if (opan.ch_lo[i][j].isIs_hear()&&!opan.ch_lo[i][j].getCh().isMoving()) {
+					if (opan.ch_lo[i][j].isIs_hear() && !opan.ch_lo[i][j].getCh().isMoving()) {
 						opan.ch_lo[i][j].getCh().draw(g);
 					}
 				if (xpan.ch_lo[i][j].getCh() != null)
-					if (xpan.ch_lo[i][j].isIs_hear()&&!xpan.ch_lo[i][j].getCh().isMoving()) {
+					if (xpan.ch_lo[i][j].isIs_hear() && !xpan.ch_lo[i][j].getCh().isMoving()) {
 						xpan.ch_lo[i][j].getCh().draw(g);
 					}
 
@@ -290,7 +291,7 @@ public class Character_Manager {
 		ch.setCurrent_pan(ch_pan);
 		ch.getCurrent_pan().setIs_hear(true);
 		ch_pan.setCh(ch);
-		//System.out.println(ch.getCurrent_point() + " " + ch.getNext_point());
+		// System.out.println(ch.getCurrent_point() + " " + ch.getNext_point());
 	}
 
 	public ArrayList<Character_ox> getCh_list() {
@@ -308,6 +309,48 @@ public class Character_Manager {
 	public Pan getXpan() {
 		return xpan;
 	}
-	
+
+	public void multiplayer_goto(Pan pan, Character_ox ch, Character_pan[] ai_move) {
+		// TODO Auto-generated method stub
+		if (ch.isMoving())
+			return;
+		Character_pan ch_pan = null;
+		Character_pan ch_pan2 = null;
+		int i = 0;
+		int r;
+		boolean[] ai_is_not_hear = new boolean[50];
+
+		for (int j = 0; j < 50; j++) {
+			ai_is_not_hear[j] = true;
+			for (Character_pan ai_hear : ai_move)
+				if (pan.ch_priority_lo[j] == ai_hear) {
+					ai_is_not_hear[j] = false;
+					break;
+				}
+
+		}
+
+		for (; i < 50; i++) {
+			if (pan.ch_priority_lo[i].is_hear == false && ai_is_not_hear[i]) {
+				ch_pan = pan.ch_priority_lo[i];
+				if (i != 49 && pan.ch_priority_lo[i + 1].is_hear == false && ai_is_not_hear[i + 1])
+					ch_pan2 = pan.ch_priority_lo[i + 1];
+				break;
+			}
+		}
+
+		if (ch_pan2 == (null)) {
+			go_ox(ch_pan, ch);
+
+		} else {
+			r = rand.nextInt(10) + 1;
+			if (1 <= r && 5 >= r)
+				go_ox(ch_pan, ch);
+			else if (6 <= r && 10 >= r)
+				go_ox(ch_pan2, ch);
+
+		}
+
+	}
 
 }
