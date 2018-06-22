@@ -353,4 +353,23 @@ public class Character_Manager {
 
 	}
 
+	public boolean user_all_move() {
+		for(Character_ox ch : ch_list) {
+			if(ch.isMoving()) {
+				return false;
+			}
+		}
+		return true;
+		
+
+	}
+
+	public void setOpan(Pan opan) {
+		this.opan = opan;
+	}
+
+	public void setXpan(Pan xpan) {
+		this.xpan = xpan;
+	}
+	
 }

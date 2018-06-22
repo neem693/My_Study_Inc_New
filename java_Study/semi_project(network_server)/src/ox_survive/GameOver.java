@@ -404,5 +404,18 @@ public class GameOver {
 		this.ai_move = ai_move;
 	}
 
+	public ArrayList<Character_ox> getCh_list() {
+		return ch_list;
+	}
+
+	public void setCh_list(ArrayList<Character_ox> ch_list) {
+		this.ch_list = ch_list;
+	}
+	public void gameover_server_ready() {
+		this.round++;
+		this.isnt_value_cheating = true;
+		s=0;
+	}
+
 
 }

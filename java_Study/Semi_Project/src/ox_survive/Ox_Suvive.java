@@ -42,6 +42,8 @@ public class Ox_Suvive extends JFrame {
 	
 	JButton jbt_start;
 	JButton jbt_exit;
+	
+
 
 	public Ox_Suvive() {
 		super("내가만든 윈도우");

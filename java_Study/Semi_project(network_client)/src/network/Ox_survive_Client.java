@@ -181,6 +181,7 @@ public class Ox_survive_Client extends JFrame {
 				while (true) {
 					try {
 						Ox_Survive_Data data = (Ox_Survive_Data) ios.readObject();
+						show_the_message(data.protocol + "번 프로토콜을 받았습니다.");
 						switch (data.protocol) {
 						case Ox_Survive_Data.USER_IN:
 							show_the_message(data.nick_name + "님이 입장하셧습니다. 헤헷");
@@ -203,6 +204,7 @@ public class Ox_survive_Client extends JFrame {
 							ox_survive.send_message(data);
 							break;
 						case Ox_Survive_Data.NEXT_ROUND:
+						
 							ox_survive.send_message(data);
 							break;
 

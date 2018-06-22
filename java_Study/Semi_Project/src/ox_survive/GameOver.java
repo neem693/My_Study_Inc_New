@@ -59,6 +59,8 @@ public class GameOver {
 	int count = 0;
 	String count_str;
 
+
+
 	public GameOver() {
 		// TODO Auto-generated constructor stub
 		super();
@@ -203,6 +205,7 @@ public class GameOver {
 
 	public boolean count_zero() {
 		if (count >= GameOver.ALL_COUNT) {
+			System.out.println("호출된다.");
 			if (round_interval < 600) {
 				round_interval++;
 				count = GameOver.ALL_COUNT;
@@ -232,6 +235,7 @@ public class GameOver {
 
 	public void lets_kill() {
 		// TODO Auto-generated method stub
+		System.out.println("호출된다.");
 		if (already_killed)
 			return;
 		else
@@ -385,12 +389,12 @@ public class GameOver {
 		g.drawImage(lose, x, y, null);
 
 	}
+
 	public void gameRestart(Timer timer) {
-		gameover= false;
+		gameover = false;
 		win = false;
 		timer.restart();
-		
+
 	}
-	
 
 }

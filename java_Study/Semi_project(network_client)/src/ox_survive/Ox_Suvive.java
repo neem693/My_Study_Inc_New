@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
@@ -39,6 +40,8 @@ public class Ox_Suvive extends JFrame {
 	Random rand = new Random();
 	KeyAdapter adapter;
 	Timer timer;
+	boolean timer_already_start = false;
+	boolean initilize = false;
 	GameOver gameover;
 
 	ObjectInputStream ios;
@@ -121,8 +124,32 @@ public class Ox_Suvive extends JFrame {
 			gameover.nextRound();
 		if (gameover.gameover || gameover.win)
 			timer.stop();
+		if (gameover.time_to_send_data && chManager.user_all_move()) {
+			send_data();
+		}
 
 		// gameover.
+	}
+
+	private void send_data() {
+		// TODO Auto-generated method stub
+		if (gameover.already_send_data)
+			return;
+		System.out.println("작동중이다.");
+		gameover.already_send_data = true;
+		Ox_Survive_Data data = new Ox_Survive_Data();
+		data.setProtocol(Ox_Survive_Data.END_ROUND);
+		data.setCh_list(chManager.getCh_list());
+		data.setOpan(opan);
+		data.setXpan(xpan);
+		try {
+			oos.writeObject(data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		timer.stop();
+		gameover.round_interval = 0;
 	}
 
 	private void init_event() {
@@ -141,7 +168,7 @@ public class Ox_Suvive extends JFrame {
 					if (key == KeyEvent.VK_RIGHT) {
 						// chManager.user_goto(xpan, chManager.getCh_user());
 						chManager.multiplayer_goto(xpan, chManager.getCh_user(), gameover.getAi_move());
-						System.out.println("o판으로 이동 --작동중");
+						System.out.println("x판으로 이동 --작동중");
 					}
 					if (key == KeyEvent.VK_LEFT) {
 						// chManager.user_goto(opan, chManager.getCh_user());
@@ -336,9 +363,15 @@ public class Ox_Suvive extends JFrame {
 			break;
 
 		case Ox_Survive_Data.NEXT_ROUND:
+			System.out.println("넥스트 라운드");
 			gameover.setAi_move(data.getAi_move());
 
-			timer.start();// 위치변경 예정
+			if (timer_already_start)
+				timer.restart();
+			else {
+				timer.start();// 위치변경 예정
+				timer_already_start = true;
+			}
 			break;
 
 		default:

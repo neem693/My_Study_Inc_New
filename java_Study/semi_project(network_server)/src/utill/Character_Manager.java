@@ -313,4 +313,13 @@ public class Character_Manager {
 		return xpan;
 	}
 
+	public void setOpan(Pan opan) {
+		this.opan = opan;
+	}
+
+	public void setXpan(Pan xpan) {
+		this.xpan = xpan;
+	}
+	
+
 }
