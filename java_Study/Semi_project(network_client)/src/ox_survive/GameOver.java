@@ -171,14 +171,15 @@ public class GameOver {
 			// }
 			// }
 			// }
+			if (!(ai_move[s] == null)) {
+				if (ai_move[s].getCharacter_start_w() < 500)
+					target_ch_pan = ch_m.getOpan().ch_priority_lo[ai_move[s].getPriority() - 1];
+				else
+					target_ch_pan = ch_m.getXpan().ch_priority_lo[ai_move[s].getPriority() - 1];
 
-			if (ai_move[s].getCharacter_start_w() < 500)
-				target_ch_pan = ch_m.getOpan().ch_priority_lo[ai_move[s].getPriority() - 1];
-			else
-				target_ch_pan = ch_m.getXpan().ch_priority_lo[ai_move[s].getPriority() -1];
+				ch_m.go_ox(target_ch_pan, ch_list.get(s));
 
-			ch_m.go_ox(target_ch_pan, ch_list.get(s));
-
+			}
 		}
 	}
 
