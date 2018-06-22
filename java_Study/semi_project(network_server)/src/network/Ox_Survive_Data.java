@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import pv.Character_User;
 import pv.Character_ox;
+import utill.Character_pan;
 import utill.Pan;
 
 public class Ox_Survive_Data implements Serializable {
@@ -27,10 +28,11 @@ public class Ox_Survive_Data implements Serializable {
 	int protocol;
 	String nick_name;
 	Pan xpan,opan;
+	Character_pan [] ai_move;
 	ArrayList<Character_ox> ch_list;
 	ArrayList<Character_ox> ch_user_list;
 	String [] user_list;
-	String [] ai_move;
+	
 	int key;
 	String message;
 	//KeyEvent key;
@@ -126,12 +128,13 @@ public class Ox_Survive_Data implements Serializable {
 	public void setCh_user_list(ArrayList<Character_ox> ch_user_list) {
 		this.ch_user_list = ch_user_list;
 	}
-	public String[] getAi_move() {
+	public Character_pan[] getAi_move() {
 		return ai_move;
 	}
-	public void setAi_move(String[] ai_move) {
+	public void setAi_move(Character_pan[] ai_move) {
 		this.ai_move = ai_move;
 	}
+
 	
 	
 	

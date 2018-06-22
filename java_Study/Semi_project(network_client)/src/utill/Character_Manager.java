@@ -275,7 +275,7 @@ public class Character_Manager {
 
 	}
 
-	private void go_ox(Character_pan ch_pan, Character_ox ch) {
+	public void go_ox(Character_pan ch_pan, Character_ox ch) {
 		// TODO Auto-generated method stub
 		ch.setNext_point(new Point(ch_pan.character_start_w, ch_pan.character_start_h));
 		ch.setMoving(true);

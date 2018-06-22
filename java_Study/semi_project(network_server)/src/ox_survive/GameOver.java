@@ -19,6 +19,7 @@ import main.MyConst;
 import pv.Character_User;
 import pv.Character_ox;
 import utill.Character_Manager;
+import utill.Character_pan;
 import utill.MunJe;
 import utill.Pan;
 
@@ -33,7 +34,7 @@ public class GameOver {
 	int w, l; // 오답체크 할시, 해당하는 이미지를 랜덤으로 불러오기 위해 난수를 받아와야 하는데, 그것을 기억해야 할 전역변수가 필요하다.
 	// 서버 전역변수
 	int noc;// number_of_character
-	String[] ai_move; // ai가 움직여야 할 곳을 미리 정하여서 클라이언트에 전달해줘야 한다.
+	Character_pan[] ai_move; // ai가 움직여야 할 곳을 미리 정하여서 클라이언트에 전달해줘야 한다.
 
 	Random rand;
 	ArrayList<Character_ox> ch_list;
@@ -102,7 +103,7 @@ public class GameOver {
 		// int max_character = ch_list.size();
 		// if (isRound)
 		// return;
-		ai_move = new String[ch_list.size()];
+		ai_move = new Character_pan[ch_list.size()];
 		int count = 0;
 		int r;
 		int i = 0;
@@ -114,7 +115,7 @@ public class GameOver {
 				if (ch_list.get(s) == user) {
 					ai_move[s] = null;
 					continue SKIP;
-					}
+				}
 			}
 
 			if (isnt_value_cheating) {
@@ -127,18 +128,20 @@ public class GameOver {
 			if (quiz_r_c.get(round).equals("O")) // 만약 답이 o라면 60%가 o로 간다. 지금으로선 무조건 O가 60퍼센트라고 하자.
 			{
 				if (!cheating)
-					ai_move[s] = "O";// o_is_correct(r);
+					o_is_correct(r);
 				else
-					ai_move[s] = "X";// x_is_correct(r);
+					x_is_correct(r);
 
 			} else if (quiz_r_c.get(round).equals("X")) {
 				if (!cheating)
-					ai_move[s] = "X";// x_is_correct(r);
+					x_is_correct(r);
 				else
-					ai_move[s] = "O";// o_is_correct(r);
-
+					o_is_correct(r);
 			}
+			
+			ai_move[s] = ch_list.get(s).getCurrent_pan();
 		}
+		
 	}
 
 	private void we_cheat_player() {
@@ -393,16 +396,13 @@ public class GameOver {
 
 	}
 
-	public String[] getAi_move() {
+	public Character_pan[] getAi_move() {
 		return ai_move;
 	}
 
-	public void setAi_move(String[] ai_move) {
+	public void setAi_move(Character_pan[] ai_move) {
 		this.ai_move = ai_move;
 	}
-	
-	
-	
-	
+
 
 }

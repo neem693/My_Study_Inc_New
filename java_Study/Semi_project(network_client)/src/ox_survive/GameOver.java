@@ -20,6 +20,7 @@ import main.MyConst;
 import pv.Character_User;
 import pv.Character_ox;
 import utill.Character_Manager;
+import utill.Character_pan;
 import utill.MunJe;
 import utill.Pan;
 
@@ -60,7 +61,7 @@ public class GameOver {
 	int count = 0;
 	String count_str;
 	
-	String [] ai_move;//ai가 움직여야 할 곳을 미리 받아서 ai들을 움직이자.
+	Character_pan [] ai_move;//ai가 움직여야 할 곳을 미리 받아서 ai들을 움직이자.
 
 	public GameOver() {
 		// TODO Auto-generated constructor stub
@@ -145,12 +146,7 @@ public class GameOver {
 //
 //			}
 			
-			if(ai_move[s].equals("O"))
-				ch_m.user_goto(ch_m.getOpan(), ch_list.get(s));
-			else if(ai_move[s].equals("X"))
-				ch_m.user_goto(ch_m.getXpan(), ch_list.get(s));
-			else if(ai_move[s]==null)
-				continue;
+			ch_m.go_ox(ai_move[s], ch_list.get(s));
 			
 
 		}
@@ -430,13 +426,17 @@ public class GameOver {
 		this.quiz_r_c = quiz_r_c;
 	}
 
-	public String[] getAi_move() {
+	public Character_pan[] getAi_move() {
 		return ai_move;
 	}
 
-	public void setAi_move(String[] ai_move) {
+	public void setAi_move(Character_pan[] ai_move) {
 		this.ai_move = ai_move;
 	}
+	
+	
+
+
 	
 	
 	
