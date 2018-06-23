@@ -138,10 +138,19 @@ public class GameOver {
 				else
 					o_is_correct(r);
 			}
-			
+
 			ai_move[s] = ch_list.get(s).getCurrent_pan();
 		}
-		
+		System.out.println(ai_move.length + "명 ai 데이터 존재");
+		System.out.println("o판 프리오리티");
+		for (int z = 0; z < 50; z++) {
+			System.out.println(z + " " + ch_m.getOpan().ch_priority_lo[z].isIs_hear());
+		}
+		System.out.println("x판 프리오리티");
+		for (int z = 0; z < 50; z++) {
+			System.out.println(z + " " + ch_m.getXpan().ch_priority_lo[z].isIs_hear());
+		}
+
 	}
 
 	private void we_cheat_player() {
@@ -411,11 +420,11 @@ public class GameOver {
 	public void setCh_list(ArrayList<Character_ox> ch_list) {
 		this.ch_list = ch_list;
 	}
+
 	public void gameover_server_ready() {
 		this.round++;
 		this.isnt_value_cheating = true;
-		s=0;
+		s = 0;
 	}
-
 
 }

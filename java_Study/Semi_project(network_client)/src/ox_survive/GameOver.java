@@ -65,6 +65,11 @@ public class GameOver {
 	public boolean already_send_data = false;
 
 	Character_pan[] ai_move;// ai가 움직여야 할 곳을 미리 받아서 ai들을 움직이자.
+	public boolean kill_allow = false;
+	public boolean check_munje = false;
+	public boolean already_end_round_send = false;
+	public boolean oneCycle = true;
+	public boolean time_to_send_end_round = false;
 
 	public GameOver() {
 		// TODO Auto-generated constructor stub
@@ -172,13 +177,15 @@ public class GameOver {
 			// }
 			// }
 			if (!(ai_move[s] == null)) {
-				if (ai_move[s].getCharacter_start_w() < 500)
+				if (ai_move[s].getCurrentLocation().equals(Pan.OPAN))
 					target_ch_pan = ch_m.getOpan().ch_priority_lo[ai_move[s].getPriority() - 1];
 				else
 					target_ch_pan = ch_m.getXpan().ch_priority_lo[ai_move[s].getPriority() - 1];
 
 				ch_m.go_ox(target_ch_pan, ch_list.get(s));
 
+			}else {
+				System.out.println(s+ "번 째 캐릭터의 이동 경로가 없습니다.");
 			}
 		}
 	}
@@ -232,11 +239,14 @@ public class GameOver {
 		if (!quetioning && count < GameOver.ALL_COUNT) {
 			quetioning = true;
 			checking = false;
+			time_to_send_end_round = false;
 
 		} else if (count >= GameOver.ALL_COUNT) {
 			quetioning = false;
 			isnt_value_cheating = true;
-			time_to_send_data = true;
+			time_to_send_end_round = true;
+
+			// time_to_send_data = true;
 
 		}
 		// System.out.println(quetioning);
@@ -245,8 +255,12 @@ public class GameOver {
 
 	public boolean count_zero() {
 		if (count >= GameOver.ALL_COUNT) {
+			
 			if (round_interval < 600) {
-				round_interval++;
+				if (oneCycle) {
+					round_interval++;
+					oneCycle = false;
+				}
 				count = GameOver.ALL_COUNT;
 				already_killed = false;
 			} else if (round_interval >= 600) {
@@ -256,9 +270,12 @@ public class GameOver {
 				round++;
 				time_to_send_data = false;
 				already_send_data = false;
+				already_end_round_send = false;
+				this.check_munje = false;
 			}
 			return true;
 		} else
+
 			return false;
 	}
 
@@ -281,6 +298,8 @@ public class GameOver {
 		else
 			remain = ch_list.size();// 플레이어 포함 다 죽을 경우 해당 등수를 보여주기 위해서 변수를 저장한 것이다.
 		already_killed = true;
+		this.kill_allow = false;
+		System.out.println("죽인다.");
 
 		Pan pan = null;
 		if (quiz_r_c.get(round).equals("O")) { // x판이 틀렸을 때
@@ -305,15 +324,14 @@ public class GameOver {
 							pan.ch_lo[i][j].setCh(null);
 							break;
 						}
-
 					}
 				}
-
 			}
 		}
 		if (ch_list.size() == 1 && ch_list.get(0) == ch_m.ch_user) {
 			win = true;
 		}
+		System.out.println("남은 캐릭터수 " + ch_list.size());
 
 		// System.out.println(ch_list.size());
 

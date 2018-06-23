@@ -32,7 +32,7 @@ public class Ox_survive_Server extends JFrame {
 	JTextArea jta_text;
 	ServerSocket server;
 	ArrayList<ReadThread> socket_list;
-	//ArrayList<Character_ox> ch_list;
+	// ArrayList<Character_ox> ch_list;
 	ArrayList<Character_User> ch_user;
 
 	ArrayList<String> user_list;
@@ -105,6 +105,7 @@ public class Ox_survive_Server extends JFrame {
 						synchronized (Ox_survive_Server.this) {
 
 							// System.out.println(data.nick_name.equals(""));
+							
 
 							if (data.nick_name.equals("")) {
 								nick_name = String.format("%s<레디>", user_list.get(index));
@@ -138,14 +139,45 @@ public class Ox_survive_Server extends JFrame {
 						synchronized (Ox_survive_Server.this) {
 							this.receive = true;
 							if (all_user_end()) {
+
+								Ox_Survive_Data re_data = new Ox_Survive_Data();
+								re_data.setProtocol(Ox_Survive_Data.KILL);
+								re_data.setKill_allow(true);
+								send_all_client(re_data);
+
+							}
+							break;
+						}
+					case Ox_Survive_Data.REQUEST_NEXTROUND:
+						synchronized (Ox_survive_Server.this) {
+							this.receive = true;
+							if (all_user_end()) {
+								System.out.println("o판 프리오리티");
+								for (int z = 0; z < 50; z++) {
+									System.out.println(z + " " + data.getOpan().ch_priority_lo[z].isIs_hear());
+								}
+								System.out.println("x판 프리오리티");
+								for (int z = 0; z < 50; z++) {
+									System.out.println(z + " " + data.getXpan().ch_priority_lo[z].isIs_hear());
+								}
+								System.out.println(data.ch_list.size() + "명의 데이터를 받았음");
+								System.out.println("일시" + data.date);
 								next_round_send(data);
 								Ox_Survive_Data re_data = new Ox_Survive_Data();
 								re_data.protocol = Ox_Survive_Data.NEXT_ROUND;
 								re_data.setAi_move(gameover.getAi_move());
 								send_all_client(re_data);
 							}
+							break;
 
 						}
+					case Ox_Survive_Data.CHARACTER_MOVE:
+						synchronized (Ox_survive_Server.this) {
+							send_all_client(data);
+							break;
+							
+						}
+					
 
 					}
 
@@ -208,11 +240,11 @@ public class Ox_survive_Server extends JFrame {
 		ch_m.setOpan(opan);
 		ch_m.setXpan(xpan);
 		ch_m.ch_list = data.ch_list;
+		ch_m.ch_user_list = data.ch_user_list;
 		gameover.setCh_list(ch_m.ch_list);
 		gameover.gameover_server_ready();
 		gameover.nextRound();
-		
-		
+
 	}
 
 	public boolean all_user_end() {
@@ -296,6 +328,13 @@ public class Ox_survive_Server extends JFrame {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		for (int z = 0; z < 50; z++) {
+			System.out.println(z + " " + ch_m.getOpan().ch_priority_lo[z].isIs_hear());
+		}
+		System.out.println("x판 프리오리티");
+		for (int z = 0; z < 50; z++) {
+			System.out.println(z + " " + ch_m.getXpan().ch_priority_lo[z].isIs_hear());
 		}
 
 	}

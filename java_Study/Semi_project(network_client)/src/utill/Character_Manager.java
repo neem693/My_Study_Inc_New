@@ -312,8 +312,8 @@ public class Character_Manager {
 
 	public void multiplayer_goto(Pan pan, Character_ox ch, Character_pan[] ai_move) {
 		// TODO Auto-generated method stub
-		if (ch.isMoving())
-			return;
+//		if (ch.isMoving())
+//			return;
 		Character_pan ch_pan = null;
 		Character_pan ch_pan2 = null;
 		int i = 0;

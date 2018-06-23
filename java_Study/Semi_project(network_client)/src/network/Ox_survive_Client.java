@@ -106,13 +106,13 @@ public class Ox_survive_Client extends JFrame {
 			ready = false;
 
 		try {
-
+			socket = null;
 			ios.close();
 			oos.close();
-			socket = null;
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+		//	e.printStackTrace();
 
 		}
 		check_view();
@@ -207,6 +207,11 @@ public class Ox_survive_Client extends JFrame {
 						
 							ox_survive.send_message(data);
 							break;
+						case Ox_Survive_Data.KILL:
+							ox_survive.send_message(data);
+						case Ox_Survive_Data.CHARACTER_MOVE:
+							ox_survive.send_message(data);
+							break;
 
 						}
 					} catch (ClassNotFoundException e) {
@@ -298,8 +303,13 @@ public class Ox_survive_Client extends JFrame {
 		nick_label.setFont(new Font("±¼¸²", 0, 15));
 		nick_label.setHorizontalAlignment(SwingConstants.CENTER);
 		north_panel.add(nick_label);
-
-		jserver_addr = new JTextField("192.168.0.5:7000");
+		//jserver_addr = new JTextField("192.168.0.5:7000");
+		try {
+			jserver_addr = new JTextField(InetAddress.getLocalHost().getHostAddress()+":7000");
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		north_panel.add(jserver_addr);
 
 		jnick_name = new JTextField();

@@ -22,6 +22,8 @@ public class Ox_Survive_Data implements Serializable {
 	public static final int NEXT_ROUND = 64;//PAN과 chlist, 현재 문제와 답, 번호등이 전송한다.
 	public static final int END_ROUND =128;
 	public static final int CHARACTER_MOVE = 256;//멀티플레이어의 캐릭터가 움직인다.
+	public static final int KILL = 512;
+	public static final int REQUEST_NEXTROUND = 1024;
 	///////프로토콜
 	ArrayList<String> quiz_r_n;
 	ArrayList<String> quiz_r_m;
@@ -33,6 +35,8 @@ public class Ox_Survive_Data implements Serializable {
 	ArrayList<Character_ox> ch_list;
 	ArrayList<Character_ox> ch_user_list;
 	String [] user_list;
+	String date;
+	String player_go;
 	
 	int key;
 	String message;
@@ -40,10 +44,17 @@ public class Ox_Survive_Data implements Serializable {
 	
 	int message_index;
 	int user_index;
+	boolean kill_allow;
 	
 	
 	
 	
+	public boolean isKill_allow() {
+		return kill_allow;
+	}
+	public void setKill_allow(boolean kill_allow) {
+		this.kill_allow = kill_allow;
+	}
 	public ArrayList<String> getQuiz_r_n() {
 		return quiz_r_n;
 	}
@@ -78,19 +89,20 @@ public class Ox_Survive_Data implements Serializable {
 		return xpan;
 	}
 	public void setXpan(Pan xpan) {
-		this.xpan = xpan;
+		this.xpan = new Pan(xpan);
 	}
 	public Pan getOpan() {
 		return opan;
 	}
 	public void setOpan(Pan opan) {
-		this.opan = opan;
+		this.opan = new Pan(opan);
 	}
 	public ArrayList<Character_ox> getCh_list() {
 		return ch_list;
 	}
 	public void setCh_list(ArrayList<Character_ox> ch_list) {
-		this.ch_list = ch_list;
+		this.ch_list = new ArrayList<Character_ox>();
+		this.ch_list.addAll(ch_list);
 	}
 
 	public String[] getUser_list() {
@@ -127,7 +139,8 @@ public class Ox_Survive_Data implements Serializable {
 		return ch_user_list;
 	}
 	public void setCh_user_list(ArrayList<Character_ox> ch_user_list) {
-		this.ch_user_list = ch_user_list;
+		this.ch_user_list = new ArrayList<Character_ox>();
+		this.ch_user_list.addAll(ch_user_list);
 	}
 	public Character_pan[] getAi_move() {
 		return ai_move;
@@ -135,6 +148,19 @@ public class Ox_Survive_Data implements Serializable {
 	public void setAi_move(Character_pan[] ai_move) {
 		this.ai_move = ai_move;
 	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getPlayer_go() {
+		return player_go;
+	}
+	public void setPlayer_go(String player_go) {
+		this.player_go = player_go;
+	}
+
 
 	
 	

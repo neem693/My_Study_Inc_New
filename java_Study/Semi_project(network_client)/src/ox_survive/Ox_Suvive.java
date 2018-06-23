@@ -14,6 +14,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -117,36 +119,71 @@ public class Ox_Suvive extends JFrame {
 		// TODO Auto-generated method stub
 		chManager.move();
 		gameover.count_up();
-		if (gameover.count_zero()) {
+		if (gameover.count_zero() && gameover.time_to_send_end_round) {
+			send_end_round();
+		}
+		if (gameover.count_zero() && gameover.kill_allow) {
 			gameover.lets_kill();
 		}
 		if (!gameover.isRound)
 			gameover.nextRound();
-		if (gameover.gameover || gameover.win)
+		if (gameover.gameover || gameover.win) {
+			try {
+				ios.close();
+				oos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			timer.stop();
+		}
 		if (gameover.time_to_send_data && chManager.user_all_move()) {
 			send_data();
 		}
+		gameover.oneCycle = true;// timer의 시간초가 count_zero를 호출할 떄 이뤄지는데 여기서는 두번 호출 되는데, 그걸 한번으로 바꾼다는 의미를 가진다.
 
 		// gameover.
+	}
+
+	private void send_end_round() {
+		// TODO Auto-generated method stub
+		if (gameover.already_end_round_send)
+			return;
+		System.out.println("라운드가 끝났다는 데이터를 보냅니다.");
+
+		gameover.already_end_round_send = true;
+		Ox_Survive_Data data = new Ox_Survive_Data();
+		data.setProtocol(Ox_Survive_Data.END_ROUND);
+		try {
+			oos.writeObject(data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		timer.stop();
+
 	}
 
 	private void send_data() {
 		// TODO Auto-generated method stub
 		if (gameover.already_send_data)
 			return;
-		System.out.println("작동중이다.");
+		System.out.println("ai데이터를 요청한다.");
 		gameover.already_send_data = true;
-		Ox_Survive_Data data = new Ox_Survive_Data();
-		data.setProtocol(Ox_Survive_Data.END_ROUND);
-		data.setCh_list(chManager.getCh_list());
-		data.setOpan(opan);
-		data.setXpan(xpan);
+		Ox_Survive_Data re_data = new Ox_Survive_Data();
+		re_data.setProtocol(Ox_Survive_Data.REQUEST_NEXTROUND);
+		re_data.setCh_list(gameover.ch_list);
+		System.out.println(re_data.getCh_list().size() + "명의 데이터를 보낼거임");
+		re_data.setCh_user_list(gameover.ch_m.ch_user_list);
+		re_data.setOpan(gameover.ch_m.getOpan());
+		re_data.setXpan(gameover.ch_m.getXpan());
+		re_data.setDate(new Date().toString());
 		try {
-			oos.writeObject(data);
+			oos.writeObject(re_data);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 		timer.stop();
 		gameover.round_interval = 0;
@@ -164,16 +201,17 @@ public class Ox_Suvive extends JFrame {
 					System.out.println("업");
 				}
 
-				if (chManager.getCh_user() != null && gameover.isQuetioning()) {
+				if (chManager.getCh_user() != null && gameover.isQuetioning() && !chManager.ch_user.isMoving()) {
 					if (key == KeyEvent.VK_RIGHT) {
 						// chManager.user_goto(xpan, chManager.getCh_user());
-						chManager.multiplayer_goto(xpan, chManager.getCh_user(), gameover.getAi_move());
-						System.out.println("x판으로 이동 --작동중");
+						send_multiplayer_move(Pan.XPAN);
+						// System.out.println("x판으로 이동 --작동중");
 					}
 					if (key == KeyEvent.VK_LEFT) {
 						// chManager.user_goto(opan, chManager.getCh_user());
-						chManager.multiplayer_goto(opan, chManager.getCh_user(), gameover.getAi_move());
-						System.out.println("o판으로 이동--작동중");
+						send_multiplayer_move(Pan.OPAN);
+
+						// System.out.println("o판으로 이동--작동중");
 					}
 
 				}
@@ -207,6 +245,20 @@ public class Ox_Suvive extends JFrame {
 
 		// jbt_start.addActionListener(action);
 		// jbt_exit.addActionListener(action);
+
+	}
+
+	protected void send_multiplayer_move(String pan) {
+		// TODO Auto-generated method stub
+		Ox_Survive_Data data = new Ox_Survive_Data();
+		data.setProtocol(Ox_Survive_Data.CHARACTER_MOVE);
+		data.setPlayer_go(pan);
+		try {
+			oos.writeObject(data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -249,11 +301,11 @@ public class Ox_Suvive extends JFrame {
 				chManager.draw(g);
 				gameover.draw_count(g);
 				gameover.munje_show(g);
-				if (gameover.gameover || gameover.win)
-					gameover.end_game(g);
-				if (!gameover.quetioning) {
+				if (!gameover.quetioning && gameover.check_munje) {
 					gameover.lets_check_munje(g);
 				}
+				if (gameover.gameover || gameover.win)
+					gameover.end_game(g);
 
 				// 그리기 테스트 이다.
 				// for (int i = 0; i < xpan.ch_lo.length; i++) {
@@ -372,6 +424,23 @@ public class Ox_Suvive extends JFrame {
 				timer.start();// 위치변경 예정
 				timer_already_start = true;
 			}
+			break;
+		case Ox_Survive_Data.KILL:
+			gameover.kill_allow = true;
+			gameover.check_munje = true;
+			gameover.time_to_send_data = true;
+			timer.restart();
+			break;
+
+		case Ox_Survive_Data.CHARACTER_MOVE:
+			System.out.println("유저이동");
+			if (data.getPlayer_go().equals(Pan.XPAN))
+				chManager.multiplayer_goto(xpan, chManager.ch_user_list.get(data.getMessage_index()),
+						gameover.getAi_move());
+			else
+				chManager.multiplayer_goto(opan, chManager.ch_user_list.get(data.getMessage_index()),
+						gameover.getAi_move());
+
 			break;
 
 		default:

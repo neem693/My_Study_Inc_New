@@ -50,7 +50,7 @@ public class Character_Manager {
 		int[] user_count = new int[how_many_user];
 		int count = 0;
 
-		make_user_count(user_count);
+		make_user_count(how_many,user_count);
 
 		Character_ox ch = null;
 
@@ -110,12 +110,12 @@ public class Character_Manager {
 		// this.ch_list = new
 	}
 
-	private void make_user_count(int[] user_count) {
+	private void make_user_count(int total_user,int[] user_count) {
 		// TODO Auto-generated method stub
 		// user_count = new int[how_many_user];
 		int check;
 		AGAIN: for (int i = 0; i < user_count.length; i++) {
-			check = rand.nextInt(Character_Manager.HEAVY);
+			check = rand.nextInt(total_user);
 			for (int j = 0; j < i; j++)
 				if (check == user_count[j]) {
 					i -= 1;
@@ -242,8 +242,8 @@ public class Character_Manager {
 
 	public void user_goto(Pan pan, Character_ox ch) {
 		// TODO Auto-generated method stub
-		if (ch.isMoving())
-			return;
+//		if (ch.isMoving())
+//			return;
 		Character_pan ch_pan = null;
 		Character_pan ch_pan2 = null;
 		int i = 0;
@@ -281,13 +281,21 @@ public class Character_Manager {
 
 	private void go_ox(Character_pan ch_pan, Character_ox ch) {
 		// TODO Auto-generated method stub
+//		System.out.println(ch_pan.character_start_w + "  " + ch_pan.character_start_h);
 		ch.setNext_point(new Point(ch_pan.character_start_w, ch_pan.character_start_h));
 		ch.setMoving(true);
-		ch.getCurrent_pan().setIs_hear(false);
+		if(ch.getCurrent_pan().currentLocation.equals(Pan.OPAN)) {
+			this.getOpan().ch_priority_lo[ch.getCurrent_pan().priority-1].setIs_hear(false);
+			this.getOpan().ch_priority_lo[ch.getCurrent_pan().priority-1].setCh(null);
+		}else {
+			this.getXpan().ch_priority_lo[ch.getCurrent_pan().priority-1].setIs_hear(false);
+			this.getXpan().ch_priority_lo[ch.getCurrent_pan().priority-1].setCh(null);
+		}
+		//ch.getCurrent_pan().setIs_hear(false);
 
 		// ch.getCurrent_pan().setBefore_ch(ch.getCurrent_pan().getCh());
 
-		ch.getCurrent_pan().setCh(null);
+		//ch.getCurrent_pan().setCh(null);
 
 		// ch.setBefore_pan(ch.getCurrent_pan());
 
