@@ -312,8 +312,8 @@ public class Character_Manager {
 
 	public void multiplayer_goto(Pan pan, Character_ox ch, Character_pan[] ai_move) {
 		// TODO Auto-generated method stub
-//		if (ch.isMoving())
-//			return;
+		// if (ch.isMoving())
+		// return;
 		Character_pan ch_pan = null;
 		Character_pan ch_pan2 = null;
 		int i = 0;
@@ -323,10 +323,11 @@ public class Character_Manager {
 		for (int j = 0; j < 50; j++) {
 			ai_is_not_hear[j] = true;
 			for (Character_pan ai_hear : ai_move)
-				if (pan.ch_priority_lo[j] == ai_hear) {
-					ai_is_not_hear[j] = false;
-					break;
-				}
+				if (!(ai_hear == null))
+					if (pan.ch_priority_lo[j].getPriority() == ai_hear.getPriority()) {
+						ai_is_not_hear[j] = false;
+						break;
+					}
 
 		}
 
@@ -354,13 +355,12 @@ public class Character_Manager {
 	}
 
 	public boolean user_all_move() {
-		for(Character_ox ch : ch_list) {
-			if(ch.isMoving()) {
+		for (Character_ox ch : ch_list) {
+			if (ch.isMoving()) {
 				return false;
 			}
 		}
 		return true;
-		
 
 	}
 
@@ -371,5 +371,5 @@ public class Character_Manager {
 	public void setXpan(Pan xpan) {
 		this.xpan = xpan;
 	}
-	
+
 }

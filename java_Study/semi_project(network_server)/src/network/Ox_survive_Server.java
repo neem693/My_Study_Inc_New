@@ -44,6 +44,7 @@ public class Ox_survive_Server extends JFrame {
 
 	boolean all_ready;
 	boolean start = false;
+	boolean starting = false;
 
 	class ReadThread extends Thread {
 		Socket child;
@@ -105,7 +106,6 @@ public class Ox_survive_Server extends JFrame {
 						synchronized (Ox_survive_Server.this) {
 
 							// System.out.println(data.nick_name.equals(""));
-							
 
 							if (data.nick_name.equals("")) {
 								nick_name = String.format("%s<레디>", user_list.get(index));
@@ -175,9 +175,8 @@ public class Ox_survive_Server extends JFrame {
 						synchronized (Ox_survive_Server.this) {
 							send_all_client(data);
 							break;
-							
+
 						}
-					
 
 					}
 
@@ -211,6 +210,8 @@ public class Ox_survive_Server extends JFrame {
 				data.nick_name = name;
 				send_all_client(data);
 				check_all_ready();
+				if (socket_list.size() == 0)
+					starting = false;
 
 			}
 
@@ -279,6 +280,7 @@ public class Ox_survive_Server extends JFrame {
 					////////////////////////
 					send_all_client(data);
 					start = true;///// 나중에 쓸 때 있으면 써라. 이건 그냥 예비용으로 만들어 놓은 냠냠이 start다.
+					starting = true;
 					check_view();
 
 					/// 게임 초기화 해서 보내기
@@ -372,7 +374,9 @@ public class Ox_survive_Server extends JFrame {
 			jbt_start.setEnabled(false);
 			jbt_start.setText("시작");
 		}
+		// if (socket_list.size() == 0)
 		start = false;
+		
 	}
 
 	public void send_user_list() {
@@ -450,7 +454,12 @@ public class Ox_survive_Server extends JFrame {
 					server = new ServerSocket(7000);
 					System.out.println("서버 구동중");
 					while (true) {
+						
 						Socket child = server.accept();
+						if (starting) {
+							child.close();
+							continue;
+						}
 						ReadThread rt = new ReadThread(child);
 						socket_list.add(rt);
 						rt.start();
