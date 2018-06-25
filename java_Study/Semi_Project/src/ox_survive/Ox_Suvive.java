@@ -11,8 +11,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.util.Random;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,27 +43,26 @@ public class Ox_Suvive extends JFrame {
 	KeyAdapter adapter;
 	Timer timer;
 	GameOver gameover;
-	
+
 	CardLayout card;
-	
+
 	JButton jbt_start;
 	JButton jbt_exit;
-	
-
 
 	public Ox_Suvive() {
 		super("내가만든 윈도우");
-		
+
 		card = new CardLayout();
 		show_panel = new JPanel(card);
-		show_panel.setPreferredSize(new Dimension(MyConst.GAME_W,MyConst.GAME_H));
+		show_panel.setPreferredSize(new Dimension(MyConst.GAME_W, MyConst.GAME_H));
 
 		init_pan();
 		init_button();
-		
+
 		init_event();
 		init_game();
 		init_timer();
+		init_sound("music/BGM.wav", true);
 
 		this.setLocation(200, 100);
 		// this.setBounds(200, 100, MyConst.GAME_W, MyConst.GAME_H);
@@ -68,27 +73,46 @@ public class Ox_Suvive extends JFrame {
 
 	}
 
+	private void init_sound(String file, boolean b) {
+		// TODO Auto-generated method stub
+		try {
+
+			AudioInputStream bgm = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
+			Clip clip = AudioSystem.getClip();
+			clip.open(bgm);
+			clip.start();
+			if (b) {
+				clip.loop(-1);
+			}
+
+			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			e.printStackTrace();
+		}
+	}
+
 	private void init_button() {
 		// TODO Auto-generated method stub
 		jbt_start = new JButton(new ImageIcon(Images.START));
 		jbt_exit = new JButton(new ImageIcon(Images.EXIT));
-		
+
 		jbt_exit.setFocusPainted(false);
 		jbt_exit.setBorderPainted(false);
 		jbt_exit.setContentAreaFilled(false);
-		
+
 		jbt_start.setFocusPainted(false);
 		jbt_start.setBorderPainted(false);
 		jbt_start.setContentAreaFilled(false);
-		
-		
+
 		jbt_start.setBounds(0, 285, 250, 350);
 		jbt_exit.setBounds(1030, 285, 250, 350);
-		
+
 		main_ox.setLayout(null);
-		main_ox.add(jbt_start,"West");
-		main_ox.add(jbt_exit,"East");
-		
+		main_ox.add(jbt_start, "West");
+		main_ox.add(jbt_exit, "East");
+
 	}
 
 	private void init_game() {
@@ -112,7 +136,7 @@ public class Ox_Suvive extends JFrame {
 		};
 
 		timer = new Timer(10, listener);
-		//timer.start();
+		// timer.start();
 
 	}
 
@@ -123,9 +147,9 @@ public class Ox_Suvive extends JFrame {
 		if (gameover.count_zero()) {
 			gameover.lets_kill();
 		}
-		if(!gameover.isRound)
+		if (!gameover.isRound)
 			gameover.nextRound();
-		if(gameover.gameover||gameover.win)
+		if (gameover.gameover || gameover.win)
 			timer.stop();
 
 		// gameover.
@@ -139,10 +163,10 @@ public class Ox_Suvive extends JFrame {
 				// TODO Auto-generated method stub
 				super.keyPressed(e);
 				int key = e.getKeyCode();
-				if(key == KeyEvent.VK_UP) {
+				if (key == KeyEvent.VK_UP) {
 					System.out.println("업");
 				}
-				
+
 				if (chManager.getCh_user() != null && gameover.isQuetioning()) {
 					if (key == KeyEvent.VK_RIGHT) {
 						chManager.user_goto(xpan, chManager.getCh_user());
@@ -152,9 +176,9 @@ public class Ox_Suvive extends JFrame {
 						chManager.user_goto(opan, chManager.getCh_user());
 						System.out.println("작동중");
 					}
-					
+
 				}
-				if(key == KeyEvent.VK_SPACE&&(gameover.gameover||gameover.win)) {
+				if (key == KeyEvent.VK_SPACE && (gameover.gameover || gameover.win)) {
 					gameover.gameRestart(timer);
 					System.out.println("다시시작");
 				}
@@ -162,33 +186,25 @@ public class Ox_Suvive extends JFrame {
 			}
 		};
 		this.addKeyListener(adapter);
-		
-		
+
 		ActionListener action = new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(jbt_start == e.getSource())
-				{
+				if (jbt_start == e.getSource()) {
 					card.show(show_panel, "game");
 					timer.start();
-					Ox_Suvive.this.requestFocusInWindow(true);//이걸 해야지만 해당하는 프레임이 포커스가 된다. 따라서 키 이벤트가 작동한다.
+					Ox_Suvive.this.requestFocusInWindow(true);// 이걸 해야지만 해당하는 프레임이 포커스가 된다. 따라서 키 이벤트가 작동한다.
 				}
-				if(jbt_exit == e.getSource())
-				{
+				if (jbt_exit == e.getSource()) {
 					System.exit(0);
 				}
 			}
 		};
-		
+
 		jbt_start.addActionListener(action);
 		jbt_exit.addActionListener(action);
-		
-		
-		
-		
-		
 
 	}
 
@@ -222,17 +238,17 @@ public class Ox_Suvive extends JFrame {
 				super.paintComponent(g);
 
 				//// 이 때 쯤에 배경화면 하나 추가하자.
-				
-				g.drawImage(Images.BACKGROUND, 0, 0,null);
+
+				g.drawImage(Images.BACKGROUND, 0, 0, null);
 
 				g.drawRect(0 + border, 0 + border, width, height);
 				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);
 				chManager.draw(g);
 				gameover.draw_count(g);
 				gameover.munje_show(g);
-				if(gameover.gameover||gameover.win)
+				if (gameover.gameover || gameover.win)
 					gameover.end_game(g);
-				if(!gameover.quetioning) {
+				if (!gameover.quetioning) {
 					gameover.lets_check_munje(g);
 				}
 
@@ -267,10 +283,9 @@ public class Ox_Suvive extends JFrame {
 			}
 		};
 
-
 		full.setPreferredSize(new Dimension(MyConst.GAME_W, MyConst.GAME_H));
-		show_panel.add(full,"game");
-		
+		show_panel.add(full, "game");
+
 		main_ox = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
@@ -280,12 +295,10 @@ public class Ox_Suvive extends JFrame {
 
 			}
 		};
-		main_ox.setPreferredSize(new Dimension(MyConst.GAME_W,MyConst.GAME_H));
-		show_panel.add(main_ox,"main");
-		
-		
+		main_ox.setPreferredSize(new Dimension(MyConst.GAME_W, MyConst.GAME_H));
+		show_panel.add(main_ox, "main");
+
 		this.add(show_panel);
-		
 
 	}
 
