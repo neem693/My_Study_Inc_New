@@ -257,6 +257,9 @@ public class GameOver {
 						if (ch_list.get(n) == pan.ch_lo[i][j].getCh()) {
 							// System.out.println("---same---");
 							if (ch_list.get(n) == ch_m.ch_user) {// user가 망가졌을 때
+//								if(ch_m.ch_user instanceof Character_User) {
+//									System.out.println("유저에 포함된다.");
+								}
 								ch_m.ch_user = null;
 								gameover = true;
 							}

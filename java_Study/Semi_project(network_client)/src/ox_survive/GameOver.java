@@ -319,6 +319,9 @@ public class GameOver {
 								ch_m.ch_user = null;
 								gameover = true;
 							}
+							if(ch_list.get(n) instanceof Character_User) {
+								ch_m.ch_user_list.remove(ch_list.get(n));
+							}
 							ch_list.remove(n);
 							pan.ch_lo[i][j].setIs_hear(false);
 							pan.ch_lo[i][j].setCh(null);

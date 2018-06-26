@@ -45,6 +45,8 @@ public class Ox_survive_Server extends JFrame {
 	boolean all_ready;
 	boolean start = false;
 	boolean starting = false;
+	public Ox_Survive_Data recently_data;
+	public boolean ready_to_recieve_data;
 
 	class ReadThread extends Thread {
 		Socket child;
@@ -144,6 +146,7 @@ public class Ox_survive_Server extends JFrame {
 								re_data.setProtocol(Ox_Survive_Data.KILL);
 								re_data.setKill_allow(true);
 								send_all_client(re_data);
+								ready_to_recieve_data = true;
 
 							}
 							break;
@@ -162,11 +165,9 @@ public class Ox_survive_Server extends JFrame {
 								}
 								System.out.println(data.ch_list.size() + "명의 데이터를 받았음");
 								System.out.println("일시" + data.date);
-								next_round_send(data);
-								Ox_Survive_Data re_data = new Ox_Survive_Data();
-								re_data.protocol = Ox_Survive_Data.NEXT_ROUND;
-								re_data.setAi_move(gameover.getAi_move());
-								send_all_client(re_data);
+								recently_data = data;
+								requst_next_round_compute(data);
+								
 							}
 							break;
 
@@ -194,6 +195,13 @@ public class Ox_survive_Server extends JFrame {
 			synchronized (Ox_survive_Server.this) {
 				index = socket_list.indexOf(this);
 				String name = user_list.get(index);
+				
+				//마지막으로 검토하기 위한것. 
+				//만약 kill당한 사람이 마지막으로 온다면, 아무도 넥스트 라운드를 진행 안해줄것이기 때문에
+				this.receive=true;
+				if(all_user_end() && ready_to_recieve_data&&socket_list.size()!=1)
+					requst_next_round_compute(recently_data);//최근 받았던 데이터를 보낸다.
+				
 
 				// 제거
 				socket_list.remove(index);
@@ -232,6 +240,17 @@ public class Ox_survive_Server extends JFrame {
 		this.setVisible(true);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public void requst_next_round_compute(Ox_Survive_Data data) {
+		// TODO Auto-generated method stub
+		next_round_send(data);
+		Ox_Survive_Data re_data = new Ox_Survive_Data();
+		re_data.protocol = Ox_Survive_Data.NEXT_ROUND;
+		re_data.setAi_move(gameover.getAi_move());
+		send_all_client(re_data);
+		ready_to_recieve_data = false; // 데이터를 받기 위한 긴장을 푼다.
+		
 	}
 
 	public void next_round_send(Ox_Survive_Data data) {
@@ -387,7 +406,7 @@ public class Ox_survive_Server extends JFrame {
 		data.protocol = Ox_Survive_Data.USER_LIST;
 		data.user_list = users;
 		send_all_client(data);
-
+	
 	}
 
 	private void send_all_client(Ox_Survive_Data data) {

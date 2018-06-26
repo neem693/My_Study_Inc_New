@@ -2,6 +2,7 @@ package utill;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -48,6 +49,10 @@ public class TEST extends JFrame {
 
 	public static void main(String[] args) {
 		new TEST();
+		ArrayList<String> ss = new ArrayList<String>();
+		ss.add("얌얌");
+		System.out.println(ss.indexOf("얌얌") + "있을만한건 여기에 있지.");
+		System.out.println(ss.indexOf("이건없지") + "이건없지");
 
 	}
 

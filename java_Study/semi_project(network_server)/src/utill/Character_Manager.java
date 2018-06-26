@@ -106,6 +106,10 @@ public class Character_Manager {
 			ch_list.add(ch);
 
 		}
+		for(int c : user_count)
+		System.out.println(c);
+		for(Character_ox user : ch_user_list)
+			System.out.println(user);
 		// for(int i =0; )
 		// this.ch_list = new
 	}
@@ -122,8 +126,9 @@ public class Character_Manager {
 					continue AGAIN;
 				}
 			user_count[i] = check;
-			Arrays.sort(user_count);
+		
 		}
+		Arrays.sort(user_count);
 	}
 
 	public boolean move() {
