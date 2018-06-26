@@ -328,7 +328,6 @@ public class Character_Manager {
 						ai_is_not_hear[j] = false;
 						break;
 					}
-
 		}
 
 		for (; i < 50; i++) {
@@ -351,7 +350,6 @@ public class Character_Manager {
 				go_ox(ch_pan2, ch);
 
 		}
-
 	}
 
 	public boolean user_all_move() {

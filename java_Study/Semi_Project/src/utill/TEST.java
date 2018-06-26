@@ -41,8 +41,6 @@ public class TEST extends JFrame {
 		test.setPreferredSize(new Dimension(1280, 720));
 		this.add(test);
 		
-		
-		
 	}
 
 
