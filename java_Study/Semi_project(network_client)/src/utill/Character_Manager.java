@@ -333,23 +333,12 @@ public class Character_Manager {
 		for (; i < 50; i++) {
 			if (pan.ch_priority_lo[i].is_hear == false && ai_is_not_hear[i]) {
 				ch_pan = pan.ch_priority_lo[i];
-				if (i != 49 && pan.ch_priority_lo[i + 1].is_hear == false && ai_is_not_hear[i + 1])
-					ch_pan2 = pan.ch_priority_lo[i + 1];
 				break;
 			}
 		}
 
-		if (ch_pan2 == (null)) {
-			go_ox(ch_pan, ch);
+		go_ox(ch_pan, ch);
 
-		} else {
-			r = rand.nextInt(10) + 1;
-			if (1 <= r && 5 >= r)
-				go_ox(ch_pan, ch);
-			else if (6 <= r && 10 >= r)
-				go_ox(ch_pan2, ch);
-
-		}
 	}
 
 	public boolean user_all_move() {
