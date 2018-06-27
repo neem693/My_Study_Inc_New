@@ -249,6 +249,7 @@ public class Ox_survive_Server extends JFrame {
 		re_data.protocol = Ox_Survive_Data.NEXT_ROUND;
 		re_data.setAi_move(gameover.getAi_move());
 		send_all_client(re_data);
+		System.out.println("데이터를 보냈다.");
 		ready_to_recieve_data = false; // 데이터를 받기 위한 긴장을 푼다.
 		
 	}
@@ -361,6 +362,7 @@ public class Ox_survive_Server extends JFrame {
 		opan = new Pan(Pan.OPAN, 0 + border, 0 + border);
 		xpan = new Pan(Pan.XPAN, MyConst.GAME_W - border - width, 0 + border);
 		ch_m = new Character_Manager(opan, xpan, Character_Manager.HEAVY, socket_list.size());
+		ch_m.setUserName(user_list);
 		try {
 			munje = new MunJe();
 			munje.random();
@@ -436,7 +438,6 @@ public class Ox_survive_Server extends JFrame {
 			try {
 				
 				rt.oos.writeObject(data);
-				
 				Thread.sleep(10);
 				
 			} catch (Exception e) {

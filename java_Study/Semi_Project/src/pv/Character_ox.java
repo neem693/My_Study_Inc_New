@@ -31,6 +31,8 @@ public class Character_ox extends Item {
 
 	double dx, dy;
 	Random rand;
+	
+	
 
 	public Character_ox() {
 		// TODO Auto-generated constructor stub
@@ -118,7 +120,7 @@ public class Character_ox extends Item {
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		g.drawImage(character_Image, current_point.x, current_point.y, Pan.CH_WIDHT, Pan.CH_HEIGHT, null);
-		g.drawString(String.valueOf(current_pan.getPriority()), current_point.x, current_point.y);// 테스트 용
+		//g.drawString(String.valueOf(current_pan.getPriority()), current_point.x, current_point.y);// 테스트 용
 
 	}
 

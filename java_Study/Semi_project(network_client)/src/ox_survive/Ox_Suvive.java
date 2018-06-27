@@ -94,7 +94,6 @@ public class Ox_Suvive extends JFrame {
 		gameover.setQuiz_r_n(data.getQuiz_r_n());
 		gameover.setQuiz_r_c(data.getQuiz_r_c());
 		gameover.setQuiz_r_m(data.getQuiz_r_m());
-
 	}
 
 	private void init_timer() {

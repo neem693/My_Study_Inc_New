@@ -333,6 +333,18 @@ public class Character_Manager {
 	public void setXpan(Pan xpan) {
 		this.xpan = xpan;
 	}
+
+	public void setUserName(ArrayList<String> user_list) {
+		// TODO Auto-generated method stub
+		for(int i =0;i<ch_user_list.size();i++) {
+			Character_User user = (Character_User)ch_user_list.get(i);
+			String name = user_list.get(i).replaceFirst("\\<ทนต๐\\>", "");
+			user.setName(name);
+		
+			
+		}
+		
+	}
 	
 
 }

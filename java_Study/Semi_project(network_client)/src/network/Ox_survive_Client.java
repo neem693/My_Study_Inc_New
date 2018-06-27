@@ -303,13 +303,13 @@ public class Ox_survive_Client extends JFrame {
 		nick_label.setFont(new Font("±¼¸²", 0, 15));
 		nick_label.setHorizontalAlignment(SwingConstants.CENTER);
 		north_panel.add(nick_label);
-		//jserver_addr = new JTextField("192.168.0.5:7000");
-		try {
-			jserver_addr = new JTextField(InetAddress.getLocalHost().getHostAddress()+":7000");
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		jserver_addr = new JTextField("192.168.0.5:7000");
+//		try {
+//			jserver_addr = new JTextField(InetAddress.getLocalHost().getHostAddress()+":7000");
+//		} catch (UnknownHostException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		north_panel.add(jserver_addr);
 
 		jnick_name = new JTextField();
