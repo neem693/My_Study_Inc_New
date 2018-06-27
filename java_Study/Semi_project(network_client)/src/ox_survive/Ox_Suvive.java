@@ -187,6 +187,7 @@ public class Ox_Suvive extends JFrame {
 		}
 		timer.stop();
 		gameover.round_interval = 0;
+		gameover.round_interval_init=true;
 	}
 
 	private void init_event() {

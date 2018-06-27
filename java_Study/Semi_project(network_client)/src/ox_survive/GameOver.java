@@ -23,6 +23,7 @@ import utill.Character_Manager;
 import utill.Character_pan;
 import utill.MunJe;
 import utill.Pan;
+import utill.Second;
 
 public class GameOver {
 	MunJe munje;
@@ -70,6 +71,12 @@ public class GameOver {
 	public boolean already_end_round_send = false;
 	public boolean oneCycle = true;
 	public boolean time_to_send_end_round = false;
+	
+	
+	Second sec_out_count;
+	boolean count_init=true;
+	boolean round_interval_init=true;
+	Second sec_out_round_interval;
 
 	public GameOver() {
 		// TODO Auto-generated constructor stub
@@ -79,6 +86,8 @@ public class GameOver {
 		s = 0;
 		round = 0;
 		isnt_value_cheating = true;
+		sec_out_count = new Second();
+		sec_out_round_interval = new Second();
 		// try {
 		// munje = new MunJe();
 		// munje.random();
@@ -250,7 +259,12 @@ public class GameOver {
 
 		}
 		// System.out.println(quetioning);
-		count++;
+		if(count_init) {
+			sec_out_count.reset();
+			count_init = false;
+		}
+		//count++;
+		count = sec_out_count.out_second();
 	}
 
 	public boolean count_zero() {
@@ -258,7 +272,12 @@ public class GameOver {
 			
 			if (round_interval < 600) {
 				if (oneCycle) {
-					round_interval++;
+					if(round_interval_init) {
+						sec_out_round_interval.reset();
+						round_interval_init = false;
+					}
+					//round_interval++;
+					round_interval = sec_out_round_interval.out_second();
 					oneCycle = false;
 				}
 				count = GameOver.ALL_COUNT;
@@ -266,6 +285,8 @@ public class GameOver {
 			} else if (round_interval >= 600) {
 				count = 0;// 인터벌이 다 됬을시 다시 초기화 하는 것
 				round_interval = 0; // 인터벌도 초기화 해준다.
+				count_init = true;
+				round_interval_init =true;
 				isRound = false; // 현재 라운드가 아니고, 갖가지 에니메이션 오답 처리를 하는 과정임을 의미함
 				round++;
 				time_to_send_data = false;

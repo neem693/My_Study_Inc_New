@@ -21,11 +21,16 @@ import pv.Character_ox;
 import utill.Character_Manager;
 import utill.MunJe;
 import utill.Pan;
+import utill.Second;
 
 public class GameOver {
 	MunJe munje;
 	Character_Manager ch_m;
 	Timer timer;
+	Second sec_out_count;
+	boolean count_init=true;
+	boolean round_interval_init=true;
+	Second sec_out_round_interval;
 	int s;// 캐릭터들을 어레이 리스트로 불러올때, 끊기지 않기 위해서 전역변수를 준것
 	int round;
 	int remain;
@@ -66,6 +71,8 @@ public class GameOver {
 		super();
 		round_interval = 0;
 		rand = new Random();
+		sec_out_round_interval = new Second();
+		sec_out_count = new Second();
 		s = 0;
 		round = 0;
 		isnt_value_cheating = true;
@@ -142,6 +149,7 @@ public class GameOver {
 			}
 
 		}
+		
 	}
 
 	private void we_cheat_player() {
@@ -200,25 +208,39 @@ public class GameOver {
 
 		}
 		// System.out.println(quetioning);
-		count++;
+		if(count_init) {
+			sec_out_count.reset();
+			count_init = false;
+		}
+		count = sec_out_count.out_second();
+		//count++;
 	}
 
 	public boolean count_zero() {
 		if (count >= GameOver.ALL_COUNT) {
 			System.out.println("호출된다.");
 			if (round_interval < 600) {
-				round_interval++;
+				//round_interval++;
+				if(round_interval_init) {
+					sec_out_round_interval.reset();
+					round_interval_init = false;
+				}
+				round_interval = sec_out_round_interval.out_second();
 				count = GameOver.ALL_COUNT;
 				already_killed = false;
 			} else if (round_interval >= 600) {
 				count = 0;// 인터벌이 다 됬을시 다시 초기화 하는 것
 				round_interval = 0; // 인터벌도 초기화 해준다.
+				count_init=true;
+				round_interval_init = true;
+				
 				isRound = false; // 현재 라운드가 아니고, 갖가지 에니메이션 오답 처리를 하는 과정임을 의미함
 				round++;
 			}
 			return true;
-		} else
+		} else {
 			return false;
+		}
 	}
 
 	public int getCount() {
@@ -259,7 +281,7 @@ public class GameOver {
 							if (ch_list.get(n) == ch_m.ch_user) {// user가 망가졌을 때
 //								if(ch_m.ch_user instanceof Character_User) {
 //									System.out.println("유저에 포함된다.");
-								}
+//								}
 								ch_m.ch_user = null;
 								gameover = true;
 							}
