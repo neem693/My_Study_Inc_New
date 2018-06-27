@@ -269,6 +269,22 @@ public class Ox_survive_Server extends JFrame {
 
 	public boolean all_user_end() {
 		// TODO Auto-generated method stub
+        //synchronized (this) 
+        //{
+		  		
+		for (ReadThread rt : socket_list) {
+			if (rt.receive==false)return false;
+		}
+		
+		for (ReadThread rt : socket_list) {
+			rt.receive = false;
+		}
+		
+        //}
+		
+		return true;
+		
+/*		
 		int index = 0;
 		for (ReadThread rt : socket_list) {
 			if (rt.receive)
@@ -282,6 +298,8 @@ public class Ox_survive_Server extends JFrame {
 
 		} else
 			return false;
+*/		
+		
 	}
 
 	private void init_event() {
@@ -416,8 +434,12 @@ public class Ox_survive_Server extends JFrame {
 			ReadThread rt = socket_list.get(i);
 			data.user_index = i;
 			try {
+				
 				rt.oos.writeObject(data);
-			} catch (IOException e) {
+				
+				Thread.sleep(10);
+				
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
