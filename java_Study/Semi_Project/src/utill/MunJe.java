@@ -35,7 +35,7 @@ public class MunJe {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		data = new String[110][3];
+		data = new String[131][3];
 		int i = 0;
 		while (true) {
 		
@@ -71,9 +71,9 @@ public class MunJe {
 		for(int i = 0; i < u-1; i++) {
 			int max = quiz_n.size()-1;
 			int r = r1.nextInt(max);
-			quiz_r_n.add(quiz_n.get(r));
-			quiz_r_m.add(quiz_m.get(r));
-			quiz_r_c.add(quiz_c.get(r));
+			quiz_r_n.add(quiz_n.get(r).trim());
+			quiz_r_m.add(quiz_m.get(r).trim());
+			quiz_r_c.add(quiz_c.get(r).trim());
 			quiz_n.remove(r);
 			quiz_m.remove(r);
 			quiz_c.remove(r);

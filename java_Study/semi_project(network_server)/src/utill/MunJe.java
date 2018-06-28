@@ -35,7 +35,7 @@ public class MunJe {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		data = new String[110][3];
+		data = new String[131][3];
 		int i = 0;
 		while (true) {
 		
@@ -62,9 +62,9 @@ public class MunJe {
 	public void random() throws IOException {//랜덤 출력 코딩
 		
 		for(int i=0;i<data.length;i++) {
-			quiz_n.add(data[i][0]);
-			quiz_m.add(data[i][1]);
-			quiz_c.add(data[i][2]);
+			quiz_n.add(data[i][0].trim());
+			quiz_m.add(data[i][1].trim());
+			quiz_c.add(data[i][2].trim());
 		}
 		
 		int u = quiz_n.size();
