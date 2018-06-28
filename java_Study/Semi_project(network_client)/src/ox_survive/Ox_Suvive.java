@@ -296,8 +296,8 @@ public class Ox_Suvive extends JFrame {
 
 				g.drawImage(Images.BACKGROUND.getImage(), 0, 0, null);
 
-				g.drawRect(0 + border, 0 + border, width, height);
-				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);
+//				g.drawRect(0 + border, 0 + border, width, height);
+//				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);
 				chManager.draw(g);
 				gameover.draw_count(g);
 				gameover.munje_show(g);
@@ -358,6 +358,7 @@ public class Ox_Suvive extends JFrame {
 
 		// this.add(show_panel);
 		this.add(full);
+		this.setResizable(false);
 
 	}
 
@@ -411,6 +412,8 @@ public class Ox_Suvive extends JFrame {
 			// gameover.nextRound(); //어차피 타이머의 액션리스너가 알아서 호출해준다.
 
 			System.out.println(chManager.ch_list.size());
+			
+			send_game_intialize_complete();
 
 			break;
 
@@ -447,6 +450,20 @@ public class Ox_Suvive extends JFrame {
 			break;
 		}
 
+	}
+
+	private void send_game_intialize_complete() {
+		// TODO Auto-generated method stub
+		
+		Ox_Survive_Data data = new Ox_Survive_Data();
+		data.setProtocol(Ox_Survive_Data.INITIAL_COMPLETE);
+		try {
+			oos.writeObject(data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

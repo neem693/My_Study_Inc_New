@@ -24,6 +24,7 @@ public class Ox_Survive_Data implements Serializable {
 	public static final int CHARACTER_MOVE = 256;//멀티플레이어의 캐릭터가 움직인다.
 	public static final int KILL = 512;
 	public static final int REQUEST_NEXTROUND = 1024;
+	public static final int INITIAL_COMPLETE = 2048;
 	///////프로토콜
 	ArrayList<String> quiz_r_n;
 	ArrayList<String> quiz_r_m;

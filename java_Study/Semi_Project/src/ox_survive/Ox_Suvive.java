@@ -57,6 +57,7 @@ public class Ox_Suvive extends JFrame {
 		show_panel.setPreferredSize(new Dimension(MyConst.GAME_W, MyConst.GAME_H));
 
 		init_pan();
+		this.setResizable(false);
 		init_button();
 
 		init_event();
@@ -67,7 +68,9 @@ public class Ox_Suvive extends JFrame {
 		this.setLocation(200, 100);
 		// this.setBounds(200, 100, MyConst.GAME_W, MyConst.GAME_H);
 		this.pack();
+		
 		this.setVisible(true);
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		card.show(show_panel, "main");
 
@@ -241,8 +244,8 @@ public class Ox_Suvive extends JFrame {
 
 				g.drawImage(Images.BACKGROUND, 0, 0, null);
 
-				g.drawRect(0 + border, 0 + border, width, height);
-				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);
+//				g.drawRect(0 + border, 0 + border, width, height);
+//				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);
 				chManager.draw(g);
 				gameover.draw_count(g);
 				gameover.munje_show(g);

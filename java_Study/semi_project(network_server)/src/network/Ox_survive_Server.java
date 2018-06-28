@@ -137,6 +137,22 @@ public class Ox_survive_Server extends JFrame {
 							check_all_ready();
 							break;
 						}
+
+					case Ox_Survive_Data.INITIAL_COMPLETE:
+						synchronized (Ox_survive_Server.this) {
+							this.receive = true;
+							if (all_user_end()) {
+								init_game_round();
+								data = new Ox_Survive_Data();
+								data.protocol = Ox_Survive_Data.NEXT_ROUND;
+								data.setAi_move(gameover.getAi_move());
+								send_all_client(data);
+							}
+
+							break;
+
+						}
+
 					case Ox_Survive_Data.END_ROUND:
 						synchronized (Ox_survive_Server.this) {
 							this.receive = true;
@@ -167,10 +183,9 @@ public class Ox_survive_Server extends JFrame {
 								System.out.println("일시" + data.date);
 								recently_data = data;
 								requst_next_round_compute(data);
-								
+
 							}
 							break;
-
 						}
 					case Ox_Survive_Data.CHARACTER_MOVE:
 						synchronized (Ox_survive_Server.this) {
@@ -192,16 +207,17 @@ public class Ox_survive_Server extends JFrame {
 
 			}
 
-			synchronized (Ox_survive_Server.this) {
+			synchronized (Ox_survive_Server.this)
+
+			{
 				index = socket_list.indexOf(this);
 				String name = user_list.get(index);
-				
-				//마지막으로 검토하기 위한것. 
-				//만약 kill당한 사람이 마지막으로 온다면, 아무도 넥스트 라운드를 진행 안해줄것이기 때문에
-				this.receive=true;
-				if(all_user_end() && ready_to_recieve_data&&socket_list.size()!=1)
-					requst_next_round_compute(recently_data);//최근 받았던 데이터를 보낸다.
-				
+
+				// 마지막으로 검토하기 위한것.
+				// 만약 kill당한 사람이 마지막으로 온다면, 아무도 넥스트 라운드를 진행 안해줄것이기 때문에
+				this.receive = true;
+				if (all_user_end() && ready_to_recieve_data && socket_list.size() != 1)
+					requst_next_round_compute(recently_data);// 최근 받았던 데이터를 보낸다.
 
 				// 제거
 				socket_list.remove(index);
@@ -251,7 +267,7 @@ public class Ox_survive_Server extends JFrame {
 		send_all_client(re_data);
 		System.out.println("데이터를 보냈다.");
 		ready_to_recieve_data = false; // 데이터를 받기 위한 긴장을 푼다.
-		
+
 	}
 
 	public void next_round_send(Ox_Survive_Data data) {
@@ -270,37 +286,30 @@ public class Ox_survive_Server extends JFrame {
 
 	public boolean all_user_end() {
 		// TODO Auto-generated method stub
-        //synchronized (this) 
-        //{
-		  		
+		// synchronized (this)
+		// {
+
 		for (ReadThread rt : socket_list) {
-			if (rt.receive==false)return false;
+			if (rt.receive == false)
+				return false;
 		}
-		
+
 		for (ReadThread rt : socket_list) {
 			rt.receive = false;
 		}
-		
-        //}
-		
-		return true;
-		
-/*		
-		int index = 0;
-		for (ReadThread rt : socket_list) {
-			if (rt.receive)
-				index++;
-		}
-		if (socket_list.size() == index) {
-			for (ReadThread rt : socket_list) {
-				rt.receive = false;
-			}
-			return true;
 
-		} else
-			return false;
-*/		
-		
+		// }
+
+		return true;
+
+		/*
+		 * int index = 0; for (ReadThread rt : socket_list) { if (rt.receive) index++; }
+		 * if (socket_list.size() == index) { for (ReadThread rt : socket_list) {
+		 * rt.receive = false; } return true;
+		 * 
+		 * } else return false;
+		 */
+
 	}
 
 	private void init_event() {
@@ -334,11 +343,11 @@ public class Ox_survive_Server extends JFrame {
 					data.setQuiz_r_c(munje.getQuiz_r_c());
 					send_all_client(data);
 
-					init_game_round();
-					data = new Ox_Survive_Data();
-					data.protocol = Ox_Survive_Data.NEXT_ROUND;
-					data.setAi_move(gameover.getAi_move());
-					send_all_client(data);
+					// init_game_round();
+					// data = new Ox_Survive_Data();
+					// data.protocol = Ox_Survive_Data.NEXT_ROUND;
+					// data.setAi_move(gameover.getAi_move());
+					// send_all_client(data);
 
 				}
 
@@ -415,7 +424,7 @@ public class Ox_survive_Server extends JFrame {
 		}
 		// if (socket_list.size() == 0)
 		start = false;
-		
+
 	}
 
 	public void send_user_list() {
@@ -426,7 +435,7 @@ public class Ox_survive_Server extends JFrame {
 		data.protocol = Ox_Survive_Data.USER_LIST;
 		data.user_list = users;
 		send_all_client(data);
-	
+
 	}
 
 	private void send_all_client(Ox_Survive_Data data) {
@@ -436,10 +445,10 @@ public class Ox_survive_Server extends JFrame {
 			ReadThread rt = socket_list.get(i);
 			data.user_index = i;
 			try {
-				
+
 				rt.oos.writeObject(data);
 				Thread.sleep(10);
-				
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -496,7 +505,7 @@ public class Ox_survive_Server extends JFrame {
 					server = new ServerSocket(7000);
 					System.out.println("서버 구동중");
 					while (true) {
-						
+
 						Socket child = server.accept();
 						if (starting) {
 							child.close();
