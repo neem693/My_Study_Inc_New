@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -25,7 +26,7 @@ public class Images {
 	public static ImageIcon APEACHE;
 	public static ImageIcon TUBE;
 	public static ImageIcon MUZI;
-	public static ImageIcon BACKGROUND;
+	public static Image BACKGROUND;
 	
 	public static ImageIcon MAIN_BACK;
 	public static ImageIcon EXIT;
@@ -59,29 +60,40 @@ public class Images {
 //			MAIN_BACK = ImageIO.read(new File("src/images/main_back.png"));
 //			EXIT = ImageIO.read(new File("src/images/exit.png"));
 //			START = ImageIO.read(new File("src/images/start.png"));
-
-			Back_user = new ImageIcon("src/images/user_back.png");
-			RYON = new ImageIcon("src/images/Ryon.png");
-			APEACHE = new ImageIcon("src/images/Apeache.png");
-			TUBE = new ImageIcon("src/images/Tube.png");
-			MUZI = new ImageIcon("src/images/MUZI.png");
-			BACKGROUND = new ImageIcon("src/images/Background.png");
-			MAIN_BACK = new ImageIcon("src/images/main_back.png");
-			EXIT = new ImageIcon("src/images/exit.png");
-			START = new ImageIcon("src/images/start.png");
+			
+			URL url =  ClassLoader.getSystemResource("images/user_back.png");
+			Back_user = new ImageIcon(url);
+			url = ClassLoader.getSystemResource("images/Ryon.png"); 
+			RYON = new ImageIcon(url);
+			url = ClassLoader.getSystemResource("images/Apeache.png"); 
+			APEACHE = new ImageIcon(url);
+			url = ClassLoader.getSystemResource("images/Tube.png");
+			TUBE = new ImageIcon(url);
+			url = ClassLoader.getSystemResource("images/MUZI.png");
+			MUZI = new ImageIcon(url);
+			
+			url =  ClassLoader.getSystemResource("images/Background.png");//new URL("images/Background.png");
+			BACKGROUND = new ImageIcon (url).getImage();
+			
+			url =  ClassLoader.getSystemResource("images/main_back.png");
+			MAIN_BACK = new ImageIcon(url);
+			url =  ClassLoader.getSystemResource("images/exit.png");
+			EXIT = new ImageIcon(url);
+			url = ClassLoader.getSystemResource("images/start.png");
+			START = new ImageIcon(url);
 			
 			
 			
-			
-			LOSE1 = new ImageIcon("src/images/살인태클.gif").getImage();
-			LOSE2 = new ImageIcon("src/images/벤치 클리어링.gif").getImage();
-			LOSE3 = new ImageIcon("src/images/lose3.gif").getImage();
-			WIN1 = new ImageIcon("src/images/잠수함.gif").getImage();
-			WIN2 = new ImageIcon("src/images/win2.gif").getImage();
-			WIN3 = new ImageIcon("src/images/win3.gif").getImage();
-			WIN4 = new ImageIcon("src/images/win4.gif").getImage();
-			WIN5 = new ImageIcon("src/images/win5.gif").getImage();
-			WIN6 = new ImageIcon("src/images/win6.gif").getImage();
+			url = ClassLoader.getSystemResource("images/살인태클.gif");
+			LOSE1 = new ImageIcon("../images/살인태클.gif").getImage();
+			LOSE2 = new ImageIcon("../images/벤치 클리어링.gif").getImage();
+			LOSE3 = new ImageIcon("../images/lose3.gif").getImage();
+			WIN1 = new ImageIcon("../images/잠수함.gif").getImage();
+			WIN2 = new ImageIcon("../images/win2.gif").getImage();
+			WIN3 = new ImageIcon("../images/win3.gif").getImage();
+			WIN4 = new ImageIcon("../images/win4.gif").getImage();
+			WIN5 = new ImageIcon("../images/win5.gif").getImage();
+			WIN6 = new ImageIcon("../images/win6.gif").getImage();
 			
 			
 		} catch (Exception e) {
