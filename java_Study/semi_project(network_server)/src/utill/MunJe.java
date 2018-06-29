@@ -1,17 +1,18 @@
 package utill;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 public class MunJe {
+	int file_line;
 	InputStream is;
 	InputStreamReader isr;
 	BufferedReader br;
@@ -28,14 +29,19 @@ public class MunJe {
 	public MunJe() throws IOException {//정방향코딩
 		// TODO Auto-generated constructor stub
 		try {
-			is = new FileInputStream("OX문제.txt");
+			
+			String file_path = "c:\\My_study\\OX문제.txt";
+			//File f = new File(this.getClass().getResource("util/OX문제.txt").toURI());
+			file_line = MunJe.countLines(file_path);
+			System.out.println(file_line);
+			is = new FileInputStream (file_path);
 			isr = new InputStreamReader(is);
 			br = new BufferedReader(isr);
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		data = new String[131][3];
+		data = new String[file_line+1][3];
 		int i = 0;
 		while (true) {
 		
@@ -119,6 +125,26 @@ public class MunJe {
 
 	public void setQuiz_r_c(ArrayList<String> quiz_r_c) {
 		this.quiz_r_c = quiz_r_c;
+	}
+	public static int countLines(String filename) throws IOException {
+	    InputStream is = new BufferedInputStream(new FileInputStream(filename));
+	    try {
+	        byte[] c = new byte[1024];
+	        int count = 0;
+	        int readChars = 0;
+	        boolean empty = true;
+	        while ((readChars = is.read(c)) != -1) {
+	            empty = false;
+	            for (int i = 0; i < readChars; ++i) {
+	                if (c[i] == '\n') {
+	                    ++count;
+	                }
+	            }
+	        }
+	        return (count == 0 && !empty) ? 1 : count;
+	    } finally {
+	        is.close();
+	    }
 	}
 
 }

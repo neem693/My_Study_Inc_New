@@ -22,7 +22,7 @@ public class Character_User extends Character_ox {
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		g.setFont(new Font("±¼¸²", 1, 11));
-		g.drawImage(Images.Back_user, current_point.x - Pan.CH_WIDHT * 5 / 2, current_point.y - Pan.CH_WIDHT * 5 / 2,
+		g.drawImage(Images.Back_user.getImage(), current_point.x - Pan.CH_WIDHT * 5 / 2, current_point.y - Pan.CH_WIDHT * 5 / 2,
 				Pan.CH_WIDHT * 6, Pan.CH_WIDHT * 6, null);
 		g.drawString(name, current_point.x + Pan.CH_WIDHT / 2 - g.getFontMetrics().stringWidth(name)/2, current_point.y);
 		// g.fillOval(current_point.x, current_point.y, 10, 10); Å×½ºÆ®

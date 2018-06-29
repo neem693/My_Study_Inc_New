@@ -221,7 +221,7 @@ public class Ox_Suvive extends JFrame {
 
 				//// 이 때 쯤에 배경화면 하나 추가하자.
 				
-				g.drawImage(Images.BACKGROUND.getImage(), 0, 0,null);
+				g.drawImage(Images.BACKGROUND, 0, 0,null);
 
 				g.drawRect(0 + border, 0 + border, width, height);
 				g.drawRect(MyConst.GAME_W - border - width, 0 + border, width, height);

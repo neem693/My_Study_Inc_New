@@ -18,7 +18,7 @@ public class Character_ox extends Item {
 	final static int CHARACTER_COUNT = 4;
 	String currentLocation;
 	int ch_count;
-	BufferedImage character_Image;
+	Image character_Image;
 	Character_pan current_pan;
 	Character_pan before_pan;
 
@@ -44,16 +44,16 @@ public class Character_ox extends Item {
 		ch_count = rand.nextInt(CHARACTER_COUNT) + 1;
 		switch (ch_count) {
 		case 1:
-			character_Image = Images.RYON;
+			character_Image = Images.RYON.getImage();
 			break;
 		case 2:
-			character_Image = Images.APEACHE;
+			character_Image = Images.APEACHE.getImage();
 			break;
 		case 3:
-			character_Image = Images.TUBE;
+			character_Image = Images.TUBE.getImage();
 			break;
 		case 4:
-			character_Image = Images.MUZI;
+			character_Image = Images.MUZI.getImage();
 			break;
 
 		}

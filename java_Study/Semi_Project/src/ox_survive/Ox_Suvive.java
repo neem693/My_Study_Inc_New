@@ -98,8 +98,8 @@ public class Ox_Suvive extends JFrame {
 
 	private void init_button() {
 		// TODO Auto-generated method stub
-		jbt_start = new JButton(new ImageIcon(Images.START));
-		jbt_exit = new JButton(new ImageIcon(Images.EXIT));
+		jbt_start = new JButton(new ImageIcon(Images.START.getImage()));
+		jbt_exit = new JButton(new ImageIcon(Images.EXIT.getImage()));
 
 		jbt_exit.setFocusPainted(false);
 		jbt_exit.setBorderPainted(false);
@@ -294,7 +294,7 @@ public class Ox_Suvive extends JFrame {
 			protected void paintComponent(Graphics g) {
 				// TODO Auto-generated method stub
 				super.paintComponent(g);
-				g.drawImage(Images.MAIN_BACK, 0, 0, null);
+				g.drawImage(Images.MAIN_BACK.getImage(), 0, 0, null);
 
 			}
 		};
