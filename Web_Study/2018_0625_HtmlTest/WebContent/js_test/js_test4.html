@@ -13,11 +13,23 @@
 		ss = document.getElementById("ss");
 		document.getElementById("ssss").innerHTML = ss.value;
 		text="";
+		var reg_ex = /^[2-9]{1}$/;
+		
+		if(reg_ex.test(dan.value)==false){
+			alert('2~9사이 1자리의 숫자값을 입력하세요');
+			dan.value="";
+			dan.focus();
+			
+			return;
+		}
+		
+	
 		for (var i = 1; i <= 9; i++) {
 			text += dan.value + "x" + i + "=" + (Number(dan.value) * i) + "<br>";
 		}
 		//document.write(result);
-		result.InnerHTML = text;
+		result.innerHTML = text;
+		dan.focus();
 	}
 	
 	
