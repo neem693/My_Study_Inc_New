@@ -20,7 +20,7 @@ add constraint fk_sawon_samgr foreign key(samgr)
 								references sawon(sabun);
 								
 
-								
+select * from gogek;								
 								
 								
 								
@@ -98,6 +98,47 @@ on s.samgr = s2.sabun
 left outer join gogek g2
 on s2.sabun = g2.godam;
 							
+
+select * from gogek where substr(goaddr,1,2) = (select substr(goaddr,1,2) from gogek where goname = '류민');
+select * from sawon where to_char(sahire,'MM') = (select to_char(sahire,'MM') from sawon where saname = '최불암');
+
+
+//사원테이블에서 이미자(3,4,5월:봄)와 같은 계절에 입사한 직원 조회를 하십시요.
+select * from sawon where 
+case to_number(to_char(sahire,'mm'))/3 
+when 1 then '봄'
+when 2 then '여름'
+when 3 then '가을'
+else '겨울'
+end
+= (select case to_number(to_char(sahire,'mm'))/3 
+when 1 then '봄'
+when 2 then '여름'
+when 3 then '가을'
+else '겨울'
+end
+from sawon
+where saname = '이미자');
+
+
+//부서별 인원수를 구하시오.
+
+select count(*),deptno from sawon 
+group by deptno;
+
+
+//부서별,성별 인원수를 구하시오
+select count(*),sasex,deptno from sawon
+group by deptno,sasex
+order by deptno;
+
+//입사년도별 인원수를 구하시오.
+select count(*), to_char(sahire,'YYYY')
+from sawon
+group by to_char(sahire,'YYYY')
+order by to_char(sahire,'YYYY');
+
+
 
 
 
