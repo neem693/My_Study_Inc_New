@@ -281,7 +281,6 @@ public class Ox_survive_Server extends JFrame {
 		gameover.setCh_list(ch_m.ch_list);
 		gameover.gameover_server_ready();
 		gameover.nextRound();
-
 	}
 
 	public boolean all_user_end() {
