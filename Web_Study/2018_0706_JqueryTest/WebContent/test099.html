@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+ul {
+	width: 50%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+li {
+	display: inline-block;
+	width: 300px;
+	border: 1px solid black;
+	text-align: center;
+}
+</style>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+function effect_on(f){
+	var loge = f.children().eq(0).attr("class");
+	console.log(loge);
+}
+function effect_off(){
+	
+}
+	$(document).ready(function() {
+		
+		//$("li").on("mouseenter", effect_on($(this)));
+		//$("li").on("mouseout",effect_off)
+		$("li").hover(function(){
+			var c = $(this).find('img').attr('class');
+			console.log(c);
+			
+		},function(){
+			
+		}); 
+
+	});
+</script>
+</head>
+<body>
+	<h2>KBO 구단</h2>
+	<ul>
+		<li>1.넥센
+			<div>
+				<img class="nexen" src="kbo/넥센.png">
+				<p>넥센 히어로즈</p>
+			</div>
+		</li>
+		<li>2.한화
+			<div>
+				<img class="hanwha" src="kbo/한화.png">
+				<p>한화 이글스</p>
+			</div>
+		</li>
+		<li>3.에스케이
+			<div>
+				<img class="sk" src="kbo/에스케이.png">
+				<p>에스케이 와이번스</p>
+			</div>
+		</li>
+		<li>4.두산
+			<div>
+				<img class="doosan" src="kbo/두산.png">
+				<p>두산 베어스</p>
+			</div>
+		</li>
+		<li>5.KT위즈
+			<div>
+				<img class="KT_WIZ" src="kbo/케이티_위즈.png">
+				<p>케이티 위즈</p>
+			</div>
+		</li>
+		<li>6.엔씨
+			<div>
+				<img class="nc" src="kbo/엔씨.png">
+				<p>엔시 다이노스</p>
+			</div>
+		</li>
+		<li>7.엘쥐
+			<div>
+				<img class="lg" src="kbo/엘쥐.png">
+				<p>엘쥐 트윈스</p>
+			</div>
+		</li>
+		<li>8.기아
+			<div>
+				<img class="kia" src="kbo/기아.png">
+				<p>기아 타이거즈</p>
+			</div>
+		</li>
+		<li>9.로떼
+			<div>
+				<img class="lotte" src="kbo/로떼.png">
+				<p>로떼 자이언츠</p>
+			</div>
+		</li>
+		<li>10.삼성
+			<div>
+				<img class="samsung" src="kbo/삼성.png">
+				<p>삼성 라이온스</p>
+			</div>
+		</li>
+	</ul>
+
+</body>
+</html>
