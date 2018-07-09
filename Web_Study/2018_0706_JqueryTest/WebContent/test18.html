@@ -32,7 +32,10 @@ var bRight=true;
 			if(position>400)bRight=false;
 			if(position<0)bRight=true;
 			
-			$("img").css("marginLeft",position);
+			$("img").css({
+				"transform" : "translateX("+position+"px)"
+				
+			});
 
 		}
 	});
