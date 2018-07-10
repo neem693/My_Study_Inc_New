@@ -33,11 +33,18 @@ public class Hi extends HttpServlet {
 			greet_msg = "Hi funcking good day ya ha!";
 		}
 		response.setContentType("text/html; charset = utf-8");
-		response.getWriter().println(greet_msg);
-			
-		
-		
-		
+		response.getWriter().println("<!DOCTYPE html>\r\n" + 
+				"<html>\r\n" + 
+				"<head>\r\n" + 
+				"<meta charset=\"UTF-8\">\r\n" + 
+				"<title>"+ greet_msg + "</title>\r\n" + 
+				"</head>\r\n" + 
+				"<body><h1>\r\n" + greet_msg + 
+				"</h1>\r\n" + 
+				"<a href = 'hi.html'>다시하기</a>" + 
+				"\r\n" + 
+				"</body>\r\n" + 
+				"</html>");
 	}
 
 }
