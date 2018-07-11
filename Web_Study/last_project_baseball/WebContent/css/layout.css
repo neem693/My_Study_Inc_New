@@ -11,14 +11,22 @@ nav {
 }
 
 .fa {
+	padding: 10px 0;
 	display: block;
 	border: 1px solid white;
 	text-align: center;
 	color: #ccccaa;
 	margin: 0;
+	box-sizing: border-box;
+	height:25%;
+	font-size: 60px;
 }
 
-.fa-home>.nav_text {
+.fa:hover{
+	color: white;
+}
+
+.fa>.nav_text {
 	margin: 0;
 	font-size: 15px;
 }
