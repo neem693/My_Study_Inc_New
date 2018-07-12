@@ -8,6 +8,11 @@ public class PersonVo {
 	String tel;
 	
 	
+	public PersonVo() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 	public PersonVo(String name, int age, String tel) {
 		super();
 		this.name = name;

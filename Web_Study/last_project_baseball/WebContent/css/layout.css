@@ -4,29 +4,42 @@ nav {
 	float: left;
 	position: fixed;
 	width: 100px;
-	height: 400px;
 	background-color: black;
 	color: white;
 	text-align: center;
+	height: 100%;
 }
 
 .fa {
 	padding: 10px 0;
 	display: block;
-	border: 1px solid white;
+	//border: 1px solid white;
 	text-align: center;
 	color: #ccccaa;
 	margin: 0;
 	box-sizing: border-box;
 	height:25%;
 	font-size: 60px;
+	transition: color 0.5s;
+	cursor: pointer;
 }
 
 .fa:hover{
 	color: white;
+	transition: color 0.5s;
 }
 
 .fa>.nav_text {
 	margin: 0;
 	font-size: 15px;
 }
+
+.nav{
+	height: 400px;
+}
+
+.target{
+	background-color: #82ff82;
+	color: black;
+}
+

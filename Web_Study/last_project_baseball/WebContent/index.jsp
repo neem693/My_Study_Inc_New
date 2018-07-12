@@ -14,12 +14,22 @@
 <body>
 
 	<nav>
-		<div class="fa fa-align-justify">
-			<p class="nav_text">메뉴</p>
+		<div class="nav">
+			<div class="fa fa-align-justify">
+				<p class="nav_text">메뉴</p>
+			</div>
+			<div class="fa fa-home target">
+				<p class="nav_text">홈</p>
+			</div>
+			<div class="fa fa-comments">
+				<p class="nav_text">동행</p>
+			</div>
+			<div class="fa fa-file-text-o">
+				<p class="nav_text">게시판</p>
+			</div>
 		</div>
-		<div class="fa fa-home">
-			<p class="nav_text">홈</p>
-		</div>
+		<div class="popup home"></div>
+
 	</nav>
 
 
