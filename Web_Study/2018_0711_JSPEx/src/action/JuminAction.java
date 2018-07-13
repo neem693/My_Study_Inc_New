@@ -1,6 +1,7 @@
 package action;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,6 +31,7 @@ public class JuminAction extends HttpServlet {
 		Jumin jumin_cal = new Jumin(str_jumin);
 		
 		
+		
 		request.setAttribute("year", jumin_cal.getYear());
 		request.setAttribute("age", jumin_cal.getAge());
 		request.setAttribute("tti", jumin_cal.getTti());
@@ -40,7 +42,6 @@ public class JuminAction extends HttpServlet {
 		
 		RequestDispatcher disp = request.getRequestDispatcher("jumin_result.jsp");
 		disp.forward(request, response);
-		
 		
 		
 		

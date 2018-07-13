@@ -8,9 +8,9 @@
 </head>
 <body>
 	<ul class = "submenu_style">
-		<li><a href="#">소개 및 인사말</a></li>
-		<li><a href="#">연혁</a></li>
-		<li><a href="#">오시는길</a></li>
+		<li><a href="?m=intro">소개 및 인사말</a></li>
+		<li><a href="?m=history">연혁</a></li>
+		<li><a href="?m=comeon_myhome">오시는길</a></li>
 	</ul>
 
 </body>

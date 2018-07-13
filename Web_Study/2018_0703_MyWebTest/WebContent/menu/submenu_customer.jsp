@@ -8,9 +8,9 @@
 </head>
 <body>
 	<ul class = "submenu_style">
-		<li><a href="#">공지사항</a></li>
-		<li><a href="#">자주하는 질문</a></li>
-		<li><a href="#">고객게시판</a></li>
+		<li><a href="?m=notice">공지사항</a></li>
+		<li><a href="?m=faq">자주하는 질문</a></li>
+		<li><a href="?m=board">고객게시판</a></li>
 	</ul>
 
 </body>
