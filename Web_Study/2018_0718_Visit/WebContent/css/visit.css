@@ -7,6 +7,8 @@
  */
 
 .user{
+	padding: 25px;
+	text-align: center;
 	float: left;
 	//border: 1px solid black;
 	width: 30%;
@@ -39,8 +41,7 @@
 
 .id{
 	font-weight: bold;
-	//border: 1px solid black;
-	float: left;
+	text-align: inherit;
 	
 }
 .ip,.date{
@@ -48,6 +49,8 @@
 	//float:right;
 }
 .content_style{
+	border-left: 1px solid black;
+	padding: 25px;
 	float: right;
 	//border:1px solid black;
 	width:70%;
