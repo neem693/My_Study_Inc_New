@@ -10,12 +10,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dao.Member_Dao;
+import vo.MemberVo;
+
 import javax.servlet.RequestDispatcher;
 
 /**
  * Servlet implementation class SungDeleteAction
  */
-@WebServlet("/member")
+@WebServlet("/member/delete.do")
 public class MemberDeleteAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -26,9 +30,21 @@ public class MemberDeleteAction extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		String forward_page = "";
-		RequestDispatcher disp = request.getRequestDispatcher(forward_page);
-		disp.forward(request, response);
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+		
+		String pwd = request.getParameter("pwd");
+		String idx = request.getParameter("idx");
+		
+		MemberVo vo = new MemberVo();
+		vo.setPwd(pwd);
+		vo.setIdx(Integer.parseInt(idx));
+		
+		Member_Dao.getInstance().delete(vo);
+		
+		
+		response.sendRedirect("list.do");
+		
 
 	}
 

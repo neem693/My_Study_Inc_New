@@ -36,7 +36,9 @@ public class CheckPwd extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		String idx_str = request.getParameter("idx");
+		System.out.println(idx_str);
 		String pwd = request.getParameter("pwd");
+		System.out.println(pwd);
 		int idx = Integer.parseInt(idx_str);
 		
 		MemberVo vo = Member_Dao.getInstance().selectOne(idx);

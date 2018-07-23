@@ -92,7 +92,7 @@ public class Member_Dao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from meber where idx = ?";
+		String sql = "select * from member where idx = ?";
 
 		try {
 			// 1.Connection»πµÊ
@@ -216,7 +216,6 @@ public class Member_Dao {
 			conn = DBService.getInstance().getConnection();
 			// 2.∏Ì∑…√≥∏Æ∞¥√º »πµÊ
 			pstmt = conn.prepareStatement(sql);
-			
 
 			// 3.psmt parameter º≥¡§
 			pstmt.setString(1, vo.getName());
@@ -247,4 +246,43 @@ public class Member_Dao {
 		return res;
 	}
 
+
+
+	public int delete(MemberVo vo) {
+		// TODO Auto-generated method stub
+		int res = 0;// √≥∏Æµ» «‡ºˆ
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from member where idx = ? and pwd = ?";
+
+		try {
+			// 1.Connection»πµÊ
+			conn = DBService.getInstance().getConnection();
+			// 2.∏Ì∑…√≥∏Æ∞¥√º »πµÊ
+			pstmt = conn.prepareStatement(sql);
+
+			// 3.psmt parameter º≥¡§
+			pstmt.setInt(1, vo.getIdx());
+			pstmt.setString(2, vo.getPwd());
+
+			// 4.DB insert
+			res = pstmt.executeUpdate(); // insert update delete
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return res;
+	}
 }

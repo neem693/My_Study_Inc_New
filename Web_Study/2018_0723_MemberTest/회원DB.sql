@@ -47,3 +47,4 @@ select * from member;
 
 commit
 
+select * from member where idx = 1;
