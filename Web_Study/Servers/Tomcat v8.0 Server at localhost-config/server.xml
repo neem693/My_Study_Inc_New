@@ -132,7 +132,7 @@
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
       
-      <Context docBase="2018_0720_Visit_Ajax" path="/2018_0720_Visit_Ajax" reloadable="true" source="org.eclipse.jst.jee.server:2018_0720_Visit_Ajax"/><Context docBase="2018_0719_AjaxTest" path="/2018_0719_AjaxTest" reloadable="true" source="org.eclipse.jst.jee.server:2018_0719_AjaxTest"/><Context docBase="2018_0720_MoviePlayer" path="/2018_0720_MoviePlayer" reloadable="true" source="org.eclipse.jst.jee.server:2018_0720_MoviePlayer"/></Host>
+      <Context docBase="2018_0723_MemberTest" path="/2018_0723_MemberTest" reloadable="true" source="org.eclipse.jst.jee.server:2018_0723_MemberTest"/><Context docBase="2018_0720_Visit_Ajax" path="/2018_0720_Visit_Ajax" reloadable="true" source="org.eclipse.jst.jee.server:2018_0720_Visit_Ajax"/></Host>
     </Engine>
   </Service>
 </Server>
