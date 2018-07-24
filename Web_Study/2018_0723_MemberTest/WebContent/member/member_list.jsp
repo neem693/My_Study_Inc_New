@@ -34,6 +34,11 @@ td {
 		location.href = "check_pwd.do?type=del&idx=" + idx;
 		
 	}
+function modify(idx){
+		
+		location.href = "check_pwd.do?type=modi&idx=" + idx;
+		
+	}
 	
 </script>
 </head>
@@ -44,7 +49,9 @@ td {
 		<h1>::::회원목록</h1>
 		<div>
 			<input type="button" value="회원가입"
-				onclick="location.href = 'insert_form.do'">
+				onclick="location.href = 'insert_form.do'"> <input
+				type="button" value="회원가입2"
+				onclick="location.href = 'insert_form2.do'">
 		</div>
 		<div>
 			<form>
@@ -75,8 +82,9 @@ td {
 							<td>${vo.ip}</td>
 							<td>${vo.regdate}</td>
 
-							<td><input type="button" value="수정" onclick="modify(${vo.idx})"><input
-								type="button" value="삭제" onclick="del(${vo.idx})"></td>
+							<td><input type="button" value="수정"
+								onclick="modify(${vo.idx})"><input type="button"
+								value="삭제" onclick="del(${vo.idx})"></td>
 						</tr>
 					</c:forEach>
 

@@ -18,27 +18,24 @@
 			var data = xhr.responseText;
 			//alert(data);
 			//서버에서 전송해준 데이터 받기
-			
-			
+
 			data = eval(data);
 			//alert(data.length);
-			
+
 			var select_movie = document.getElementById("select_movie");
-			
-			for(var i=0;i<data.length;i++){
+
+			for (var i = 0; i < data.length; i++) {
 				var player = data[i].player;
 				var dir = data[i].dir;
 				var title = data[i].title;
-				
+
 				var option = document.createElement("option");
 				option.innerHTML = title;
 				option.value = dir;
-				
+
 				select_movie.appendChild(option);
 			}
-			
-			
-			
+
 		}
 	}
 
@@ -57,6 +54,14 @@
 		video.play();
 
 	}
+	function send(f) {
+		var movie = f.movie.value
+		if (movie == '') {
+			alert("영상을 입력하세요");
+			return;
+		}
+		f.submit();
+	}
 </script>
 </head>
 <body>
@@ -70,6 +75,12 @@
 		<video id="video_movie" controls="controls" width="500"></video>
 	</div>
 
+	<hr>
+	<form action="upload_movie.do" method="POST"
+		enctype="multipart/form-data">
+		<input type="file" name="movie"> <input type="button"
+			value="영상올리기" onclick="send(this.form)">
+	</form>
 
 
 

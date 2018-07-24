@@ -1,11 +1,9 @@
 package action;
 
-
 /**
  * Servlet implementation class SungDeleteAction
  */
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,36 +19,46 @@ import javax.servlet.RequestDispatcher;
 /**
  * Servlet implementation class SungDeleteAction
  */
-@WebServlet("/member/check_pwd_send.do")
-public class CheckPwd extends HttpServlet {
+@WebServlet("/member/modi.do")
+public class MemberModiAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html; charset = utf-8");
 		response.setCharacterEncoding("utf-8");
-		PrintWriter out = response.getWriter();
-		String idx_str = request.getParameter("idx");
-		//System.out.println(idx_str);
+
 		String pwd = request.getParameter("pwd");
-		//System.out.println(pwd);
-		int idx = Integer.parseInt(idx_str);
+		String idx = request.getParameter("idx");
 		
-		MemberVo vo = Member_Dao.getInstance().selectOne(idx);
+		MemberVo vo = new MemberVo();
+		vo.setPwd(pwd);
+		vo.setIdx(Integer.parseInt(idx));
 		
-		if(pwd.equals(vo.getPwd())) {
-			out.println("yes");
-		}
-		else {
-			out.println("no");
-		}
+		MemberVo res=null;
+		
+		res = Member_Dao.getInstance().selectOne(vo);
 		
 		
+		
+		request.setAttribute("vo", res);
+		
+
+//		System.out.println(res.getName());
+//		System.out.println(res.getId());
+//		System.out.println(res.getPwd());
+//		System.out.println(res.getAddr());
+//		System.out.println(res.getZipcode());
+		
+		String forward_page = "member_modify.jsp";
+		RequestDispatcher disp = request.getRequestDispatcher(forward_page);
+		disp.forward(request, response);
 
 	}
 

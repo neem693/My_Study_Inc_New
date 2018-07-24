@@ -44,10 +44,11 @@ public class MovieListAction extends HttpServlet {
 		for (int i =0; i<file_array.length;i++) {
 			File ff = file_array[i];
 			String filename = ff.getName();
-			System.out.println(filename);
+			//System.out.println(filename);
 			String[] im_array = filename.split("_");
 			String player = im_array[1];
-			String title = im_array[1].concat(" ÀÀ¿ø°¡");
+			String [] last_title = im_array[2].split("\\.");
+			String title = String.format("%s %s",im_array[1],last_title[0]);
 			String dir = String.format("mp4/%s", filename);
 
 			sb.append(String.format("{'player':'%s','title':'%s','dir':'%s'}", player, title, dir));

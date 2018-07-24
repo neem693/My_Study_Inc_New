@@ -43,10 +43,15 @@
 				if (result.indexOf("yes") == -1) {
 					alert("비밀번호가 올바르지 않습니다.");
 					return;
-				} else
-					f.action = "delete.do";
-				f.method = "POST";
-				f.submit();
+				} else {
+					if (type == "del")
+						f.action = "delete.do";
+					else
+						f.action = "modi.do";
+					f.method = "POST";
+					f.submit();
+				}
+
 			}
 		};
 
@@ -59,7 +64,7 @@
 
 	<div class="main_box">
 		<form id="form1">
-			<input type="hidden" name = "idx" value="${idx }">
+			<input type="hidden" name="idx" value="${idx}">
 			<p>확인을 위해비밀번호를 입력하세요</p>
 			<input name="pwd" type="password"> <input type="button"
 				onclick="pwd_send(this.form)" value="비밀번호 확인">

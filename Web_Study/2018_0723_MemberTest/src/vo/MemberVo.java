@@ -2,14 +2,14 @@ package vo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MemberVo {
 
 	SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 	SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년MM월dd일\nHH시mm분ss초");
-	
-	
+	SimpleDateFormat outputFormat_today = new SimpleDateFormat("HH시mm분ss초");
 
 	int idx;
 	String name, id, pwd, zipcode, addr, ip, regdate;
@@ -100,10 +100,20 @@ public class MemberVo {
 	}
 
 	public String getRegdate() {
-		String time = outputFormat.format(date);
+		String time = null;
+		Calendar cal1 = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+		cal1.setTime(this.date);
+		cal2.setTime(new Date());
+		boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
+				&& cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+		if (sameDay)
+			time = outputFormat_today.format(date);
+		else
+			time = outputFormat.format(date);
 		time = time.replaceAll("\n", "<br>");
-		//System.out.println(time);
-		
+		// System.out.println(time);
+
 		return time;
 	}
 
@@ -114,8 +124,7 @@ public class MemberVo {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		this.regdate = regdate;
 	}
 
