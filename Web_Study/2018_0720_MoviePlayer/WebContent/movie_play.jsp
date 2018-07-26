@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<c:if test="${empty sessionScope.user }">
+
+	<script>
+		alert("현재 컨텐츠를 이용하려면 로그인이 필요합니다.");
+		location.href = 'login_form.jsp';
+	</script>
+
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,7 +77,8 @@
 </script>
 </head>
 <body>
-
+	${user}님 환영합니다.
+	<br>
 	<select id="select_movie" onchange="showMovie(this)">
 		<option value="">::재생할 곡을 선택하세요::</option>
 

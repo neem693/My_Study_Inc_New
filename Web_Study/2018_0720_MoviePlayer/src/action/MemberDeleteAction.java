@@ -19,56 +19,32 @@ import javax.servlet.RequestDispatcher;
 /**
  * Servlet implementation class SungDeleteAction
  */
-@WebServlet("/member/update.do")
-public class MembeUpdateAction extends HttpServlet {
+@WebServlet("/member/delete.do")
+public class MemberDeleteAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		MemberVo vo = null;
+
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-
-		String id = request.getParameter("id");
+		
 		String pwd = request.getParameter("pwd");
 		String idx = request.getParameter("idx");
-		String addr = request.getParameter("addr");
-		String zipcode = request.getParameter("zipcode");
-		String name = request.getParameter("name");
-
-		vo = new MemberVo();
-
-		vo.setIdx(Integer.parseInt(idx));
-		vo.setId(id);
-
-		MemberVo res = Member_Dao.getInstance().selectOne2(vo);
-
-		if (res == null) {
-			send(response);
-			System.out.println(id);
-			System.out.println(idx);
-			System.out.println("수정실패");
-			return;
-		}
+		
+		MemberVo vo = new MemberVo();
 		vo.setPwd(pwd);
-		vo.setAddr(addr);
-		vo.setZipcode(zipcode);
-		vo.setName(name);
-		System.out.println("수정성공");
-
-		Member_Dao.getInstance().update(vo);
-
-		send(response);
-
-	}
-
-	private void send(HttpServletResponse response) throws IOException {
+		vo.setIdx(Integer.parseInt(idx));
+		
+		Member_Dao.getInstance().delete(vo);
+		
+		
 		response.sendRedirect("list.do");
+		
 
 	}
 

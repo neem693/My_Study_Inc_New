@@ -126,7 +126,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="2018_0723_MemberTest" path="/2018_0723_MemberTest" reloadable="true" source="org.eclipse.jst.jee.server:2018_0723_MemberTest"/><Context docBase="2018_0720_MoviePlayer" path="/2018_0720_MoviePlayer" reloadable="true" source="org.eclipse.jst.jee.server:2018_0720_MoviePlayer"/><Context docBase="2018_0725_PhotoGallery" path="/2018_0725_PhotoGallery" reloadable="true" source="org.eclipse.jst.jee.server:2018_0725_PhotoGallery"/></Host>
+      <Context docBase="2018_0726_SessionTracking" path="/2018_0726_SessionTracking" reloadable="true" source="org.eclipse.jst.jee.server:2018_0726_SessionTracking"/><Context docBase="2018_0725_PhotoGallery" path="/2018_0725_PhotoGallery" reloadable="true" source="org.eclipse.jst.jee.server:2018_0725_PhotoGallery"/><Context docBase="2018_0711_JSPEx" path="/2018_0711_JSPEx" reloadable="true" source="org.eclipse.jst.jee.server:2018_0711_JSPEx"/><Context docBase="2018_0720_MoviePlayer" path="/2018_0720_MoviePlayer" reloadable="true" source="org.eclipse.jst.jee.server:2018_0720_MoviePlayer"/></Host>
     </Engine>
   </Service>
 </Server>

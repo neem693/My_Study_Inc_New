@@ -7,7 +7,7 @@ class Switch_Ex1
 		boolean ending =true;
 		Scanner scan = new Scanner(System.in);
 	
-		while(ending){	
+		while(ending){nn	
 			System.out.print("ø‰¿œ:");
 			yoil = scan.next();
 		
