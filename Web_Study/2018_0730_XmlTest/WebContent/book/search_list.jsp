@@ -47,9 +47,13 @@ td, th {
 				<td>${vo.publisher }</td>
 				<td><fmt:formatNumber maxFractionDigits="3"
 						value="${vo.price }"></fmt:formatNumber>원</td>
-				<td><c:choose test="
-						<fmt:formatNumber maxFractionDigits="3"
-						value="${vo.discount }"></fmt:formatNumber>==0">할인정보 없다</c:if>원</td>
+				<td><c:choose>
+						<c:when test="${vo.discount eq 0}">할인정보 읎음</c:when>
+						<c:otherwise>
+							<fmt:formatNumber maxFractionDigits="3" value="${vo.discount }"></fmt:formatNumber>원
+						</c:otherwise>
+					</c:choose></td>
+
 				<td>${vo.pubdate}</td>
 			</tr>
 		</c:forEach>
