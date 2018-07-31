@@ -19,6 +19,16 @@ td, th {
 	border: 1px solid black;
 	text-align: center;
 }
+
+.title{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	border: 1px solid black;
+	width: 300px;
+	display: block;
+	margin: 0 auto;
+}
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
@@ -41,7 +51,7 @@ td, th {
 			<tr>
 				<td>${i.index +1 }</td>
 
-				<td><a href="${vo.link}">${vo.title }</a></td>
+				<td ><a class="title" href="${vo.link}">${vo.title }</a></td>
 				<td><img alt="${vo.title }" src="${vo.image}"></td>
 				<td>${vo.author}</td>
 				<td>${vo.publisher }</td>
