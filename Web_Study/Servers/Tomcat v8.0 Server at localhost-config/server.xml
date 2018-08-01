@@ -36,6 +36,8 @@
     <!-- Editable user database that can also be used by
          UserDatabaseRealm to authenticate users
     -->
+	 
+	
     <Resource auth="Container" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" name="UserDatabase" pathname="conf/tomcat-users.xml" type="org.apache.catalina.UserDatabase"/>
   </GlobalNamingResources>
 
@@ -124,7 +126,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="2018_0730_XmlTest" path="/2018_0730_XmlTest" reloadable="true" source="org.eclipse.jst.jee.server:2018_0730_XmlTest"/><Context docBase="2018_0731_MybatisTest" path="/2018_0731_MybatisTest" reloadable="true" source="org.eclipse.jst.jee.server:2018_0731_MybatisTest"/><Context docBase="2018_0731_Mybatis2" path="/2018_0731_Mybatis2" reloadable="true" source="org.eclipse.jst.jee.server:2018_0731_Mybatis2"/></Host>
+      <Context docBase="2018_0731_MybatisTest" path="/2018_0731_MybatisTest" reloadable="true" source="org.eclipse.jst.jee.server:2018_0731_MybatisTest"/></Host>
     </Engine>
   </Service>
 </Server>

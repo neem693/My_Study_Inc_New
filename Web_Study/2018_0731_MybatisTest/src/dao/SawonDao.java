@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import service.MyBatisConnector;
 import vo.SawonVo;
+import vo.SawonYearVo;
 
 public class SawonDao {
 	// single-ton : 객체1개만 생성 서비스
@@ -71,6 +72,37 @@ public class SawonDao {
 		// 3.작업객체 반환시킨다(내부적으로 connection close)
 		sqlSession.close();
 
+		return list;
+	}
+
+	public List<SawonVo> selectList(SawonVo vo) {
+		// TODO Auto-generated method stub
+		
+		List<SawonVo> list = null;
+		SqlSession sqlSession = factory.openSession();
+		list = sqlSession.selectList("deptno_sajob_select",vo);
+		sqlSession.close();
+		
+		return list;
+	}
+
+	public List<SawonVo> selectList(Map map) {
+		// TODO Auto-generated method stub
+		List<SawonVo> list = null;
+		SqlSession sqlSession = factory.openSession();
+		list = sqlSession.selectList("deptno_sajob_selectMap",map);
+		sqlSession.close();
+		
+		
+		return list;
+	}
+
+	public List<SawonYearVo> selectYearList() {
+		// TODO Auto-generated method stub
+		List<SawonYearVo> list = null;
+		SqlSession sqlSession = factory.openSession();
+		list = sqlSession.selectList("sawon_year_list");
+		sqlSession.close();
 		return list;
 	}
 
