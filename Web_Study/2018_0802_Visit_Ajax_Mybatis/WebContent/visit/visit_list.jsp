@@ -15,7 +15,7 @@
 	var g_idx;
 	function modify(f) {
 		g_idx = f.idx.value;
-		idx =g_idx;
+		idx = g_idx;
 		var c_pwd = f.c_pwd.value;//confirm password
 
 		if (c_pwd == '') {
@@ -80,11 +80,90 @@
 
 		}
 	}
+	function find() {
+		var search = document.getElementById("search").value;
+		var search_text = document.getElementById("search_text").value;
+		search_text = encodeURIComponent(search_text);
+		//alert(search_text);
+		var url, param;
+		if (search_text == '') {
+			alert("검색 내용을 입력하세요");
+			return;
+		}
+		if (search == "name") {
+
+		} else if (search == "content") {
+
+		}
+
+		location.href = "?search=" + search + "&search_text=" + search_text;
+
+	}
+
+	window.onload = function() {
+
+		var search = '${param.search}';
+		var search_text = '${param.search_text}';
+		console.log(search_text);
+		var element = document.getElementById("search");
+		var names = document.getElementsByClassName("id");
+		var contents = document.getElementsByClassName("content_style");
+		
+		switch (search) {
+		case 'name':
+			element[0].selected = true;
+			break;
+		case 'content':
+			element[1].selected = true;
+			break;
+		case 'name_content':
+			element[2].selected = true;
+			break;
+
+		}
+		
+		if(search == ""){
+			return;
+		}else 
+			console.log(search);
+		
+		for(var i =0;i<names.length;i++){
+			var temp = names[i].innerHTML;
+			var regex = eval("".concat("/",search_text,"/gi"));
+			var rep = "".concat("<span class = 'searched'>",search_text.toUpperCase(),"</span>");
+			temp = temp.replace(regex,rep);
+			
+			//console.log(regex);
+			//console.log(rep);
+			//console.log(temp);
+			names[i].innerHTML = temp;
+			
+			temp = contents[i].innerHTML;
+			regex = eval("".concat("/",search_text,"/gi"));
+			rep = "".concat("<span class = 'searched'>",search_text.toUpperCase(),"</span>");
+			temp = temp.replace(regex,rep);
+			
+			//console.log(regex);
+			//console.log(rep);
+			//console.log(temp);
+			contents[i].innerHTML = temp;
+			
+		}
+
+	};
 </script>
 </head>
 <body>
+	<div align="center">
+		<a href="list.do">방명록으로</a> <br> <br>
+		<select id="search">
 
-
+			<option selected="selected" value="name">이름</option>
+			<option value="content">내용</option>
+			<option value="name_content">이름+내용</option>
+		</select> <input id="search_text" value="${param.search_text}"> <input
+			type="button" value="검색" onclick="find()">
+	</div>
 	<div id="main_box">
 		<h1>::::방명록::::</h1>
 		<div style="text-align: center;">

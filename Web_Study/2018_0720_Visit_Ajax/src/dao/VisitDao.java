@@ -91,7 +91,8 @@ public class VisitDao {
 		try {
 			// 1.Connection»πµÊ
 			conn = DBService.getInstance().getConnection();
-			// 2.∏Ì∑…√≥∏Æ∞¥√º »πµÊ
+
+			// 2.∏Ì∑…√≥∏Æ∞¥√º »πµÊ			
 			pstmt = conn.prepareStatement(sql);
 
 			// 3.psmt parameter º≥¡§
