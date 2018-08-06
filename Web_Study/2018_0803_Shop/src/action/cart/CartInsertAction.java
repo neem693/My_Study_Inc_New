@@ -41,7 +41,7 @@ public class CartInsertAction extends HttpServlet {
 		MemberVo m_vo = (MemberVo) request.getSession().getAttribute("user");
 		if (m_vo.getId() == null) {
 			System.out.println("실패");
-			out.print(String.format("{'anwser':'%s'}", "fail"));
+			out.print(String.format("[{'anwser':'%s'}]", "fail"));
 			return;
 
 		}
@@ -57,13 +57,13 @@ public class CartInsertAction extends HttpServlet {
 		System.out.println(!(r_vo == null));
 		if (!(r_vo == null)) {
 			System.out.println("존재함");
-			out.print(String.format("{'anwser':'%s'}", "exist"));
+			out.print(String.format("[{'anwser':'%s'}]", "exist"));
 			return;
 
 		}
 
 		int res = CartDao.getInstance().insert(c_vo);
-		out.print(String.format("{'anwser':'%s'}", "add"));
+		out.print(String.format("[{'anwser':'%s'}]", "add"));
 
 	}
 

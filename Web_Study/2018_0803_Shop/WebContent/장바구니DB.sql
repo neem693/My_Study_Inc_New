@@ -25,6 +25,11 @@ alter table cart
 select * from member;
 select * from product
 
+
+insert into cart values(seq_cart_idx.nextVal,1,2,2);
+insert into cart values(seq_cart_idx.nextVal,1,1,2);
+insert into cart values(seq_cart_idx.nextVal,1,9,2);
+
 insert into cart values(seq_cart_idx.nextVal,1,11,13);
 insert into cart values(seq_cart_idx.nextVal,1,13,13);
 insert into cart values(seq_cart_idx.nextVal,1,9,13);
