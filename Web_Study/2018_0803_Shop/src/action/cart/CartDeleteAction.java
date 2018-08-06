@@ -1,10 +1,9 @@
-package action;
+package action.cart;
 
 /**
  * Servlet implementation class SungDeleteAction
  */
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,16 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ProductDao;
-import vo.ProductVo;
+import dao.CartDao;
 
 import javax.servlet.RequestDispatcher;
 
 /**
  * Servlet implementation class SungDeleteAction
  */
-@WebServlet("/shop/list.do")
-public class ProductListAction extends HttpServlet {
+@WebServlet("/shop/delete.do")
+public class CartDeleteAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -33,15 +31,11 @@ public class ProductListAction extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		request.setCharacterEncoding("utf-8");
-		String category = request.getParameter("category");
-		if(category==null) {
-			category = "com001";
-		}
+		int c_idx = Integer.parseInt(request.getParameter("c_idx"));
 
-		List<ProductVo> list = ProductDao.getInstance().selectList(category);
-		request.setAttribute("list", list);
+		int res = CartDao.getInstance().delete(c_idx);
 
-		String forward_page = "product_list.jsp";
+		String forward_page = "cart_list.do";
 		RequestDispatcher disp = request.getRequestDispatcher(forward_page);
 		disp.forward(request, response);
 

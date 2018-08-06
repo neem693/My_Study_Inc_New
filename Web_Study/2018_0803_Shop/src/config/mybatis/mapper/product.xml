@@ -14,6 +14,11 @@
 		insert into product values(seq_product_idx.nextVal,#{category}, #{p_num},
 		#{p_name},#{p_company},#{p_price},#{p_saleprice},#{p_image_s},#{p_image_l},#{p_content},sysdate)
 	</insert>
+	
+	<select id="product_select_one" parameterType="int" resultType="vo.ProductVo">
+	select * from product where idx = #{idx}
+	</select>
+	
 
 
 

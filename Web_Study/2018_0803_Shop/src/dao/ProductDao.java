@@ -48,6 +48,17 @@ public class ProductDao {
 		
 		return res;
 	}
+
+	public ProductVo selectOne(int idx) {
+		// TODO Auto-generated method stub
+		ProductVo vo = null;
+		
+		SqlSession session = factory.openSession();
+		vo = session.selectOne("product.product_select_one",idx);
+		session.close();
+		
+		return vo;
+	}
 	
 	
 	
