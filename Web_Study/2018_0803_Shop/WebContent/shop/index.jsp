@@ -50,7 +50,9 @@ a:hover {
 		</c:if>
 		<c:if test="${not empty user}">${user.name}님 환영합니다.<input
 				type="button" value="로그아웃"
-				onclick="location.href ='${pageContext.request.contextPath}/member/logout.do'">
+				onclick="location.href ='${pageContext.request.contextPath}/member/logout.do'"><input
+				type="button" value="장바구니보기"
+				onclick="location.href ='${pageContext.request.contextPath}/shop/cart_list.do'">
 		</c:if>
 	</center>
 	<hr width="600" border="1" noshade color="navy">

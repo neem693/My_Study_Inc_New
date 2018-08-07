@@ -59,7 +59,19 @@ public class ProductDao {
 		
 		return vo;
 	}
-	
+
+	public int delete(int idx) {
+		// TODO Auto-generated method stub
+		int res =0;
+		
+		SqlSession session = factory.openSession(true);
+		res = session.delete("product.product_delete",idx);
+		session.close();
+		
+		return res;
+	}
+
+
 	
 	
 

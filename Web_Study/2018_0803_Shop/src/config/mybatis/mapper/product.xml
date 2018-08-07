@@ -19,6 +19,9 @@
 	select * from product where idx = #{idx}
 	</select>
 	
+	<delete id="product_delete" parameterType="int">
+	delete from product where idx = #{idx}
+	</delete>
 
 
 

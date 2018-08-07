@@ -13,13 +13,22 @@ create table cart
 )
 
 --상품테이블(product)의 idx와 p_idx간의 외래키 설정
-alter table cart
-  add constraint fk_cart_p_idx foreign key(p_idx) 
-                               references product(idx)
+
+alter table cart drop constraint fk_cart_p_idx
+
+alter table cart drop constraint fk_cart_m_idx 
+--제약조건 재 설정
+
 
 alter table cart
+  add constraint fk_cart_p_idx foreign key(p_idx) 
+                               references product(idx) on delete cascade
+
+      
+                               
+alter table cart
   add constraint fk_cart_m_idx foreign key(m_idx) 
-                               references member(idx)
+                               references member(idx) on delete cascade
 
 
 select * from member;
@@ -55,10 +64,10 @@ select sum(amount) from cart_view;
 
 
 
+select * from product;
 
 
-
-
+delete from product where idx = 9
 
 
 
