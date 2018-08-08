@@ -31,7 +31,7 @@ public class MemberLogoutAction extends HttpServlet {
 		String root = request.getRequestURI();
 		String root_array[] = root.split("/");
 		root = root_array[1];
-		String full_dir = String.format("/%s/shop/list.do", root);
+		String full_dir = String.format("/%s/board/list.do", root);
 		response.sendRedirect(full_dir);
 
 

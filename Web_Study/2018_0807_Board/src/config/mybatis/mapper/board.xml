@@ -4,13 +4,61 @@
 
 <mapper namespace="board">
 
-<select id="board_list" resultType="board">
-select * from board order by ref desc,step asc
-</select>
+	<select id="board_list" resultType="board">
+		select * from board order by
+		ref desc,step asc
+	</select>
 
-<select id="board_select_one" parameterType="int" resultType="board">
-select * from board where idx = #{idx}
-</select>
+	<select id="board_check_one" parameterType="board"
+		resultType="board">
+		select * from board where idx = #{idx} and id = #{id}
+	</select>
 
+	<select id="board_select_one" parameterType="int"
+		resultType="board">
+		select * from board where idx = #{idx}
+	</select>
+	<!-- 조회수 올리기 -->
+	<update id="board_update_readhit" parameterType="int">
+		update board set
+		readhit = readhit + 1
+		where idx =#{idx}
+	</update>
+
+	<insert id="board_insert" parameterType="board">
+		insert into board
+		values(seq_board_idx.nextVal,#{id},#{name},#{subject},#{content},#{pwd},#{ip},sysdate,0,seq_board_idx.currVal,0,0)
+	</insert>
+
+	<insert id="board_reply" parameterType="board">
+		insert into board
+		values(seq_board_idx.nextVal,#{id},#{name},#{subject},#{content},#{pwd},#{ip},sysdate,0,#{ref},#{step},#{depth})
+	</insert>
+
+
+
+
+	<delete id="board_delete" parameterType="board">
+		delete from board where
+		idx = #{idx} and id = #{id}
+	</delete>
+
+
+	<update id="board_update_stepUp" parameterType="board">
+		update board set
+		step = step+1 where ref=#{ref} and step>#{step}
+
+	</update>
+
+
+	<select id="board_select_one_detail" parameterType="board"
+		resultType="board">
+		select * from board where idx = #{idx} and id = #{id}
+	</select>
+	
+	
+	<update id="board_update_all" parameterType="board">
+	update board set subject = #{subject},content = #{content},pwd=#{pwd} where idx = #{idx}
+	</update>
 
 </mapper>

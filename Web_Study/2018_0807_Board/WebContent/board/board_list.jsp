@@ -9,11 +9,55 @@
 <link rel="stylesheet" href="../css/style.css" type="text/css">
 
 <meta http-equiv="Content-Type" content="text/html;">
+<script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	function insert_form() {
+
+		if ('${empty user}' == 'true') {
+			if (confirm('글쓰기는 로그인 하신후에 가능합니다.\n 로그인 하시겠습니까?') == false)
+				return;
+
+			location.href = '../member/login_form.do';
+			return;
+		}
+
+		//로그인 상태면.. 글쓰기 폼 띄우기
+		location.href = 'insert_form.do';
+	};
+
+	$(document)
+			.ready(function() {
+
+				var fail = '${param.fail}';
+				if (fail == null) {
+					return;
+				} else if (fail == 'empty user') {
+					alert("잘못된 접근: 로그인이 잘못됨");
+					return;
+				}
+
+			})
+</script>
 
 
 </head>
 
 <body>
+
+	<div style="width: 700px; margin: auto; text-align: right;">
+		
+			<c:if test="${empty user }">
+				<input type="button" value="로그인"
+					onclick="location.href ='${pageContext.request.contextPath}/member/login_form.do'">
+			</c:if>
+
+			<c:if test="${not empty user}">
+${user.name}(${user.id})님 환영합니다.
+			<input type="button" value="로그아웃"
+					onclick="location.href ='${pageContext.request.contextPath}/member/logout.do'">
+			</c:if>
+		
+	</div>
 
 	<!--로케이션 & 로그인끝-->
 	<!--타이틀 영역-->
@@ -55,7 +99,7 @@
 											<!-- 들여쓰기 --> <c:forEach begin="1" end="${b.depth}">
 										&nbsp;
 										</c:forEach> <c:if test="${b.depth != 0}">
-										ㄴ</c:if>  <a href="board_view.do?idx=${b.idx}" title="${b.subject }"
+										ㄴ</c:if> <a href="board_view.do?idx=${b.idx}" title="${b.subject }"
 											class="num">${b.subject }</a>
 										</td>
 										<td class="td_b_1"><img src="../img/td_bg_02.gif"></td>
@@ -102,9 +146,8 @@
 						<td height="5"></td>
 					</tr>
 					<tr>
-						<td><img src="../img/btn_reg.gif"
-							onClick="JavaScript:location.href='board_write.jsp'"
-							style="cursor: hand"></td>
+						<td><img src="../img/btn_reg.gif" onClick="insert_form()"
+							style="cursor:pointer;"></td>
 					</tr>
 
 				</table> <!--WRITE,MODIFY,REPLY END-->

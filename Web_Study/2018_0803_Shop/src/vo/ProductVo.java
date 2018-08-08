@@ -13,6 +13,28 @@ public class ProductVo {
 	String p_date;
 
 	int discount_rate;
+	
+	
+	
+	public ProductVo() {
+		// TODO Auto-generated constructor stub
+	}
+	
+
+	public ProductVo( int p_price, int p_saleprice, String category, String p_num, String p_name,
+			String p_company, String p_image_s, String p_image_l, String p_content) {
+		super();
+		this.p_price = p_price;
+		this.p_saleprice = p_saleprice;
+		this.category = category;
+		this.p_num = p_num;
+		this.p_name = p_name;
+		this.p_company = p_company;
+		this.p_image_s = p_image_s;
+		this.p_image_l = p_image_l;
+		this.p_content = p_content;
+		this.p_date = p_date;
+	}
 
 	public int getDiscount_rate() {
 

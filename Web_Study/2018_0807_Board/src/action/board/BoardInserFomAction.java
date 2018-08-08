@@ -4,24 +4,22 @@ package action.board;
  * Servlet implementation class SungDeleteAction
  */
 import java.io.IOException;
-import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.Board_Dao;
-import jdk.nashorn.internal.parser.JSONParser;
-import vo.BoardVo;
+import vo.MemberVo;
+
+import javax.servlet.RequestDispatcher;
 
 /**
  * Servlet implementation class SungDeleteAction
  */
-@WebServlet("/board/list.do")
-public class BoardListAction extends HttpServlet {
+@WebServlet("/board/insert_form.do")
+public class BoardInserFomAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -31,18 +29,18 @@ public class BoardListAction extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		List<BoardVo> list = Board_Dao.getInstance().selectList();
+		MemberVo user = (MemberVo)request.getSession().getAttribute("user");
+		if(user== null) {
+			response.sendRedirect("list.do?fail=empty user");
+			return;
+		}
 		
-		//System.out.println(list.size());
-		request.setAttribute("list", list);
-		request.getSession().removeAttribute("show");
 		
-		
-		String forward_page = "board_list.jsp";
+
+		String forward_page = "board_write.jsp";
 		RequestDispatcher disp = request.getRequestDispatcher(forward_page);
 		disp.forward(request, response);
-		
-		
+
 	}
 
 }

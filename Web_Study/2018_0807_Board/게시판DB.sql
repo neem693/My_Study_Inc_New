@@ -53,4 +53,17 @@ commit
 
 
 
+delete from board where idx>=34
+
 select * from board order by ref desc,step asc
+
+
+
+update board set id = 1,ref =1 where idx = 11
+
+rollback
+
+update board set idx =1,ref = 1 where idx =11
+update board set idx=3 where idx =13
+
+update board set subject = '构瘤? 捞扒',content = '具具具具具',pwd=121212 where idx = 48

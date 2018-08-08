@@ -6,83 +6,119 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class BoardVo {
-	
-	int idx,readhit,ref,step,depth;
-	String id,name,subject,content,pwd,ip,regdate;
+
+	int idx, readhit, ref, step, depth;
+	String id, name, subject, content, pwd, ip, regdate, viewdate;
 	Date date;
-	
-	
-	
+
 	SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-	SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd\nHH-mm");
+	SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat outputFormat_today = new SimpleDateFormat("HH:mm:ss");
-	
+	SimpleDateFormat viewOutputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	public BoardVo() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public BoardVo(String id, String name, String subject, String content, String pwd, String ip) {
+		super();
+
+		this.id = id;
+		this.name = name;
+		this.subject = subject;
+		this.content = content;
+		this.pwd = pwd;
+		this.ip = ip;
+	}
+
 	public int getIdx() {
 		return idx;
 	}
+
 	public void setIdx(int idx) {
 		this.idx = idx;
 	}
+
 	public int getReadhit() {
 		return readhit;
 	}
+
 	public void setReadhit(int readhit) {
 		this.readhit = readhit;
 	}
+
 	public int getRef() {
 		return ref;
 	}
+
 	public void setRef(int ref) {
 		this.ref = ref;
 	}
+
 	public int getStep() {
 		return step;
 	}
+
 	public void setStep(int step) {
 		this.step = step;
 	}
+
 	public int getDepth() {
 		return depth;
 	}
+
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getSubject() {
 		return subject;
 	}
+
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
+
 	public String getPwd() {
 		return pwd;
 	}
+
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
+
 	public String getIp() {
 		return ip;
 	}
+
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
+
 	public String getRegdate() {
 		String time = null;
 		Calendar cal1 = Calendar.getInstance();
@@ -108,12 +144,16 @@ public class BoardVo {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		this.setViewdate(viewOutputFormat.format(date));
 		this.regdate = regdate;
 	}
-	
-	
-	
-	
+
+	public String getViewdate() {
+		return viewdate;
+	}
+
+	public void setViewdate(String viewdate) {
+		this.viewdate = viewdate;
+	}
 
 }

@@ -21,7 +21,7 @@
 			return false;
 		}
 
-		f.action = "insert.do";
+		f.action = "modify.do";
 		f.submit();
 	}
 </script>
@@ -43,12 +43,15 @@
 		<tr>
 			<td>
 				<form method="post">
-					<input type="hidden" name="id" value="${user.id }">
+					<input type="hidden" name="idx" value="${vo.idx}">
+					 <input
+						type="hidden" name="id" value="${user.id }">
 					<table width="750" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td width="120" height="25" class="td_d">제목</td>
 							<td class="td_d_1" colspan="3"><input name="subject"
-								type="text" class="search" style="width: 250px;"></td>
+								type="text" class="search" style="width: 250px;"
+								value="${vo.subject }"></td>
 
 						</tr>
 						<tr>
@@ -61,7 +64,7 @@
 						<tr>
 							<td class="td_d_4">내용</td>
 							<td class="td_d_2" colspan="3"><TEXTAREA NAME='content'
-									rows="9" cols="65"></TEXTAREA></td>
+									rows="9" cols="65">${vo.content }</TEXTAREA></td>
 						</tr>
 						<tr>
 							<td height="25" class="td_d_4">비밀번호</td>

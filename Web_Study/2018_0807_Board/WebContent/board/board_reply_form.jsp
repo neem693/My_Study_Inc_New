@@ -4,7 +4,7 @@
 <html>
 
 <head>
-<title>쓰기</title>
+<title>답글쓰기</title>
 <link rel="stylesheet" href="../css/style.css" type="text/css">
 <script language=javascript>
 	function send_check(f) {
@@ -21,7 +21,7 @@
 			return false;
 		}
 
-		f.action = "insert.do";
+		f.action = "reply.do";
 		f.submit();
 	}
 </script>
@@ -43,6 +43,7 @@
 		<tr>
 			<td>
 				<form method="post">
+				<input type = "hidden" name = "idx" value = "${param.idx}">
 					<input type="hidden" name="id" value="${user.id }">
 					<table width="750" border="0" cellspacing="0" cellpadding="0">
 						<tr>

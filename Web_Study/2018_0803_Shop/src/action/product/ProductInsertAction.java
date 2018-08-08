@@ -65,8 +65,8 @@ public class ProductInsertAction extends HttpServlet {
 			p_content = mr.getParameter("p_content");
 			
 			//vo = new ProductVo(p_price, p_saleprice, category, p_num, p_name, p_company, p_image_s, p_image_l, p_content, "sysdate");
-			vo = new ProductVo();
-			vo.setCategory(category);
+			vo = new ProductVo(p_price, p_saleprice, category, p_num, p_name, p_company, p_image_s, p_image_l, p_content);
+			/*vo.setCategory(category);
 			vo.setP_num(p_num);
 			vo.setP_name(p_name);
 			vo.setP_company(p_company);
@@ -74,7 +74,7 @@ public class ProductInsertAction extends HttpServlet {
 			vo.setP_saleprice(p_saleprice);
 			vo.setP_image_l(p_image_l);
 			vo.setP_image_s(p_image_s);
-			vo.setP_content(p_content);
+			vo.setP_content(p_content);*/
 		
 			int res = ProductDao.getInstance().insert(vo);
 			System.out.println(res);
