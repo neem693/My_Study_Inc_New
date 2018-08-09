@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -38,6 +39,18 @@ public class Board_Dao {
 		return list;
 	}
 
+	/* 페이징 처리위한 select */
+	public List<BoardVo> selectList(Map map) {
+		// TODO Auto-generated method stub
+		List<BoardVo> list = null;
+
+		SqlSession session = factory.openSession();
+		list = session.selectList("board.board_condition_list", map);
+		session.close();
+
+		return list;
+	}
+
 	public BoardVo selectOne(int idx) {
 		// TODO Auto-generated method stub
 		BoardVo vo = null;
@@ -47,28 +60,6 @@ public class Board_Dao {
 		session.close();
 
 		return vo;
-	}
-
-	public int update_readhit(int idx) {
-		// TODO Auto-generated method stub
-		int res = 0;
-
-		SqlSession session = factory.openSession(true);
-		res = session.update("board.board_update_readhit", idx);
-		session.close();
-
-		return res;
-	}
-
-	public int insert(BoardVo vo) {
-		// TODO Auto-generated method stub
-		int res = 0;
-
-		SqlSession session = factory.openSession(true);
-		res = session.insert("board.board_insert", vo);
-		session.close();
-
-		return res;
 	}
 
 	public int selectOne(BoardVo vo) {
@@ -87,11 +78,34 @@ public class Board_Dao {
 		return res;
 	}
 
-	public int delete(BoardVo vo) {
+	public BoardVo selectOne_detail(BoardVo vo) {
+		// TODO Auto-generated method stub
+		BoardVo voo = null;
+
+		SqlSession session = factory.openSession(true);
+		voo = session.selectOne("board.board_select_one_detail", vo);
+		session.close();
+
+		return voo;
+	}
+
+	public int update_readhit(int idx) {
 		// TODO Auto-generated method stub
 		int res = 0;
+
 		SqlSession session = factory.openSession(true);
-		res = session.delete("board.board_delete", vo);
+		res = session.update("board.board_update_readhit", idx);
+		session.close();
+
+		return res;
+	}
+
+	public int update_all(BoardVo vo) {
+		// TODO Auto-generated method stub
+		int res = 0;
+
+		SqlSession session = factory.openSession(true);
+		res = session.update("board.board_update_all", vo);
 		session.close();
 
 		return res;
@@ -108,6 +122,16 @@ public class Board_Dao {
 		return res;
 	}
 
+	public int delete(BoardVo vo) {
+		// TODO Auto-generated method stub
+		int res = 0;
+		SqlSession session = factory.openSession(true);
+		res = session.delete("board.board_delete", vo);
+		session.close();
+
+		return res;
+	}
+
 	public int insert_reply(BoardVo vo) {
 		int res = 0;
 
@@ -118,27 +142,50 @@ public class Board_Dao {
 		return res;
 	}
 
-	public BoardVo selectOne_detail(BoardVo vo) {
+	public int insert(BoardVo vo) {
 		// TODO Auto-generated method stub
-		BoardVo voo = null;
-		
-		
+		int res = 0;
+
 		SqlSession session = factory.openSession(true);
-		voo = session.selectOne("board.board_select_one_detail", vo);
+		res = session.insert("board.board_insert", vo);
 		session.close();
-		
-		return voo;
+
+		return res;
 	}
 
-	public int update_all( BoardVo vo) {
+	public int selectCount() {
 		// TODO Auto-generated method stub
-		int res =0;
+		int res = 0;
+
+		SqlSession session = factory.openSession();
+		res = session.selectOne("board.board_all_count");
+		// System.out.println(res);
+		session.close();
+
+		return res;
+	}
+
+	public int selectOne_IsOnlyOne(BoardVo vo) {
+		// TODO Auto-generated method stub
+		int res = 0;
+
+		SqlSession session = factory.openSession();
+		res = session.selectOne("board.board_is_only_one", vo);
+		// System.out.println(res);
+		session.close();
+
+		return res;
+	}
+
+	public int update_del_mod(BoardVo vo) {
+		// TODO Auto-generated method stub
+		int res = 0;
 		
 		SqlSession session = factory.openSession(true);
-		res = session.update("board.board_update_all", vo);
+		res = session.update("board.board_update_del_mod", vo);
+		// System.out.println(res);
 		session.close();
-		
-		
+
 		return res;
 	}
 

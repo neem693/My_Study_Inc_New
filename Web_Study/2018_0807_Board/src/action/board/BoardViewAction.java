@@ -38,6 +38,12 @@ public class BoardViewAction extends HttpServlet {
 		int idx = Integer.parseInt(request.getParameter("idx"));
 
 		BoardVo vo = Board_Dao.getInstance().selectOne(idx);
+		String page = request.getParameter("page");
+		
+		if(vo.getDel() == 1) {
+			response.sendRedirect("list.do?fail=deleted&page="+page);
+			return;
+		}
 
 		HttpSession session = request.getSession();
 		if (session.getAttribute("show") == null) {

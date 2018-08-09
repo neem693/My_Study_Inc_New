@@ -9,7 +9,7 @@
 	function del(f) {
 		if (confirm("삭제 하시겠습니까?")) {
 
-			f.action = 'delete.do';
+			f.action = 'delete.do?page=${param.page}';
 			alert(f.idx.value);
 			f.submit();
 
@@ -17,14 +17,14 @@
 	}
 	function modify(f) {
 
-		f.action = "modify_form.do";
+		f.action = "modify_form.do?page=${param.page}";
 
 		f.submit();
 
 	}
 	function reply() {
 
-		location.href = "reply_form.do?idx=" + ${param.idx};
+		location.href = "reply_form.do?idx=${param.idx}&page=${(empty param.page)?1:param.page}";
 
 	}
 </script>
@@ -34,13 +34,13 @@
 	<table width="690" height="50" border="0" cellpadding="0"
 		cellspacing="0">
 		<tr>
-			<td><input type = "image" src="../img/title_04.gif"></td>
+			<td><input type="image" src="../img/title_04.gif"></td>
 		</tr>
 	</table>
 
 	<form method="post">
-		<input type="hidden" name="idx" value="${vo.idx}">
-		<input type = "hidden" name = "id" value = "${vo.id}">
+		<input type="hidden" name="idx" value="${vo.idx}"> <input
+			type="hidden" name="id" value="${vo.id}">
 		<table width="690" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td width="120" height="25" class="td_d">제목</td>
@@ -67,15 +67,17 @@
 				<td height="5"></td>
 			</tr>
 			<tr>
-				<td><input type = "image" src="../img/btn_list.gif" onClick="location.href='list.do';return false;" style="cursor: pointer;"> 
-				<c:if test="${not empty user}">
-						<input type = "image" src="../img/btn_reply.gif" onClick="reply(); return false;"
-							style="cursor: pointer">
+				<td><input type="image" src="../img/btn_list.gif"
+					onClick="location.href='list.do?page=${(empty param.page)?1:param.page}';return false;"
+					style="cursor: pointer;"> <c:if test="${not empty user}">
+						<input type="image" src="../img/btn_reply.gif"
+							onClick="reply(); return false;" style="cursor: pointer">
 					</c:if> <c:if test="${vo.id eq user.id}">
-						<input type = "image" src="../img/btn_modify.gif" onClick="modify(this.form); return false;"
+						<input type="image" src="../img/btn_modify.gif"
+							onClick="modify(this.form); return false;"
 							style="cursor: pointer">
-						<input type = "image" src='../img/btn_delete.gif' onClick='del(this.form); return false;'
-							style='cursor: pointer'>
+						<input type="image" src='../img/btn_delete.gif'
+							onClick='del(this.form); return false;' style='cursor: pointer'>
 					</c:if></td>
 			</tr>
 		</table>

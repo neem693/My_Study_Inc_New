@@ -45,12 +45,15 @@ public class BoardModifyAction extends HttpServlet {
 		String content = request.getParameter("content");
 		String pwd = request.getParameter("pwd");
 		String ip = null;
+		
 
 		BoardVo vo = new BoardVo(id, name, subject, content, pwd, ip);
 		vo.setIdx(Integer.parseInt(idx));
+		String page = request.getParameter("page");
+		System.out.println(page);
 
 		int res = Board_Dao.getInstance().update_all(vo);
-		System.out.println(res);
-		response.sendRedirect("list.do");
+		//System.out.println(res);
+		response.sendRedirect("list.do?page="+page);
 	}
 }

@@ -31,7 +31,8 @@ public class MemberLoginAction extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		
+		String page = request.getParameter("page");
 		String id = request.getParameter("id");
 		String pwd = request.getParameter("pwd");
 		// id에 해당되는 회원정보 얻어온다.
@@ -50,7 +51,7 @@ public class MemberLoginAction extends HttpServlet {
 		String root = request.getRequestURI();
 		String root_array[] = root.split("/");
 		root = root_array[1];
-		String full_dir = String.format("/%s/board/list.do", root);
+		String full_dir = String.format("/%s/board/list.do?page=%s", root,page);
 		response.sendRedirect(full_dir);
 		
 		//정상적인 로그인 처리

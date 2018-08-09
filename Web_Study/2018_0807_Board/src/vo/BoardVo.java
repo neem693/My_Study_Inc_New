@@ -7,9 +7,10 @@ import java.util.Date;
 
 public class BoardVo {
 
-	int idx, readhit, ref, step, depth;
+	int idx, readhit, ref, step, depth,no,del;
 	String id, name, subject, content, pwd, ip, regdate, viewdate;
 	Date date;
+
 
 	SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 	SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -155,5 +156,24 @@ public class BoardVo {
 	public void setViewdate(String viewdate) {
 		this.viewdate = viewdate;
 	}
+	
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public int getDel() {
+		return del;
+	}
+
+	public void setDel(int del) {
+		this.del = del;
+	}
+	
+	
+
 
 }

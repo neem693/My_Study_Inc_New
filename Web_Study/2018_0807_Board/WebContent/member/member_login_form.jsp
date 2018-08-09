@@ -77,7 +77,8 @@ input {
 <title>Insert title here</title>
 </head>
 <body>
-	<form>
+	<form method="post">
+	<input type="hidden" name = "page"  value="${param.page}">
 		<table>
 			<tr>
 				<th width="20%">아이디</th>

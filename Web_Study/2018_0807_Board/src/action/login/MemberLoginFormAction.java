@@ -25,6 +25,7 @@ public class MemberLoginFormAction extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 
 		String forward_page = "member_login_form.jsp";
 		RequestDispatcher disp = request.getRequestDispatcher(forward_page);

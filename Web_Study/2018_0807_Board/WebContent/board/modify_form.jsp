@@ -21,7 +21,7 @@
 			return false;
 		}
 
-		f.action = "modify.do";
+		f.action = "modify.do?page=${param.page}";
 		f.submit();
 	}
 </script>
@@ -83,8 +83,10 @@
 							<td align="center"><input type="image"
 								src="../img/btn_reg.gif"
 								onClick="send_check(this.form); return false;"
-								style="cursor: pointer;"> <img src="../img/btn_back.gif"
-								onClick="location.href='list.do'" style="cursor: pointer;"></td>
+								style="cursor: pointer;"> 
+								
+								<img src="../img/btn_back.gif"
+								onClick="location.href='list.do?page=${param.page}'" style="cursor: pointer;"></td>
 						</tr>
 					</table>
 

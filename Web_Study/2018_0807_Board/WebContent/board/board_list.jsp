@@ -34,6 +34,8 @@
 				} else if (fail == 'empty user') {
 					alert("잘못된 접근: 로그인이 잘못됨");
 					return;
+				}else if (fail == 'deleted'){
+					alert("잘못된 접근: 삭제된 게시물입니다.");
 				}
 
 			})
@@ -45,18 +47,18 @@
 <body>
 
 	<div style="width: 700px; margin: auto; text-align: right;">
-		
-			<c:if test="${empty user }">
-				<input type="button" value="로그인"
-					onclick="location.href ='${pageContext.request.contextPath}/member/login_form.do'">
-			</c:if>
 
-			<c:if test="${not empty user}">
+		<c:if test="${empty user }">
+			<input type="button" value="로그인"
+				onclick="location.href ='${pageContext.request.contextPath}/member/login_form.do?page=${(empty param.page)?1:param.page}'">
+		</c:if>
+
+		<c:if test="${not empty user}">
 ${user.name}(${user.id})님 환영합니다.
 			<input type="button" value="로그아웃"
-					onclick="location.href ='${pageContext.request.contextPath}/member/logout.do'">
-			</c:if>
-		
+				onclick="location.href ='${pageContext.request.contextPath}/member/logout.do?page=${param.page }'">
+		</c:if>
+
 	</div>
 
 	<!--로케이션 & 로그인끝-->
@@ -95,17 +97,29 @@ ${user.name}(${user.id})님 환영합니다.
 									<tr>
 										<td align="center" class="td_a_1">${b.idx }</td>
 										<td class="td_b_1"><img src="../img/td_bg_02.gif"></td>
-										<td class="td_b_1 left">
-											<!-- 들여쓰기 --> <c:forEach begin="1" end="${b.depth}">
+										<c:choose>
+											<c:when test="${ b.del eq 0}">
+												<td class="td_b_1 left">
+													<!-- 들여쓰기 --> <c:forEach begin="1" end="${b.depth}">
 										&nbsp;
 										</c:forEach> <c:if test="${b.depth != 0}">
-										ㄴ</c:if> <a href="board_view.do?idx=${b.idx}" title="${b.subject }"
-											class="num">${b.subject }</a>
-										</td>
-										<td class="td_b_1"><img src="../img/td_bg_02.gif"></td>
+										ㄴ</c:if> <a
+													href="board_view.do?idx=${b.idx}&page=${(empty param.page)?1:param.page}"
+													title="${b.subject}" class="num">${b.subject }</a>
+												</td>
 
-										<td align="center" class="td_b_1">${b.name }</td>
 
+												<td class="td_b_1"><img src="../img/td_bg_02.gif"></td>
+
+												<td align="center" class="td_b_1">${b.name }</td>
+											</c:when>
+											<c:when test="${ b.del eq 1}">
+												<td colspan="3" class="td_b_1 left">
+													<!-- 들여쓰기 --> <c:forEach begin="1" end="${b.depth}">&nbsp;</c:forEach>
+													<c:if test="${b.depth != 0}">ㄴ</c:if> 이 글은 작성자에 의해 삭제되었습니다.
+												</td>
+											</c:when>
+										</c:choose>
 										<td class="td_b_1"><img src="../img/td_bg_02.gif"></td>
 
 										<td align="center" class="td_b_1">${b.regdate}</td>
@@ -134,10 +148,9 @@ ${user.name}(${user.id})님 환영합니다.
 								bgcolor="#F1F5F4">
 								<tr>
 									<td width="7"><img src="../img/search_bg_01.gif"></td>
-									<td class="f11"><a href="board_list.jsp?page="><img
-											src="../img/btn_prev.gif" align="absmiddle"></a> <a
-										href="board_list.jsp?page="><img src="../img/btn_next.gif"
-											align="absmiddle"></a></td>
+									<td class="f11" align="center">${pageMenu}<%-- <c:forEach var="c" items="${count}"></c:forEach>
+									<a href ="?page=1">1</a>&nbsp; --%>
+									</td>
 								</tr>
 							</table>
 						</td>
@@ -147,7 +160,7 @@ ${user.name}(${user.id})님 환영합니다.
 					</tr>
 					<tr>
 						<td><img src="../img/btn_reg.gif" onClick="insert_form()"
-							style="cursor:pointer;"></td>
+							style="cursor: pointer;"></td>
 					</tr>
 
 				</table> <!--WRITE,MODIFY,REPLY END-->

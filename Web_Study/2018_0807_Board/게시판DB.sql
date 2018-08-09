@@ -25,6 +25,8 @@ depth 	int 			--荐乞利 鉴辑
 )
 
 
+
+
 alter table board
 add constraint pk_board_idx primary key(idx)
 
@@ -55,7 +57,17 @@ commit
 
 delete from board where idx>=34
 
-select * from board order by ref desc,step asc
+create or replace view board_show as select rownum no,s.* from (select * from board order by ref desc,step asc) s
+
+create or replace view board_show_rank as select  rank() over(order by ref desc,step asc) no ,b.* from(select * from board) b
+
+
+
+select * from board_show_rank
+
+
+
+select * from member
 
 
 
@@ -67,3 +79,32 @@ update board set idx =1,ref = 1 where idx =11
 update board set idx=3 where idx =13
 
 update board set subject = '构瘤? 捞扒',content = '具具具具具',pwd=121212 where idx = 48
+
+
+select *
+from board_show
+where ref = 60
+
+
+--select b2.*
+--from board b1 inner join board b2
+--on b1.idx = b2.ref
+--where b1.idx = 47 and b2.idx 
+
+select count(*)
+from board
+where ref = 47 and step>6;
+
+
+alter table board
+ADD(del NUMBER(1));
+
+update board set del = 0;
+
+
+
+select * from board where ref = 60;
+select * from board where idx = 65;
+	select nvl(count(*),0)
+	from board
+	where ref =60 and step>3

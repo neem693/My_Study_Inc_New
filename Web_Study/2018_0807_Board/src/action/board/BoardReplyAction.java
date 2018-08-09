@@ -56,10 +56,12 @@ public class BoardReplyAction extends HttpServlet {
 		vo.setStep(base_vo.getStep() + 1);
 		vo.setDepth(base_vo.getDepth() + 1);
 		res = Board_Dao.getInstance().insert_reply(vo);
+		
+		String page = request.getParameter("page");
 
 		System.out.println(res);
 
-		response.sendRedirect("list.do");
+		response.sendRedirect("list.do?page=" + page);
 
 	}
 

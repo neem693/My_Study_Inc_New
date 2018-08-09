@@ -27,12 +27,12 @@
 
 	<insert id="board_insert" parameterType="board">
 		insert into board
-		values(seq_board_idx.nextVal,#{id},#{name},#{subject},#{content},#{pwd},#{ip},sysdate,0,seq_board_idx.currVal,0,0)
+		values(seq_board_idx.nextVal,#{id},#{name},#{subject},#{content},#{pwd},#{ip},sysdate,0,seq_board_idx.currVal,0,0,0)
 	</insert>
 
 	<insert id="board_reply" parameterType="board">
 		insert into board
-		values(seq_board_idx.nextVal,#{id},#{name},#{subject},#{content},#{pwd},#{ip},sysdate,0,#{ref},#{step},#{depth})
+		values(seq_board_idx.nextVal,#{id},#{name},#{subject},#{content},#{pwd},#{ip},sysdate,0,#{ref},#{step},#{depth},0)
 	</insert>
 
 
@@ -55,10 +55,36 @@
 		resultType="board">
 		select * from board where idx = #{idx} and id = #{id}
 	</select>
-	
-	
+
+
 	<update id="board_update_all" parameterType="board">
-	update board set subject = #{subject},content = #{content},pwd=#{pwd} where idx = #{idx}
+		update board set
+		subject = #{subject},content = #{content},pwd=#{pwd} where
+		idx = #{idx}
 	</update>
+
+
+	<select id="board_all_count" resultType="int">
+		select nvl(count(*),0) from board
+	</select>
+
+	<select id="board_condition_list" parameterType="java.util.Map"
+		resultType="board">
+		select *
+		from board_show
+		where no between #{start} and #{end}
+		
+	</select>
+	<select id="board_is_only_one" parameterType="board" resultType="int">
+	select nvl(count(*),0)
+	from board
+	where ref = #{ref} and step>#{step}
+	</select>
+	
+	<update id="board_update_del_mod" parameterType="board">
+	update board set del = 1 where idx = #{idx} 
+	</update>
+
+
 
 </mapper>

@@ -28,14 +28,17 @@ public class BoardReplyFormAction extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
 		
 		MemberVo user = (MemberVo)request.getSession().getAttribute("user");
 		if(user== null) {
 			response.sendRedirect("list.do?fail=empty user");
 			return;
 		}
+		
+		String page = request.getParameter("page");
 
-		String forward_page = "board_reply_form.jsp";
+		String forward_page = "board_reply_form.jsp?page="+page;
 		RequestDispatcher disp = request.getRequestDispatcher(forward_page);
 		disp.forward(request, response);
 
