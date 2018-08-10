@@ -42,6 +42,10 @@
 		delete from board where
 		idx = #{idx} and id = #{id}
 	</delete>
+	<delete id="board_delete_continue" parameterType="board">
+		delete from board where
+		step = #{step} and ref = #{ref} and del = 1
+	</delete>
 
 
 	<update id="board_update_stepUp" parameterType="board">
@@ -65,7 +69,8 @@
 
 
 	<select id="board_all_count" resultType="int">
-		select nvl(count(*),0) from board
+		select nvl(count(*),0)
+		from board
 	</select>
 
 	<select id="board_condition_list" parameterType="java.util.Map"
@@ -73,17 +78,21 @@
 		select *
 		from board_show
 		where no between #{start} and #{end}
-		
+
 	</select>
-	<select id="board_is_only_one" parameterType="board" resultType="int">
-	select nvl(count(*),0)
-	from board
-	where ref = #{ref} and step>#{step}
+	<select id="board_is_only_one" parameterType="board"
+		resultType="int">
+		select nvl(count(*),0)
+		from board
+		where ref = #{ref} and step>#{step}
 	</select>
-	
+
+
 	<update id="board_update_del_mod" parameterType="board">
-	update board set del = 1 where idx = #{idx} 
+		update board set del = 1 where idx = #{idx}
 	</update>
+
+
 
 
 

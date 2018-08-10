@@ -8,7 +8,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+
 <script>
 
 $(document).ready(function(){
@@ -78,6 +79,7 @@ input {
 </head>
 <body>
 	<form method="post">
+	<input type = "hidden" name = "url" value = "${param.url}">
 	<input type="hidden" name = "page"  value="${param.page}">
 		<table>
 			<tr>

@@ -8,6 +8,8 @@
 
 		<typeAlias type="vo.BoardVo" alias="board"></typeAlias>
 		<typeAlias type="vo.MemberVo" alias="member"></typeAlias>
+		<typeAlias type="vo.CommentVo" alias="comment"></typeAlias>
+		
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -26,5 +28,7 @@
 	<mappers>
 		<mapper resource="config/mybatis/mapper/board.xml" />
 		<mapper resource="config/mybatis/mapper/member.xml" />
+		<mapper resource="config/mybatis/mapper/comment.xml" />
+		
 	</mappers>
 </configuration>

@@ -37,6 +37,7 @@ public class BoardListAction extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8");
 		
+		
 		int nowPage = 1;
 		String strPage = request.getParameter("page");
 		if(strPage!=null && !strPage.isEmpty())
@@ -65,6 +66,7 @@ public class BoardListAction extends HttpServlet {
 		request.setAttribute("list", list);
 		request.setAttribute("pageMenu", pageMenu);
 		request.getSession().removeAttribute("show");
+		
 		
 		
 		String forward_page = "board_list.jsp";

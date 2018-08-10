@@ -132,6 +132,17 @@ public class Board_Dao {
 		return res;
 	}
 
+	public int delete_continue(BoardVo vo) {
+		// TODO Auto-generated method stub
+		int res = 0;
+		
+		SqlSession session = factory.openSession(true);
+		res = session.delete("board.board_delete_continue", vo);
+		session.close();
+		
+		return res;
+	}
+
 	public int insert_reply(BoardVo vo) {
 		int res = 0;
 
@@ -188,5 +199,7 @@ public class Board_Dao {
 
 		return res;
 	}
+
+
 
 }

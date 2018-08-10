@@ -39,7 +39,7 @@ select * from member;
 
 select * from board
 
-delete from board where idx = 6
+delete from board where idx = 65
 
 insert into board values(seq_board_idx.nextVal,'hong','홍길동','내가1등','제곧내',1234,'127.0.0.1',sysdate,0,seq_board_idx.currVal,0,0)
 --답글쓰기 인서트 문
@@ -108,3 +108,17 @@ select * from board where idx = 65;
 	select nvl(count(*),0)
 	from board
 	where ref =60 and step>3
+	
+	
+	
+	delete from board where del = 1
+	
+	select * from board
+	
+	ALTER TABLE board MODIFY del DEFAULT 0; 
+
+	alter table TableName
+
+add constraint df_ConstraintNAme
+default getutcdate() for [Date]
+

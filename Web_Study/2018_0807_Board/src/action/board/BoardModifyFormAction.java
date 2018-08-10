@@ -57,7 +57,7 @@ public class BoardModifyFormAction extends HttpServlet {
 		
 		request.setAttribute("vo", vo);
 
-		String forward_page = "modify_form.jsp?page=" + page;
+		String forward_page = "modify_form.jsp";
 		RequestDispatcher disp = request.getRequestDispatcher(forward_page);
 		disp.forward(request, response);
 

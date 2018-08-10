@@ -1,4 +1,4 @@
-package action.board;
+package action.comment;
 
 /**
  * Servlet implementation class SungDeleteAction
@@ -11,15 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import vo.MemberVo;
+import dao.CommentDao;
 
 import javax.servlet.RequestDispatcher;
 
 /**
  * Servlet implementation class SungDeleteAction
  */
-@WebServlet("/board/reply_form.do")
-public class BoardReplyFormAction extends HttpServlet {
+@WebServlet("/board/comment_delete.do")
+public class CommentDeleteAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -29,18 +29,18 @@ public class BoardReplyFormAction extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
+		int idx = Integer.parseInt(request.getParameter("idx"));
 		
-		MemberVo user = (MemberVo)request.getSession().getAttribute("user");
-		if(user== null) {
-			response.sendRedirect("list.do?fail=empty user");
-			return;
+		
+		int res = CommentDao.getInstance().delete(idx);
+		String result; 
+		if(res==-1 || res==0) {
+			result = String.format("[{'result':'%s'}]","fail");
+		}else {
+			result = String.format("[{'result':'%s'}]","success");
 		}
-		
-		String page = request.getParameter("page");
-
-		String forward_page = "board_reply_form.jsp";
-		RequestDispatcher disp = request.getRequestDispatcher(forward_page);
-		disp.forward(request, response);
+		response.setContentType("text/html; charset=utf-8");
+		response.getWriter().print(result);
 
 	}
 

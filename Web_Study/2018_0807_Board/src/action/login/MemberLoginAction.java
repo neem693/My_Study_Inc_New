@@ -31,10 +31,15 @@ public class MemberLoginAction extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
+		request.setCharacterEncoding("utf-8");
+
+		String url = request.getParameter("url");
 		String page = request.getParameter("page");
 		String id = request.getParameter("id");
 		String pwd = request.getParameter("pwd");
+		System.out.println(id + " " + pwd +"이것은 테스트");
+
 		// id에 해당되는 회원정보 얻어온다.
 		MemberVo vo = Member_Dao.getInstance().selectOne(id);
 
@@ -45,17 +50,22 @@ public class MemberLoginAction extends HttpServlet {
 			response.sendRedirect("login_form.do?reason=fail_pwd");
 			return;
 		}
-		
+
 		HttpSession session = request.getSession();
 		session.setAttribute("user", vo);
 		String root = request.getRequestURI();
 		String root_array[] = root.split("/");
 		root = root_array[1];
-		String full_dir = String.format("/%s/board/list.do?page=%s", root,page);
-		response.sendRedirect(full_dir);
-		
-		//정상적인 로그인 처리
-		
+		String full_dir = String.format("/%s/board/list.do?page=%s", root, page);
+		String full_dir_url = String.format("%s", url);
+
+		System.out.println(full_dir + " " + full_dir_url + "냠냠냠");
+		if (url ==null || url.isEmpty()) 
+			response.sendRedirect(full_dir);
+		else
+			response.sendRedirect(full_dir_url);
+
+		// 정상적인 로그인 처리
 
 	}
 

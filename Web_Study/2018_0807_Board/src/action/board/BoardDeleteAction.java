@@ -53,11 +53,19 @@ public class BoardDeleteAction extends HttpServlet {
 		int res = 0;
 		if (count > 0)
 			is_only_one = false;
-		
-		
-		if (is_only_one)
+
+		if (is_only_one) {
 			res = Board_Dao.getInstance().delete(vo);
-		else {
+			int res2 = 0;
+			while (res != -1) {
+				vo.setStep(vo.getStep() - 1);
+				//바로 상단에 있는 게시물이 삭제된 게시물로 존재한다면(del이 1이라면) 같이 삭제한다.
+				res2 = Board_Dao.getInstance().delete_continue(vo);
+				if (res2 == -1 || res2 ==0) {
+					break;
+				}
+			}
+		} else {
 			res = Board_Dao.getInstance().update_del_mod(vo);
 		}
 
@@ -66,7 +74,7 @@ public class BoardDeleteAction extends HttpServlet {
 			return;
 		}
 
-		response.sendRedirect("list.do?page="+page);
+		response.sendRedirect("list.do?page=" + page);
 
 	}
 

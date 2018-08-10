@@ -1,44 +1,48 @@
-package action.board;
+package action.comment;
 
 /**
  * Servlet implementation class SungDeleteAction
  */
 import java.io.IOException;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import vo.MemberVo;
-
-import javax.servlet.RequestDispatcher;
+import dao.CommentDao;
+import vo.CommentVo;
 
 /**
  * Servlet implementation class SungDeleteAction
  */
-@WebServlet("/board/reply_form.do")
-public class BoardReplyFormAction extends HttpServlet {
+@WebServlet("/board/comment_list.do")
+public class CommentListAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("utf-8");
-		
-		MemberVo user = (MemberVo)request.getSession().getAttribute("user");
-		if(user== null) {
-			response.sendRedirect("list.do?fail=empty user");
-			return;
-		}
-		
-		String page = request.getParameter("page");
 
-		String forward_page = "board_reply_form.jsp";
+		request.setCharacterEncoding("utf-8");
+		int b_idx = Integer.parseInt(request.getParameter("b_idx"));
+		
+		List<CommentVo> list = CommentDao.getInstance().selectList(b_idx);
+		
+		request.setAttribute("list", list);
+		
+		for(CommentVo vo : list) {
+			vo.setContent(vo.getContent().replaceAll("\\n", "<br>"));
+		}
+
+		String forward_page = "comment_list.jsp";
 		RequestDispatcher disp = request.getRequestDispatcher(forward_page);
 		disp.forward(request, response);
 

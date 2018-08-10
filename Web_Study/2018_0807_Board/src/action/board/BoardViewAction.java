@@ -4,6 +4,8 @@ package action.board;
  * Servlet implementation class SungDeleteAction
  */
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +17,10 @@ import javax.servlet.http.HttpSession;
 import com.sun.corba.se.impl.protocol.BootstrapServerRequestDispatcher;
 
 import dao.Board_Dao;
+import dao.CommentDao;
+import myconst.MyConst;
 import vo.BoardVo;
+import vo.CommentVo;
 
 import javax.servlet.RequestDispatcher;
 
@@ -38,6 +43,8 @@ public class BoardViewAction extends HttpServlet {
 		int idx = Integer.parseInt(request.getParameter("idx"));
 
 		BoardVo vo = Board_Dao.getInstance().selectOne(idx);
+		
+		
 		String page = request.getParameter("page");
 		
 		if(vo.getDel() == 1) {
@@ -51,6 +58,8 @@ public class BoardViewAction extends HttpServlet {
 			int res = Board_Dao.getInstance().update_readhit(idx);
 			session.setAttribute("show", session.getId());
 		}
+		
+		
 
 		request.setAttribute("vo", vo);
 

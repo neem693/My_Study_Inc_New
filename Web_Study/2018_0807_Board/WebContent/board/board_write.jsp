@@ -5,6 +5,7 @@
 
 <head>
 <title>쓰기</title>
+<script></script>
 <link rel="stylesheet" href="../css/style.css" type="text/css">
 <script language=javascript>
 	function send_check(f) {
