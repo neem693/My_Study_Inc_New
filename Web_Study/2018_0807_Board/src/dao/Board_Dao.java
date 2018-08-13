@@ -164,12 +164,12 @@ public class Board_Dao {
 		return res;
 	}
 
-	public int selectCount() {
+	public int selectCount(Map map) {
 		// TODO Auto-generated method stub
 		int res = 0;
 
 		SqlSession session = factory.openSession();
-		res = session.selectOne("board.board_all_count");
+		res = session.selectOne("board.board_all_count",map);
 		// System.out.println(res);
 		session.close();
 

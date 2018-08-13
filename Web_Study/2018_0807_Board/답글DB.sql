@@ -26,3 +26,29 @@ create table comment_tb
 select * from comment_tb where b_idx = 59
 insert into comment_tb values(comment_seq.nextVal,'123','hong','efef','sdfef',sysdate,2)
 
+select * from comment_tb
+
+create or replace view comment_tb_view 
+as
+select c.*
+from (select * from comment_tb) c
+
+select * from comment_tb_view 
+drop view comment_tb_view
+
+
+
+		select *
+		from (select rownum no, c.* from comment_tb c where b_idx =91) 
+		where no between 6 and 10
+
+		
+		
+		select rownum as no, c.*
+		from comment_tb_view c
+		where b_idx = 91
+		
+		
+	
+		
+		

@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -55,6 +56,28 @@ public class CommentDao {
 		session.close();
 
 		return res;
+	}
+
+	public List<CommentVo> selectList(Map map) {
+		// TODO Auto-generated method stub
+		List<CommentVo> list = null;
+
+		SqlSession session = factory.openSession();
+		list = session.selectList("comment.comment_list_page", map);
+		session.close();
+
+		return list;
+	}
+
+	public int selectListCount(int b_idx) {
+		// TODO Auto-generated method stub
+		int count = 0;
+
+		SqlSession session = factory.openSession();
+		count = session.selectOne("comment.comment_count", b_idx);
+		session.close();
+
+		return count;
 	}
 
 }

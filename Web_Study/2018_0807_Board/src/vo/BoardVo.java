@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class BoardVo {
 
-	int idx, readhit, ref, step, depth,no,del;
+	int idx, readhit, ref, step, depth,no,del,c_count;
 	String id, name, subject, content, pwd, ip, regdate, viewdate;
 	Date date;
 
@@ -171,6 +171,14 @@ public class BoardVo {
 
 	public void setDel(int del) {
 		this.del = del;
+	}
+
+	public int getC_count() {
+		return c_count;
+	}
+
+	public void setC_count(int c_count) {
+		this.c_count = c_count;
 	}
 	
 	

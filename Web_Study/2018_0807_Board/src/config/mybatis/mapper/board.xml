@@ -43,7 +43,8 @@
 		idx = #{idx} and id = #{id}
 	</delete>
 	<delete id="board_delete_continue" parameterType="board">
-		delete from board where
+		delete from
+		board where
 		step = #{step} and ref = #{ref} and del = 1
 	</delete>
 
@@ -68,28 +69,67 @@
 	</update>
 
 
-	<select id="board_all_count" resultType="int">
+	<select id="board_all_count" parameterType="java.util.Map"
+		resultType="int">
 		select nvl(count(*),0)
 		from board
+		<if test="vo!=null">
+			<trim prefix="where" prefixOverrides="or">
+				<if test="vo.name!=null">
+					name like '%' || #{ vo.name } || '%'
+				</if>
+				<if test="vo.subject!=null">
+					or subject like '%' || #{vo.subject } || '%'
+				</if>
+				<if test="vo.content!=null">
+					or content like '%' || #{ vo.content } || '%'
+				</if>
+
+			</trim>
+		</if>
 	</select>
 
 	<select id="board_condition_list" parameterType="java.util.Map"
 		resultType="board">
-		select *
-		from board_show
+		select*
+		from(
+		select rownum no,s.*
+		from (
+		select b.*,(select count(b_idx)
+		from
+		comment_tb where b_idx = b.idx)c_count
+		from board b
+		<if test="vo!=null">
+			<trim prefix="where" prefixOverrides="or|and">
+				<if test="vo.name!=null">
+					b.name like '%' || #{vo.name} || '%'
+				</if>
+				<if test="vo.subject!=null">
+					or b.subject like '%' || #{vo.subject} || '%'
+				</if>
+				<if test="vo.content!=null">
+					or content like '%' || #{ vo.content } || '%'
+				</if>
+			</trim>
+		</if>
+		order by ref desc,step asc
+		) s )
 		where no between #{start} and #{end}
+
 
 	</select>
 	<select id="board_is_only_one" parameterType="board"
 		resultType="int">
 		select nvl(count(*),0)
 		from board
-		where ref = #{ref} and step>#{step}
+		where ref = #{ref} and
+		step>#{step}
 	</select>
 
 
 	<update id="board_update_del_mod" parameterType="board">
-		update board set del = 1 where idx = #{idx}
+		update board set
+		del = 1 where idx = #{idx}
 	</update>
 
 

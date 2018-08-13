@@ -57,7 +57,12 @@ commit
 
 delete from board where idx>=34
 
-create or replace view board_show as select rownum no,s.* from (select * from board order by ref desc,step asc) s
+create or replace view board_show
+as 
+select rownum no,s.* 
+from (	select b.* ,(select count(b_idx) from comment_tb where b_idx = b.idx) c_count
+		from board b
+		order by ref desc,step asc) s
 
 create or replace view board_show_rank as select  rank() over(order by ref desc,step asc) no ,b.* from(select * from board) b
 
@@ -122,3 +127,58 @@ select * from board where idx = 65;
 add constraint df_ConstraintNAme
 default getutcdate() for [Date]
 
+
+select count(b.idx)
+from board b
+
+select c.b_idx, count(c.b_idx)
+from comment_tb c
+group by c.b_idx
+
+select b.*,(select count(idx) from comment_tb where comment_tb.b_idx = b.idx) c_count
+from board b
+
+
+select b.idx,count(c.b_idx)
+from board b inner join comment_tb c
+on b.idx = c.b_idx
+group by b.idx
+
+
+
+
+select * from board_show
+
+
+select *   from board_show  
+where no between 1 and 5   
+and (name like '%길동%'   
+or content like '%길동%'
+or subject like '%길동%'
+)
+
+
+
+
+select rownum no,s.* 
+from (	select b.* ,(select count(b_idx) from comment_tb where b_idx = b.idx) c_count
+		from board b
+		order by ref desc,step asc) s
+		
+		
+		
+		select*
+		from(
+		select rownum no,s.*
+		from (
+		select b.*,(select count(b_idx) from
+		comment_tb where b_idx = b.idx)c_count
+		from board b
+	where 			b.content like '%길동%' or
+					b.subject like '%길동%' or
+					b.name like '%길동%'
+					
+		order by ref desc,step asc
+		) s
+		)
+			where no between 6 and 10
